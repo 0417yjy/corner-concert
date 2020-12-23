@@ -33,3 +33,4 @@ npm i
 ```
 npm start
 ```
+![electron_demo](https://i.imgur.com/RVk45Cf.png)
