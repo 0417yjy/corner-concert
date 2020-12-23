@@ -1,0 +1,24 @@
+{
+  "name": "corner-concert",
+  "version": "0.0.1",
+  "description": "온라인 합주 프로그램",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0417yjy/corner-concert.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0417yjy/corner-concert/issues"
+  },
+  "homepage": "https://github.com/0417yjy/corner-concert#readme",
+  "devDependencies": {
+    "electron": "^11.1.1"
+  }
+}
