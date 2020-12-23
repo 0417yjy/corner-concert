@@ -14,7 +14,7 @@
 git clone https://github.com/0417yjy/corner-concert.git
 ```
 ## 1.2. 비주얼 스튜디오 코드로 클론하기
-1. 비주얼 스튜디오에서 F1 -> Git:Clone -> URL(https://github.com/0417yjy/corner-concert.git) 쓰기
+1. 에서 F1 -> Git:Clone -> URL(https://github.com/0417yjy/corner-concert.git) 쓰기
 2. 설치하고자 하는 폴더 선택하여 클론
 
 # 2. 일렉트론 설치
