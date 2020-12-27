@@ -1,2 +1,5 @@
 # npm modules
 node_modules/
+
+# aws secret key
+coco-aws-key.pem
