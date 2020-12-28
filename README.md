@@ -7,7 +7,7 @@
 * [개발 설치 가이드](install_guide.md)  
 * [AWS 가이드](aws_guide.md)
 ### 개발 기술 문서
-* [Electron] (https://www.electronjs.org/docs)
+* [Electron](https://www.electronjs.org/docs)
 * [bootstrap v4.5](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
 ***
 ## App Icon
