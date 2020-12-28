@@ -2,8 +2,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>CoCo</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body style="background: white;">
     <h1>Hello World!</h1>
@@ -12,5 +13,12 @@
         Chrome <script>document.write(process.versions.chrome)</script>,
         and Electron <script>document.write(process.versions.electron)</script>.
     </p>
+    <a class="btn btn-info">test btn</a>
+    <script>
+        // bootstrap.js를 사용하는 데 필요
+        window.$ = window.jquery = require("jquery");
+        window.popper = require("popper.js");
+        require("bootstrap");
+    </script>
 </body>
 </html>

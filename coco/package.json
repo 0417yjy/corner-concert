@@ -20,5 +20,10 @@
   "homepage": "https://github.com/0417yjy/corner-concert#readme",
   "devDependencies": {
     "electron": "^11.1.1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
   }
 }
