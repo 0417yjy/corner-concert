@@ -4,7 +4,7 @@
 ![concertroom](concertroom.png)
 ***
 ## 로그인
-![login](login.jpg)
+![login](login.JPG)
 ## 회원가입
 ![register](register.png)
 ## 메인
