@@ -1,24 +1,66 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>CoCo</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="coco-style.css">
 </head>
-<body style="background: white;">
-    <h1>Hello World!</h1>
-    <p>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </p>
-    <a class="btn btn-info">test btn</a>
-    <script>
-        // bootstrap.js를 사용하는 데 필요
-        window.$ = window.jquery = require("jquery");
-        window.popper = require("popper.js");
-        require("bootstrap");
-    </script>
+
+<body>
+    <header id="titlebar">
+        <div id="drag-region">
+            <!-- 앱 제목 -->
+            <div id="window-title">
+                <span>CoCo</span>
+            </div>
+
+            <!-- 윈도우 제어 버튼 (최소화, 최대화, 창 닫기) -->
+            <div id="window-controls">
+
+                <div class="button" id="min-button">
+                    <img class="icon"
+                        srcset="icons/min-k-10.png 1x, icons/min-k-12.png 1.25x, icons/min-k-15.png 1.5x, icons/min-k-15.png 1.75x, icons/min-k-20.png 2x, icons/min-k-20.png 2.25x, icons/min-k-24.png 2.5x, icons/min-k-30.png 3x, icons/min-k-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="max-button">
+                    <img class="icon"
+                        srcset="icons/max-k-10.png 1x, icons/max-k-12.png 1.25x, icons/max-k-15.png 1.5x, icons/max-k-15.png 1.75x, icons/max-k-20.png 2x, icons/max-k-20.png 2.25x, icons/max-k-24.png 2.5x, icons/max-k-30.png 3x, icons/max-k-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="restore-button">
+                    <img class="icon"
+                        srcset="icons/restore-k-10.png 1x, icons/restore-k-12.png 1.25x, icons/restore-k-15.png 1.5x, icons/restore-k-15.png 1.75x, icons/restore-k-20.png 2x, icons/restore-k-20.png 2.25x, icons/restore-k-24.png 2.5x, icons/restore-k-30.png 3x, icons/restore-k-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="close-button">
+                    <img class="icon"
+                        srcset="icons/close-k-10.png 1x, icons/close-k-12.png 1.25x, icons/close-k-15.png 1.5x, icons/close-k-15.png 1.75x, icons/close-k-20.png 2x, icons/close-k-20.png 2.25x, icons/close-k-24.png 2.5x, icons/close-k-30.png 3x, icons/close-k-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <div id="main">
+        <h1>Hello World!</h1>
+        <p>
+            We are using node
+            <script>document.write(process.versions.node)</script>,
+            Chrome
+            <script>document.write(process.versions.chrome)</script>,
+            and Electron
+            <script>document.write(process.versions.electron)</script>.
+        </p>
+    </div>
+
+    <script src="renderer.js"></script>
 </body>
+
 </html>
