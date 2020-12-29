@@ -6,9 +6,9 @@
 ## 로그인
 ![login](login.JPG)
 ## 회원가입
-![register](register.png)
+![register](register.JPG)
 ## 메인
-![main](main.png)
+![main](main.JPG)
 ***
 ## 프로필
 ### 프로필 메인
