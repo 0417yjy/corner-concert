@@ -20,7 +20,7 @@ html, body {
 
 body {
     font-family: "Segoe UI", sans-serif;
-    border: 1px solid #e7f3d6;
+    border: 1px solid #b79f9a;
     overflow-y: hidden;
     background: #e7f3d6;
 }
@@ -41,8 +41,8 @@ p {
     height: 32px;
     width: calc(100% - 2px);
     /*Compensate for body 1px border*/
-    /* background: #254053;
-    color: white; */
+    background: #b79f9a;
+    color: white;
     padding: 4px;
 }
 
