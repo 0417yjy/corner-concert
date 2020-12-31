@@ -1,24 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>CoCo</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="coco-style.css">
 </head>
-<body style="background: white;">
-    <h1>Hello World!</h1>
-    <p>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </p>
-    <a class="btn btn-info">test btn</a>
-    <script>
-        // bootstrap.js를 사용하는 데 필요
-        window.$ = window.jquery = require("jquery");
-        window.popper = require("popper.js");
-        require("bootstrap");
-    </script>
-</body>
-</html>
+
+<body>
+    <header id="titlebar">
+        <div id="drag-region">
+            <!-- 앱 제목 -->
+            <div id="window-title">
+                <img src="icons/icon.svg" height="20">
+                <span style="margin-left: 5px;">CoCo</span>
+            </div>
+
+            <!-- 윈도우 제어 버튼 (최소화, 최대화, 창 닫기) -->
+            <div id="window-controls">
+
+                <div class="button" id="min-button">
+                    <img class="icon"
+                        srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="max-button">
+                    <img class="icon"
+                        srcset="icons/max-w-10.png 1x, icons/max-w-12.png 1.25x, icons/max-w-15.png 1.5x, icons/max-w-15.png 1.75x, icons/max-w-20.png 2x, icons/max-w-20.png 2.25x, icons/max-w-24.png 2.5x, icons/max-w-30.png 3x, icons/max-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="restore-button">
+                    <img class="icon"
+                        srcset="icons/restore-w-10.png 1x, icons/restore-w-12.png 1.25x, icons/restore-w-15.png 1.5x, icons/restore-w-15.png 1.75x, icons/restore-w-20.png 2x, icons/restore-w-20.png 2.25x, icons/restore-w-24.png 2.5x, icons/restore-w-30.png 3x, icons/restore-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="close-button">
+                    <img class="icon"
+                        srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="register">
+            <h1> 회원가입 </h1>
+            <form style="margin:20px;" action="">
+                <div class="form-group">
+                    <label class="form-label">사용할 계정 ID: </label>
+                    <input type="text" id="userid" size="40">
+                    <a href="" class="btn btn-secondary btn-sm">중복 확인</a>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">사용할 비밀번호: </label>
+                    <input type="password" id="usr_password" size="40">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">비밀번호 확인: </label>
+                    <input type="password" id="usr_password_confirm" size="40">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">닉네임: </label>
+                    <input type="text" id="nickname" size="40">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">확인용 이메일: </label>
+                    <input type="text" id="email" size="40">
+                    <a href="" class="btn btn-secondary btn-sm">전송</a>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">인증번호: </label>
+                    <input type="text" id="verification_code" size="40">
+                    <a href="" class="btn btn-secondary btn-sm">확인</a>
+                </div>
+                <div class="form-submit-group">
+                    <input class="btn btn-secondary btn-sm" type="submit" value="회원가입">
+                </div>
+            </form>
+        </div>
+    </div>
+
+        <script src="renderer.js"></script>
+    </body>
+    
+    </html>
