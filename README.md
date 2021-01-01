@@ -5,7 +5,8 @@
 * [UI 설계](res/ui-design/README.md)
 ### 가이드
 * [개발 설치 가이드](install_guide.md)  
-* [AWS 가이드](aws_guide.md)
+* [AWS 가이드](aws_guide.md) - AWS 대신 자체 서버 사용
+* [서버 가이드](svr_guide.md)
 ### 개발 기술 문서
 * [Electron](https://www.electronjs.org/docs)
 * [bootstrap v4.5](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
