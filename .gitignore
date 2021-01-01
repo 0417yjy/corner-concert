@@ -12,3 +12,6 @@ coco/node_modules/bootstrap/dist/css/*
 
 # aws secret key
 coco-aws-key.pem
+
+# db info
+dbinfo.js

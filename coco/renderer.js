@@ -1,3 +1,25 @@
+const ipcRenderer = require('electron').ipcRenderer;
+
+// check if database is ready
+ipcRenderer.send('connect', {});
+ipcRenderer.on('callFunction', function (event, functionName, param) {
+    switch (functionName) {
+        case "connect":
+            check_dbconnect(param);
+            break;
+        case "disconnect":
+            break;
+    }
+})
+
+function check_dbconnect(param) {
+    if (param) {
+        console.log("mysql 성공");
+    } else {
+        console.log("mysql 실패");
+    }
+}
+
 // bootstrap.js를 사용하는 데 필요
 window.$ = window.jquery = require("jquery");
 window.popper = require("popper.js");
