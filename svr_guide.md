@@ -1,11 +1,10 @@
 # 서버 가이드
-접속 명령어: `ssh 124.111.89.191 -p 50000 -l coco-dev`
 *전력 낭비 방지를 위해 자주 끌 것이니 접속이 안 되면 켜달라고 할 것*
 ## 자주 쓰는 명령어
 ### 리눅스
 * SSH 접속 명령어
     ```
-    ssh -i "coco-aws-key.pem" ubuntu@ec2-15-164-171-230.ap-northeast-2.compute.amazonaws.com
+    ssh 124.111.89.191 -p 50022 -l coco-dev
     ```
 * MySQL 서비스 재시작
     ```
