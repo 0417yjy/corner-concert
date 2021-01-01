@@ -1,4 +1,11 @@
 const { app, BrowserWindow } = require('electron')
+// try to connect database
+const ipcMain = require('electron').ipcMain;
+var db = require('./db/conn')();
+ipcMain.on('connect', (event, arg) => {
+    var conn = db.init();
+    db.open(conn);
+})
 
 let mainWindow;
 
