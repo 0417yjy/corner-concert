@@ -1,10 +1,14 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 // try to connect database
-const ipcMain = require('electron').ipcMain;
 var db = require('./db/conn')();
-ipcMain.on('connect', (event, arg) => {
-    var conn = db.init();
-    db.open(conn);
+ipcMain.on('db_connect', (event, arg) => {
+  var conn = db.init();
+  db.open(conn);
+});
+
+ipcMain.on('sendveri', (event, arg) => {
+  console.log(arg);
+  
 })
 
 let mainWindow;

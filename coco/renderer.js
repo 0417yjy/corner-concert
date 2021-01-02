@@ -1,7 +1,7 @@
 const ipcRenderer = require('electron').ipcRenderer;
 
 // check if database is ready
-ipcRenderer.send('connect', {});
+ipcRenderer.send('db_connect', {});
 ipcRenderer.on('callFunction', function (event, functionName, param) {
     switch (functionName) {
         case "connect":
@@ -75,3 +75,28 @@ function handleWindowControls() {
         }
     }
 }
+
+// --------------------------------------------- 회원 가입 스크립트 ----------------------------------------------
+let is_verified = false;
+
+document.getElementById("send_veri").addEventListener("click", async (event) => {
+    event.preventDefault();
+    const email = document.getElementById("email").value;
+    
+    ipcRenderer.send('sendveri', email);
+    alert("확인 코드를 이메일로 전송하였습니다.");
+});
+
+document.getElementById("register").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const id = document.getElementById("userid");
+    const pw = document.getElementById("usr_password");
+    const pw_confirm = document.getElementById("usr_passwordr_confirm");
+    const nickname = document.getElementById("nickname");
+    const email = document.getElementById("email");
+    const verification_code = document.getElementById("verification_code");
+
+
+     
+});
