@@ -1,5 +1,14 @@
 # npm modules
-node_modules/
+coco/node_modules/*
+
+# exclude bootstrap css
+!coco/node_modules/bootstrap/
+coco/node_modules/bootstrap/*
+!coco/node_modules/bootstrap/dist/
+coco/node_modules/bootstrap/dist/*
+!coco/node_modules/bootstrap/dist/css/
+coco/node_modules/bootstrap/dist/css/*
+!coco/node_modules/bootstrap/dist/css/bootstrap.min.css
 
 # aws secret key
 coco-aws-key.pem
