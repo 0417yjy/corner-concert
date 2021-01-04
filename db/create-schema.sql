@@ -21,6 +21,12 @@ CREATE TABLE user (
     pw CHAR(64) NOT NULL # 비밀번호
 );
 
+CREATE TABLE verification_register (
+    email VARCHAR(50) NOT NULL PRIMARY KEY, # 이메일
+    code CHAR(8) NOT NULL,
+    expires DATETIME NOT NULL
+);
+
 CREATE TABLE instrument (
     id INT PRIMARY KEY AUTO_INCREMENT,
     initial CHAR(1) NOT NULL, # 악기 이니셜
