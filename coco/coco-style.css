@@ -13,6 +13,16 @@ html {
     box-sizing: inherit;
 }
 
+img.logo {
+width: 180px;
+height: 180px;
+display: block;
+position: relative;
+top: 30px;
+margin-left: auto;
+margin-right: auto;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -30,6 +40,13 @@ h1 {
     font-weight: 600;
     line-height: 1.2;
 }
+
+h3 {
+text-align: center;
+line-height: 1.2;
+font-weight: 600;
+}
+
 
 p {
     margin-top: 10px;
