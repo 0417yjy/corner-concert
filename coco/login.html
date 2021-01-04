@@ -1,55 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-          <meta charset="UTF-8">
-          <title>Coco</title>
-          <link rel = "stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-          <link rel = "stylesheet" href = "login.css">
 
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+<head>
+    <meta charset="UTF-8">
+    <title>CoCo</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="coco-style.css">
+</head>
 
-  </head>
-  <body>
-          <header id="titlebar">
-              <div id="drag-region">
+<body>
+    <header id="titlebar">
+        <div id="drag-region">
             <!-- 앱 제목 -->
             <div id="window-title">
-                    <img class="small-logo" src="icons/icon.svg" height="20">
+                <img src="icons/icon.svg" height="20">
                 <span style="margin-left: 5px;">CoCo</span>
             </div>
 
             <!-- 윈도우 제어 버튼 (최소화, 최대화, 창 닫기) -->
             <div id="window-controls">
+
                 <div class="button" id="min-button">
                     <img class="icon"
-                         src="icons/min-w-10.png"
-                         draggable="false" />
+                        srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x"
+                        draggable="false" />
                 </div>
 
                 <div class="button" id="max-button">
                     <img class="icon"
-                         src="icons/max-k-10.png"
-                         draggable="false" />
+                        srcset="icons/max-w-10.png 1x, icons/max-w-12.png 1.25x, icons/max-w-15.png 1.5x, icons/max-w-15.png 1.75x, icons/max-w-20.png 2x, icons/max-w-20.png 2.25x, icons/max-w-24.png 2.5x, icons/max-w-30.png 3x, icons/max-w-30.png 3.5x"
+                        draggable="false" />
                 </div>
 
                 <div class="button" id="restore-button">
                     <img class="icon"
-                         src="icons/restore-k-10.png"
-                         draggable="false" />
+                        srcset="icons/restore-w-10.png 1x, icons/restore-w-12.png 1.25x, icons/restore-w-15.png 1.5x, icons/restore-w-15.png 1.75x, icons/restore-w-20.png 2x, icons/restore-w-20.png 2.25x, icons/restore-w-24.png 2.5x, icons/restore-w-30.png 3x, icons/restore-w-30.png 3.5x"
+                        draggable="false" />
                 </div>
 
                 <div class="button" id="close-button">
                     <img class="icon"
-                         src="icons/close-k-10.png"
-                         draggable="false"/>
-
+                        srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x"
+                        draggable="false" />
                 </div>
 
             </div>
         </div>
-
-          </header>
+  </header>
 
           <div id="main">
             <div id="img">
