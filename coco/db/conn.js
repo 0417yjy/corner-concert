@@ -1,11 +1,11 @@
 const mysql = require('mysql');
-const config = require('./dbinfo');
+const config = require('../info');
 const { BrowserWindow } = require('electron');
 
 module.exports = function () {
     return {
         init: function () {
-            return mysql.createConnection(config.local)
+            return mysql.createConnection(config.db)
         },
 
         open: function (conn) {
