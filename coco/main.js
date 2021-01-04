@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 
 let mainWindow;
+let roomWindow;
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -21,7 +22,29 @@ function createWindow () {
   });
 }
 
+function createRoom() {
+  roomWindow = new BrowserWindow({
+    parent: mainWindow,
+    width: 1920,
+    height: 1080,
+    frame: false, // 메뉴 삭제
+    backgroundColor: '#FFF', // subpixel anti-aliasing enabled (https://github.com/electron/electron/issues/6344#issuecomment-420371918)
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true
+    }
+  })
+
+  roomWindow.loadFile('room.html');
+
+  roomWindow.on('closed', () => {
+    roomWindow = null;
+  });
+}
+
+
 app.whenReady().then(createWindow)
+app.whenReady().then(createRoom)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
