@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const conn = require('./db/conn');
 // try to connect database
 var db = require('./db/conn')();
 ipcMain.on('db_connect', (event, arg) => {
@@ -7,8 +8,9 @@ ipcMain.on('db_connect', (event, arg) => {
 });
 
 ipcMain.on('sendveri', (event, arg) => {
-  console.log(arg);
-  
+  // console.log(arg);
+  console.log(conn);
+  //conn.query(sql, true, (error, results, fields))
 })
 
 let mainWindow;
