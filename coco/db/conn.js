@@ -23,10 +23,23 @@ module.exports = function () {
 
         close: function (conn) {
             conn.end(function (err) {
-                if (err) con.destroy();
+                if (err) conn.destroy();
                 console.log("[SUCCESS] Disconnected to MySQL.");
                 mainWindow.webContents.send('callFunction', 'disconnect', true);
             })
+        },
+
+        execute: function (conn, sql, args, callback) {
+            return new Promise(data => {
+                conn.query(sql, args, (error, results, fields) => {
+                    if (error) {
+                        callback(error)
+                    }
+                    else {
+                        callback(results)
+                    }
+                });
+            });
         }
     }
 }

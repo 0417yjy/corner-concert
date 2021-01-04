@@ -9,6 +9,9 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
             break;
         case "disconnect":
             break;
+        case "checkVerified":
+            checkVerified(param);
+            break;
     }
 })
 
@@ -78,13 +81,38 @@ function handleWindowControls() {
 
 // --------------------------------------------- 회원 가입 스크립트 ----------------------------------------------
 let is_verified = false;
+function checkVerified(bool) {
+    is_verified = bool;
+    if (bool) {
+        alert("인증되었습니다.");
+    } else {
+        alert("잘못된 인증번호입니다.");
+    }
+}
 
 document.getElementById("send_veri").addEventListener("click", async (event) => {
     event.preventDefault();
     const email = document.getElementById("email").value;
     
-    ipcRenderer.send('sendveri', email);
-    alert("확인 코드를 이메일로 전송하였습니다.");
+    if (email) {
+        ipcRenderer.send('sendveri', email);
+        alert("확인 코드를 이메일로 전송하였습니다.");
+    } else {
+        alert("이메일을 입력해주세요.");
+    }
+});
+
+document.getElementById("confirm_veri").addEventListener("click", async (event) => {
+    event.preventDefault();
+    const email = document.getElementById("email").value;
+    const code = document.getElementById("verification_code").value;
+    
+    if (code) {
+        ipcRenderer.send('confirmveri', [email, code]);
+        
+    } else {
+        alert("인증코드를 입력해주세요.");
+    }
 });
 
 document.getElementById("register").addEventListener("submit", async (event) => {
@@ -97,6 +125,5 @@ document.getElementById("register").addEventListener("submit", async (event) => 
     const email = document.getElementById("email");
     const verification_code = document.getElementById("verification_code");
 
-
-     
+    
 });
