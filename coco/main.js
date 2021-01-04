@@ -22,19 +22,52 @@ ipcMain.on('confirmveri', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
   let sql = "SELECT GET_VERIFICATION_CODE(?) as code";
   db.execute(connection, sql, args[0], (results) => {
-    console.log(results);
+    // console.log(results);
     if (results) {
       if (args[1] == results[0].code) {
+        // 코드가 일치하는 경우
         win.webContents.send("callFunction", "checkVerified", true);
       } else {
+        // 코드가 불일치하는 경우
+        console.log('Not same');
         win.webContents.send("callFunction", "checkVerified", false);
       }
     }
     else {
+      // results가 없는 경우
+      console.log('No results');
       win.webContents.send("callFunction", "checkVerified", false);
     }
   });
 })
+
+ipcMain.on('checkdup', (event, args) => {
+  let win = BrowserWindow.getFocusedWindow();
+  let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
+  db.execute(connection, sql, args[0], (results) => {
+    if (results[0].res) {
+      // 중복되는 경우
+      win.webContents.send("callFunction", "checkDuplicate", false);
+    } else {
+      // 중복되는 것이 없는 경우
+      win.webContents.send("callFunction", "checkDuplicate", true);
+    }
+  });
+});
+
+ipcMain.on('addNewUser', (event, args) => {
+  let win = BrowserWindow.getFocusedWindow();
+  let sql = "INSERT INTO USER(nickname, login_id, email, bio, pw) VALUES (?, ?, ?, NULL, ?)";
+  db.execute(connection, sql, args, (results) => {
+    if (err) {
+      console.log("[ERROR] Register failed during executing sql state");
+      win.webContents.send("callFunction", "register", false);
+    } else {
+      // console.log(results);
+      win.webContents.send("callFunction", "register", true);
+    }
+  });
+});
 /* ---------------------------- IPC 함수 끝 ---------------------------*/
 
 let mainWindow;
