@@ -1,8 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const conn = require('./db/conn');
+const nodemailer = require('nodemailer');
+const config = require('./info');
+
 // try to connect database
 var db = require('./db/conn')();
 var connection;
+
+var transporter = nodemailer.createTransport(config.mail);
 
 /* ---------------------------- IPC 함수 시작 --------------------------*/
 ipcMain.on('db_connect', (event, arg) => {
@@ -12,9 +17,35 @@ ipcMain.on('db_connect', (event, arg) => {
 
 ipcMain.on('sendveri', (event, args) => {
   // console.log(arg);
+
+  // 코드 생성
   let sql = "CALL MAKE_VERIFICATION_CODE(?)";
   db.execute(connection, sql, args, (err, results) => {
     // console.log(results);
+  });
+
+  // 코드 이메일로 전송
+  sql = "SELECT GET_VERIFICATION_CODE(?) as code";
+  db.execute(connection, sql, args, (err, results) => {
+    // console.log(results);
+    if (results) {
+      transporter.sendMail({
+        from: '"CoCo" <"coco-dev@coco-no-reply.com">',
+        to: args,
+        subject: '[CoCo] 인증번호 입력',
+        html: '${results[0].code}',
+      }, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Message sent: %s', info.messageId);
+        }
+      });
+    }
+    else {
+      // results가 없는 경우
+      console.log('No results');
+    }
   });
 })
 
