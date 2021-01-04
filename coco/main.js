@@ -13,7 +13,7 @@ ipcMain.on('db_connect', (event, arg) => {
 ipcMain.on('sendveri', (event, args) => {
   // console.log(arg);
   let sql = "CALL MAKE_VERIFICATION_CODE(?)";
-  db.execute(connection, sql, args, (results) => {
+  db.execute(connection, sql, args, (err, results) => {
     // console.log(results);
   });
 })
@@ -21,7 +21,7 @@ ipcMain.on('sendveri', (event, args) => {
 ipcMain.on('confirmveri', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
   let sql = "SELECT GET_VERIFICATION_CODE(?) as code";
-  db.execute(connection, sql, args[0], (results) => {
+  db.execute(connection, sql, args[0], (err, results) => {
     // console.log(results);
     if (results) {
       if (args[1] == results[0].code) {
@@ -44,7 +44,7 @@ ipcMain.on('confirmveri', (event, args) => {
 ipcMain.on('checkdup', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
   let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
-  db.execute(connection, sql, args[0], (results) => {
+  db.execute(connection, sql, args[0], (err, results) => {
     if (results[0].res) {
       // 중복되는 경우
       win.webContents.send("callFunction", "checkDuplicate", false);
@@ -57,10 +57,11 @@ ipcMain.on('checkdup', (event, args) => {
 
 ipcMain.on('addNewUser', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
-  let sql = "INSERT INTO USER(nickname, login_id, email, bio, pw) VALUES (?, ?, ?, NULL, ?)";
-  db.execute(connection, sql, args, (results) => {
+  // console.log('Add new user: ' + args);
+  let sql = "INSERT INTO user(nickname, login_id, email, bio, pw) VALUES (?, ?, ?, NULL, SHA2(?, 256))";
+  db.execute(connection, sql, args, (err, results) => {
     if (err) {
-      console.log("[ERROR] Register failed during executing sql state");
+      console.log("[ERROR] Register failed during executing sql state: " + results);
       win.webContents.send("callFunction", "register", false);
     } else {
       // console.log(results);

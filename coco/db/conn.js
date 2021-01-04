@@ -30,15 +30,13 @@ module.exports = function () {
         },
 
         execute: function (conn, sql, args, callback) {
-            return new Promise(data => {
-                conn.query(sql, args, (error, results, fields) => {
-                    if (error) {
-                        callback(error)
-                    }
-                    else {
-                        callback(results)
-                    }
-                });
+            return conn.query(sql, args, (error, results, fields) => {
+                if (error) {
+                    callback(true, error)
+                }
+                else {
+                    callback(false, results)
+                }
             });
         }
     }

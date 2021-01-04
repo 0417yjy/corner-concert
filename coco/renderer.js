@@ -86,12 +86,13 @@ function handleWindowControls() {
 }
 
 // --------------------------------------------- 회원 가입 스크립트 ----------------------------------------------
-let not_duplicated = false;
-let is_verified = false;
+var not_duplicated = false;
+var is_verified = false;
 
 function check_verified(bool) {
     // 이메일 코드 인증 함수
     is_verified = bool;
+    //console.log(is_verified);
     if (bool) {
         alert("인증되었습니다.");
     } else {
@@ -102,6 +103,7 @@ function check_verified(bool) {
 function check_duplicated(bool) {
     // id 중복 확인 함수
     not_duplicated = bool;
+    //console.log(not_duplicated);
     if (bool) {
         // 사용 가능한 id
         let btn_check_dup = document.getElementById("check_dup");
@@ -115,6 +117,7 @@ function check_duplicated(bool) {
 }
 
 function check_register(bool) {
+    //console.log(bool);
     if (bool) {
         // 회원가입 성공
         alert("회원가입에 성공하였습니다.");
@@ -161,12 +164,12 @@ document.getElementById("confirm_veri").addEventListener("click", async (event) 
 
 document.getElementById("register").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const pw = document.getElementById("usr_password");
-    const pw_confirm = document.getElementById("usr_passwordr_confirm");
-    if (not_duplicated) {
+    const pw = document.getElementById("usr_password").value;
+    const pw_confirm = document.getElementById("usr_password_confirm").value;
+    if (!not_duplicated) {
         alert("중복 확인을 해 주세요"); // 추후 툴팁으로 바꾸면 보기 좋을 듯
     }
-    else if (is_verified) {
+    else if (!is_verified) {
         alert("인증코드를 입력해주세요"); // 여기도 툴팁으로 바꾸면 좋을 듯
     }
     else if (pw != pw_confirm) {
@@ -174,11 +177,11 @@ document.getElementById("register").addEventListener("submit", async (event) => 
     }
     else {
         // 회원 등록
-        const id = document.getElementById("userid");
-        const nickname = document.getElementById("nickname");
-        const email = document.getElementById("email");
+        const id = document.getElementById("userid").value;
+        const nickname = document.getElementById("nickname").value;
+        const email = document.getElementById("email").value;
 
-        param = [nickname, id, email, pw];
+        let param = new Array(nickname, id, email, pw);
         ipcRenderer.send('addNewUser', param);
     }
 });
