@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+          <meta charset="UTF-8">
+          <title>Coco</title>
+          <link rel = "stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+          <link rel = "stylesheet" href = "login.css">
+
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+  </head>
+  <body>
+          <header id="titlebar">
+              <div id="drag-region">
+            <!-- 앱 제목 -->
+            <div id="window-title">
+                    <img class="small-logo" src="icons/icon.svg" height="20">
+                <span style="margin-left: 5px;">CoCo</span>
+            </div>
+
+            <!-- 윈도우 제어 버튼 (최소화, 최대화, 창 닫기) -->
+            <div id="window-controls">
+                <div class="button" id="min-button">
+                    <img class="icon"
+                         src="icons/min-w-10.png"
+                         draggable="false" />
+                </div>
+
+                <div class="button" id="max-button">
+                    <img class="icon"
+                         src="icons/max-k-10.png"
+                         draggable="false" />
+                </div>
+
+                <div class="button" id="restore-button">
+                    <img class="icon"
+                         src="icons/restore-k-10.png"
+                         draggable="false" />
+                </div>
+
+                <div class="button" id="close-button">
+                    <img class="icon"
+                         src="icons/close-k-10.png"
+                         draggable="false"/>
+
+                </div>
+
+            </div>
+        </div>
+
+          </header>
+
+          <div id="main">
+            <div id="img">
+                    <img class="logo" src="coco_circle.png" alt="" height="180" width="180"/>
+            </div>
+            <div id="login">
+            <br>
+
+            <h3><br>ID:
+                    <input type="text" style="text-align:center" width=200 height=200>
+            </h3>
+            </div>
+
+            <div id="login-pw">
+            <h3><br>PW:
+
+                    <input type="password" style="text-align:center" pattern="*">
+            </h3>
+            </div>
+
+            <br><br>
+            <div class="buttons">
+
+                    <a href="" class="btn btn-secondary btn-lg">로그인</a>
+                    &nbsp; &nbsp;
+                    <a href="" class="btn btn-secondary btn-lg">회원가입</a>
+                    &nbsp; &nbsp;
+                    <a href="" class="btn btn-secondary btn-lg">비회원 로>그인</a>
+            </div>
+
+    </div>
+
+<!-- You can also require other files to run in this process -->
+<script src="./renderer.js"></script>
+</body>
+</html>
