@@ -30,15 +30,26 @@ ipcMain.on('sendveri', (event, args) => {
     // console.log(results);
     if (results) {
       transporter.sendMail({
-        from: '"CoCo" <"coco-dev@coco-no-reply.com">',
+        from: "'CoCo Team' <coco-dev@naver.com>",
         to: args,
         subject: '[CoCo] 인증번호 입력',
-        html: '${results[0].code}',
+        html: `
+          <h3>CoCo에 오신 걸 환영합니다.</h3>
+          <p>
+            다음 인증코드를 해당 란에 입력하십시오: <br><br>
+
+            ` + results[0].code + ` <br><br>
+
+            '확인' 버튼을 눌러 인증을 완료 후 '회원가입' 버튼을 누르면 정상적으로 계정이 생성됩니다. <br><br>
+
+            CoCo 팀 드림
+          </p>
+        `,
       }, function (err, info) {
         if (err) {
           console.log(err);
         } else {
-          console.log('Message sent: %s', info.messageId);
+          console.log('Message sent to: %s', info.messageId);
         }
       });
     }
