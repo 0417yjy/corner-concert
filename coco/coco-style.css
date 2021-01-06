@@ -13,6 +13,16 @@ html {
     box-sizing: inherit;
 }
 
+img.logo {
+width: 180px;
+height: 180px;
+display: block;
+position: relative;
+top: 30px;
+margin-left: auto;
+margin-right: auto;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -25,11 +35,24 @@ body {
     background: #e7f3d6;
 }
 
+.buttons {
+    margin: 0 18px;
+    display: flex;
+    justify-content: center;
+ }
+
 h1 {
     margin: 0 0 10px 0;
     font-weight: 600;
     line-height: 1.2;
 }
+
+h3 {
+text-align: center;
+line-height: 1.2;
+font-weight: 600;
+}
+
 
 p {
     margin-top: 10px;
