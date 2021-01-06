@@ -35,6 +35,12 @@ body {
     background: #e7f3d6;
 }
 
+.buttons {
+    margin: 0 18px;
+    display: flex;
+    justify-content: center;
+ }
+
 h1 {
     margin: 0 0 10px 0;
     font-weight: 600;
