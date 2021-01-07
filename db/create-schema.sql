@@ -16,8 +16,15 @@ CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT, # DB 내부의 숫자 id
     nickname VARCHAR(32) NOT NULL, # 닉네임 (중복가능)
     login_id VARCHAR(32) NOT NULL UNIQUE, # 로그인 시 사용하는 아이디 (중복불가)
+    email VARCHAR(50) NOT NULL UNIQUE, # 이메일 (검증에 필요)
     bio VARCHAR(120), # 상태 메시지
     pw CHAR(64) NOT NULL # 비밀번호
+);
+
+CREATE TABLE verification_register (
+    email VARCHAR(50) NOT NULL PRIMARY KEY, # 이메일
+    code CHAR(8) NOT NULL,
+    expires DATETIME NOT NULL
 );
 
 CREATE TABLE instrument (
