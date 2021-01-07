@@ -143,6 +143,10 @@ function check_register(bool) {
     }
 }
 
+document.getElementById("goto_login").addEventListener("click", async (event) => {
+    change_display_to("login-page");
+})
+
 document.getElementById("check_dup").addEventListener("click", async (event) => {
     event.preventDefault();
     const id = document.getElementById("userid").value;

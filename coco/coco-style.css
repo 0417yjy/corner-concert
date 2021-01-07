@@ -181,6 +181,11 @@ p {
     overflow-y: auto;
 }
 
+/* 회원 가입 화면 */
+#goto_login {
+    margin-bottom: 20px;
+}
+
 .form-label {
     font-weight: bold;
     text-align: right;
