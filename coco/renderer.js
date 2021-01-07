@@ -86,7 +86,7 @@ function handleWindowControls() {
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
-const div_ids = ['login-page', 'register'];
+const div_ids = ['login-page', 'register-page'];
 function change_display_to(id) {
     // 모든 div 숨기기
     for (let i = 0; i < div_ids.length; i++) {
@@ -99,7 +99,7 @@ function change_display_to(id) {
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
 document.getElementById('goto_register').addEventListener("click", async (event) => {
-    change_display_to('register');
+    change_display_to('register-page');
 });
 
 // --------------------------------------------- 회원 가입 화면 스크립트 ------------------------------------------
