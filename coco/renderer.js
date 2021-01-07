@@ -85,7 +85,24 @@ function handleWindowControls() {
     }
 }
 
-// --------------------------------------------- 회원 가입 스크립트 ----------------------------------------------
+// --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
+const div_ids = ['login-page', 'register-page'];
+function change_display_to(id) {
+    // 모든 div 숨기기
+    for (let i = 0; i < div_ids.length; i++) {
+        $('#' + div_ids[i]).hide();
+    }
+
+    // 선택한 div만 표시하기
+    $('#' + id).show();
+}
+
+// --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
+document.getElementById('goto_register').addEventListener("click", async (event) => {
+    change_display_to('register-page');
+});
+
+// --------------------------------------------- 회원 가입 화면 스크립트 ------------------------------------------
 var not_duplicated = false;
 var is_verified = false;
 
@@ -125,6 +142,10 @@ function check_register(bool) {
         alert("회원가입에 실패하였습니다.");
     }
 }
+
+document.getElementById("goto_login").addEventListener("click", async (event) => {
+    change_display_to("login-page");
+})
 
 document.getElementById("check_dup").addEventListener("click", async (event) => {
     event.preventDefault();
