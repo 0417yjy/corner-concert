@@ -52,34 +52,37 @@
     <div id="main">
         <div id="login-page">
             <div id="img">
-                <img class="logo" src="icons/coco_circle.png" alt="" height="180" width="180"/>
+                <img class="logo" src="icons/coco_circle.png" alt="" height="180" width="180" />
             </div>
             <div id="login-id">
-            <br>
+                <br>
 
-            <h3><br>ID:
-                &nbsp;
+                <h3><br>ID:
+                    &nbsp;
                     <input type="text" width=200 height=200>
-            </h3>
+                </h3>
             </div>
 
             <div id="login-pw">
-            <h3><br>PW:
+                <h3><br>PW:
                     <input type="password" pattern="*">
-            </h3>
+                </h3>
             </div>
 
             <br><br>
             <div class="buttons">
-                    <a href="" class="btn btn-secondary btn-lg">로그인</a>
-                    &nbsp; &nbsp;
-                    <a href="" class="btn btn-secondary btn-lg">회원가입</a>
-                    &nbsp; &nbsp;
-                    <a href="" class="btn btn-secondary btn-lg">비회원 로그인</a>
+                <a href="" class="btn btn-secondary btn-lg">로그인</a>
+                &nbsp; &nbsp;
+                <button id="goto_register" class="btn btn-secondary btn-lg">회원가입</button>
+                &nbsp; &nbsp;
+                <a href="" class="btn btn-secondary btn-lg">비회원 로그인</a>
             </div>
         </div>
-        <!--
         <div id="register">
+            <button id="goto_login" class="btn btn-primary btn-sm">
+                <i data-feather="arrow-left" width="15"></i>
+                로그인 화면으로
+            </button>
             <h1> 회원가입 </h1>
             <form style="margin:20px;" id="register">
                 <div class="form-group">
@@ -114,11 +117,13 @@
                 </div>
             </form>
         </div>
-        
-        -->
+
     </div>
 
-        <script src="renderer.js"></script>
-    </body>
-    
-    </html>
+    <script src="renderer.js"></script>
+    <script>
+        change_display_to('login-page');
+    </script>
+</body>
+
+</html>
