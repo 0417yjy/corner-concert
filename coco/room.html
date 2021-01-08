@@ -49,17 +49,21 @@
             </div>
         </div>
     </header>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="main_area col-xs-9" style="position: relative;">
-                <div class="content">
-                    <div class="navbar" id="room-control"></div>
-                    <div class="video_container container-fluid"></div>
+    <div class="container-fluid p-0" id="main">
+        <div class="row main_area" style="height:100vh">
+            <div class="col-9">
+                <div class="content container-fluid">
+                    <div class="row">
+                        <div class="navbar col-12" id="room-control"></div>
+                    </div>
+                    <div class="row">
+                        <div class="video_container col-12 container-fluid p-0"></div>
+                    </div>
                 </div>
                 <div class="navbar" id="concert-control"></div>
                 <div class="track_container d-flex-column-reverse border"></div>
             </div>
-            <div class="side_bar col-xs-3">
+            <div class="side_bar col-3 border">
                 <div class="participant_list">
 
                 </div>
@@ -69,7 +73,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="renderer.js"></script>
 </body>
