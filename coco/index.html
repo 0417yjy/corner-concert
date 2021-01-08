@@ -85,33 +85,20 @@
     </div>
     <!-- 화면 -->
     <div id="main">
-        <div id="login-page">
-            <div id="img">
-                <img class="logo" src="icons/coco_circle.png" alt="" height="180" width="180" />
-            </div>
-            <div id="login-id">
-                <br>
-
-                <h3><br>ID:
-                    &nbsp;
-                    <input type="text" width=200 height=200>
-                </h3>
-            </div>
-
-            <div id="login-pw">
-                <h3><br>PW:
-                    <input type="password" pattern="*">
-                </h3>
-            </div>
-
-            <br><br>
-            <div class="buttons">
-                <a href="" class="btn btn-secondary btn-lg">로그인</a>
-                &nbsp; &nbsp;
-                <button id="goto_register" class="btn btn-secondary btn-lg">회원가입</button>
-                &nbsp; &nbsp;
-                <a href="" class="btn btn-secondary btn-lg">비회원 로그인</a>
-            </div>
+        <div id="login-page" class="container-fluid">
+            <form class="form-signin">
+                <img class="logo my-2 mx-auto" src="icons/coco_circle.png" alt="" height="180" width="180" />
+                <input type="text" class="form-control my-3" placeholder="ID" required autofocus>
+                <input type="password" class="form-control my-3" placeholder="PW" pattern="*" required>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 로그인 유지
+                    </label>
+                </div>
+                <a href="" class="btn btn-primary btn-block">로그인</a>
+                <button id="goto_register" class="btn btn-primary btn-block">회원가입</button>
+                <a href="" class="btn btn-secondary btn-block">비회원 로그인</a>
+            </form>
         </div>
         <div id="register-page" class="container">
             <button id="goto_login" class="btn btn-primary btn-sm mb-3">
