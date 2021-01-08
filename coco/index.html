@@ -79,41 +79,63 @@
                 <a href="" class="btn btn-secondary btn-lg">비회원 로그인</a>
             </div>
         </div>
-        <div id="register-page">
-            <button id="goto_login" class="btn btn-primary btn-sm">
+        <div id="register-page" class="container">
+            <button id="goto_login" class="btn btn-primary btn-sm mb-3">
                 <i data-feather="arrow-left" width="15"></i>
                 로그인 화면으로
             </button>
-            <h1> 회원가입 </h1>
-            <form style="margin:20px;" id="register">
-                <div class="form-group">
-                    <label class="form-label">사용할 계정 ID: </label>
-                    <input type="text" id="userid" size="40">
+            <h4 style="font-weight: bold;"> 계정 만들기 </h4>
+            <h6 class="mb-4">CoCo는 언제나 새 뮤지션들을 환영해요.</h6>
+            <form class="needs-validation" id="register" novalidate>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label col-form-label col-3">사용할 계정 ID </label> -->
+                    <input type="text" id="userid" class="col-6 form-control mx-3" placeholder="ID" required>
                     <button id="check_dup" class="btn btn-secondary btn-sm">중복 확인</button>
+                    <div class="valid-feedback mx-3">
+                        사용 가능한 ID입니다!
+                    </div>
+                    <div id="id-dup-invalid-feedback" class="invalid-feedback mx-3">
+                        ID를 입력해 주세요.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">사용할 비밀번호: </label>
-                    <input type="password" id="usr_password" size="40">
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">사용할 비밀번호: </label> -->
+                    <input type="password" id="usr_password" class="col-6 form-control mx-3" placeholder="비밀번호">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">비밀번호 확인: </label>
-                    <input type="password" id="usr_password_confirm" size="40">
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">비밀번호 확인: </label> -->
+                    <input type="password" id="usr_password_confirm" class="col-6 form-control mx-3"
+                        placeholder="비밀번호 확인">
+                    <div class="invalid-feedback mx-3">
+                        비밀번호가 일치하지 않습니다!
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">닉네임: </label>
-                    <input type="text" id="nickname" size="40">
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">닉네임: </label> -->
+                    <input type="text" id="nickname" class="col-6 form-control mx-3" placeholder="닉네임">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">확인용 이메일: </label>
-                    <input type="text" id="email" size="40">
-                    <button id="send_veri" class="btn btn-secondary btn-sm">전송</a>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">확인용 이메일: </label> -->
+                    <input type="email" id="email" class="col-6 form-control mx-3" placeholder="이메일">
+                    <button id="send_veri" class="btn btn-secondary btn-sm">인증코드 전송</button>
+                    <div class="valid-feedback mx-3">
+                        확인 코드를 이메일로 전송하였습니다.
+                    </div>
+                    <div class="invalid-feedback mx-3">
+                        이메일을 입력해주세요.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">인증코드: </label>
-                    <input type="text" id="verification_code" size="40">
-                    <button id="confirm_veri" class="btn btn-secondary btn-sm">확인</a>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">인증코드: </label> -->
+                    <input type="text" id="verification_code" class="col-6 form-control mx-3" placeholder="인증코드">
+                    <button id="confirm_veri" class="btn btn-secondary btn-sm">확인</button>
+                    <div class="valid-feedback mx-3">
+                        확인 코드를 이메일로 전송하였습니다.
+                    </div>
+                    <div id="id-veri-invalid-feedback" class="invalid-feedback mx-3">
+                    </div>
                 </div>
-                <div class="form-submit-group">
+                <div class="form-group row justify-content-end">
                     <input class="btn btn-secondary btn-sm" type="submit" value="회원가입">
                 </div>
             </form>
