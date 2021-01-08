@@ -2,7 +2,10 @@ const ipcRenderer = require('electron').ipcRenderer;
 
 // check if database is ready
 ipcRenderer.send('db_connect', {});
+
+// IPC 함수 호출문
 ipcRenderer.on('callFunction', function (event, functionName, param) {
+    // main 프로세스에서 send('callFunction', functionName, param); 함수를 호출하면 이곳에서 메시지를 받아서 처리
     switch (functionName) {
         case "connect":
             check_dbconnect(param);
@@ -17,6 +20,9 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
             break;
         case "register":
             check_register(param);
+            break;
+        case "login":
+            check_login(param);
             break;
     }
 })
@@ -89,7 +95,7 @@ function handleWindowControls() {
 const modal_type = Object.freeze({ YESNO: 0, OK: 1 });
 function show_modal(mode, modal_header, modal_body) {
     let modal;
-    
+
     // 모달 모드 선택
     switch (mode) {
         case modal_type.YESNO:
@@ -99,7 +105,7 @@ function show_modal(mode, modal_header, modal_body) {
             modal = document.getElementById('ok-modal');
             break;
     }
-    
+
     // 모달 내용 변경
     modal.querySelector('.modal-title').innerHTML = modal_header;
     modal.querySelector('.modal-body').innerHTML = modal_body;
@@ -121,9 +127,44 @@ function change_display_to(id) {
 }
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
+let user_data = {
+    id: null,
+    nickname: null,
+    email: null,
+    bio: null
+}
 document.getElementById('goto_register').addEventListener("click", async (event) => {
     change_display_to('register-page');
 });
+
+document.getElementById("login").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const id_input = document.getElementById('login_id').value;
+    const pw_input = document.getElementById('login_pw').value;
+    // 로그인 시도
+    const param = new Array(id_input, pw_input);
+    ipcRenderer.send('tryLogin', param);
+});
+
+function check_login(arg) {
+    if (arg.success) {
+        // 로그인 성공
+        user_data.id = arg.id;
+        user_data.nickname = arg.nickname;
+        user_data.email = arg.email;
+        user_data.bio = arg.bio;
+
+        show_modal(modal_type.OK, "로그인 성공!", `
+        ID: ` + user_data.id + ` <br>
+        닉네임: ` + user_data.nickname + ` <br>
+        이메일: ` + user_data.email + ` <br>
+        상메: ` + user_data.bio + ` <br>
+        `);
+    } else {
+        // 로그인 실패
+        show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")
+    }
+}
 
 // --------------------------------------------- 회원 가입 화면 스크립트 ------------------------------------------
 var not_duplicated = false;

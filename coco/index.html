@@ -86,16 +86,16 @@
     <!-- 화면 -->
     <div id="main">
         <div id="login-page" class="container-fluid">
-            <form class="form-signin">
+            <form class="form-signin" id="login">
                 <img class="logo my-2 mx-auto" src="icons/coco_circle.png" alt="" height="180" width="180" />
-                <input type="text" class="form-control my-3" placeholder="ID" required autofocus>
-                <input type="password" class="form-control my-3" placeholder="PW" pattern="*" required>
+                <input type="text" class="form-control my-3" placeholder="ID" id="login_id" required autofocus>
+                <input type="password" class="form-control my-3" placeholder="PW" id="login_pw" required>
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" value="remember-me"> 로그인 유지
                     </label>
                 </div>
-                <a href="" class="btn btn-primary btn-block">로그인</a>
+                <input type="submit" class="btn btn-primary btn-block" value="로그인">
                 <button id="goto_register" class="btn btn-primary btn-block">회원가입</button>
                 <a href="" class="btn btn-secondary btn-block">비회원 로그인</a>
             </form>
