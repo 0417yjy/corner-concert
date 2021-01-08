@@ -86,8 +86,8 @@ ipcMain.on('confirmveri', (event, args) => {
 ipcMain.on('checkdup', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
   let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
-  db.execute(connection, sql, args[0], (err, results) => {
-    if (results[0].res) {
+  db.execute(connection, sql, args, (err, results) => {
+    if (results[0].res == 1) {
       // 중복되는 경우
       win.webContents.send("callFunction", "checkDuplicate", false);
     } else {

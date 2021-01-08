@@ -184,22 +184,3 @@ p {
 #login-page, #register-page {
     display: none;
 }
-
-/* 회원 가입 화면 */
-#goto_login {
-    margin-bottom: 20px;
-}
-
-.form-label {
-    font-weight: bold;
-    text-align: right;
-    width: 125px;
-}
-
-.form-group input {
-    margin: 0 20px;
-}
-
-.form-submit-group {
-    text-align: right;
-}
