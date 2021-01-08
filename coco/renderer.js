@@ -32,7 +32,7 @@ function check_dbconnect(param) {
 // bootstrap.js를 사용하는 데 필요
 window.$ = window.jquery = require("jquery");
 window.popper = require("popper.js");
-require("bootstrap");
+const bootstrap = require("bootstrap");
 
 const remote = require('electron').remote;
 
@@ -83,6 +83,29 @@ function handleWindowControls() {
             document.body.classList.remove('maximized');
         }
     }
+}
+
+// --------------------------------------------- 모달 스크립트 ----------------------------------------------
+const modal_type = Object.freeze({ YESNO: 0, OK: 1 });
+function show_modal(mode, modal_header, modal_body) {
+    let modal;
+    
+    // 모달 모드 선택
+    switch (mode) {
+        case modal_type.YESNO:
+            modal = document.getElementById('yes-no-modal');
+            break;
+        case modal_type.OK:
+            modal = document.getElementById('ok-modal');
+            break;
+    }
+    
+    // 모달 내용 변경
+    modal.querySelector('.modal-title').innerHTML = modal_header;
+    modal.querySelector('.modal-body').innerHTML = modal_body;
+
+    // 모달 보이기
+    $('#' + modal.id).modal('show');
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
@@ -166,10 +189,13 @@ function check_register(bool) {
     //console.log(bool);
     if (bool) {
         // 회원가입 성공
-        alert("회원가입에 성공하였습니다.");
+        // alert("회원가입에 성공하였습니다.");
+        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 성공하였습니다.");
     } else {
-        alert("회원가입에 실패하였습니다.");
+        // alert("회원가입에 실패하였습니다.");
+        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 실패하였습니다. 다시 시도하시거나, 문제가 반복되는 경우 관리자에게 문의하십시오.");
     }
+    change_display_to('login-page')
 }
 
 $('#userid').on("propertychange change keyup paste input", async (event) => {
