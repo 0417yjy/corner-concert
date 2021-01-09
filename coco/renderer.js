@@ -114,7 +114,7 @@ function show_modal(mode, modal_header, modal_body) {
     if (mode == modal_type.TEXT_INPUT) {
         modal.querySelector('#ti_modal_input').setAttribute('placeholder', modal_body);
     } else {
-    modal.querySelector('.modal-body').innerHTML = modal_body;
+        modal.querySelector('.modal-body').innerHTML = modal_body;
     }
 
     // 모달 보이기
@@ -134,7 +134,8 @@ function change_display_to(id) {
 }
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
-let user_data = {
+var user_data = {
+    mode: null, // 회원은 1, 비회원은 2
     id: null,
     nickname: null,
     email: null,
@@ -142,6 +143,23 @@ let user_data = {
 }
 document.getElementById('goto_register').addEventListener("click", async (event) => {
     change_display_to('register-page');
+});
+
+document.getElementById('non_member_login').addEventListener("click", async (event) => {
+    show_modal(modal_type.TEXT_INPUT, '비회원 로그인', '사용할 닉네임');
+    document.getElementById("ti_modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#text-input-modal').modal('hide');
+        const inserted_nickname = document.getElementById('ti_modal_input').value;
+        check_login({
+            success: true,
+            mode: 2,
+            id: null,
+            nickname: inserted_nickname,
+            email: null,
+            bio: null
+        });
+    });
 });
 
 document.getElementById("login").addEventListener("submit", async (event) => {
@@ -156,6 +174,7 @@ document.getElementById("login").addEventListener("submit", async (event) => {
 function check_login(arg) {
     if (arg.success) {
         // 로그인 성공
+        user_data.mode = 1;
         user_data.id = arg.id;
         user_data.nickname = arg.nickname;
         user_data.email = arg.email;
@@ -165,7 +184,7 @@ function check_login(arg) {
         ID: ` + user_data.id + ` <br>
         닉네임: ` + user_data.nickname + ` <br>
         이메일: ` + user_data.email + ` <br>
-        상메: ` + user_data.bio + ` <br>
+        상태메시지: ` + user_data.bio + ` <br>
         `);
     } else {
         // 로그인 실패
