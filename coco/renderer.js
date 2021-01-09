@@ -92,7 +92,7 @@ function handleWindowControls() {
 }
 
 // --------------------------------------------- 모달 스크립트 ----------------------------------------------
-const modal_type = Object.freeze({ YESNO: 0, OK: 1 });
+const modal_type = Object.freeze({ YESNO: 0, OK: 1, TEXT_INPUT: 2 });
 function show_modal(mode, modal_header, modal_body) {
     let modal;
 
@@ -104,11 +104,18 @@ function show_modal(mode, modal_header, modal_body) {
         case modal_type.OK:
             modal = document.getElementById('ok-modal');
             break;
+        case modal_type.TEXT_INPUT:
+            modal = document.getElementById('text-input-modal');
+            break;
     }
 
     // 모달 내용 변경
     modal.querySelector('.modal-title').innerHTML = modal_header;
+    if (mode == modal_type.TEXT_INPUT) {
+        modal.querySelector('#ti_modal_input').setAttribute('placeholder', modal_body);
+    } else {
     modal.querySelector('.modal-body').innerHTML = modal_body;
+    }
 
     // 모달 보이기
     $('#' + modal.id).modal('show');
