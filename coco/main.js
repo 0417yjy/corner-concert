@@ -28,7 +28,7 @@ ipcMain.on('tryLogin', (event, args) => {
       bio: null
     };
 
-    if (results[0][0].login_id) {
+    if (results[0][0]) {
       // 로그인 성공
       // user_data 새로 초기화
       user_data.success = true;
