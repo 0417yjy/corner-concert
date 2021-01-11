@@ -1,12 +1,20 @@
+.content{
+    height: 60%;
+}
+
+.track{
+    height : 40%
+}
+
 .video_container{
     background-color: white;
-    min-height: 50vh;
+    min-height: calc(100% - 40px);
 }
 
 .track_container{
     display: flex;
     background-color: rgb(224, 200, 191);
-    min-height : 40vh;
+    height : calc(100% - 40px);
 }
 
 .navbar#room-control{
@@ -19,4 +27,25 @@
     height : 40px;
 }
 
+.main_area{
+    height: 100%;
+}
 
+.side_bar{
+    height: 100%;
+    width : 90%;
+}
+
+.participant_area{
+    height : 40%
+}
+
+.chatting_area{
+    height : 60%
+}
+
+.white_area{
+    background-color: white;
+    height : 100%;
+    border-radius: 10px;
+}
