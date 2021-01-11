@@ -50,6 +50,7 @@
         </div>
     </header>
     <!-- 모달 창 -->
+
     <!-- 예 / 아니오 모달 -->
     <div class="modal fade" id="yes-no-modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -83,23 +84,44 @@
             </div>
         </div>
     </div>
+     <!-- 텍스트 입력 모달 -->
+        <div class="modal fade" id="text-input-modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                    </div>
+                    <form id="ti_modal_form">
+                        <div class="modal-body">
+                            <input type="text" class="form-control" id="ti_modal_input" placeholder="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                            <input type="submit" class="btn btn-primary" value="확인">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <!-- 화면 -->
     <div id="main">
+
         <div id="login-page" class="container-fluid">
-            <form class="form-signin">
+            <form class="form-signin" id="login">
                 <img class="logo my-2 mx-auto" src="icons/coco_circle.png" alt="" height="180" width="180" />
-                <input type="text" class="form-control my-3" placeholder="ID" required autofocus>
-                <input type="password" class="form-control my-3" placeholder="PW" pattern="*" required>
+                <input type="text" class="form-control my-3" placeholder="ID" id="login_id" required autofocus>
+                <input type="password" class="form-control my-3" placeholder="PW" id="login_pw" required>
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" value="remember-me"> 로그인 유지
                     </label>
                 </div>
-                <a href="" class="btn btn-primary btn-block">로그인</a>
-                <button id="goto_register" class="btn btn-primary btn-block">회원가입</button>
-                <a href="" class="btn btn-secondary btn-block">비회원 로그인</a>
+                <input type="submit" class="btn btn-primary btn-block" value="로그인">
+                <button type="button" id="goto_register" class="btn btn-primary btn-block">회원가입</button>
+                <button type="button" id="non_member_login" class="btn btn-secondary btn-block">비회원 로그인</button>
             </form>
         </div>
+
         <div id="register-page" class="container">
             <button id="goto_login" class="btn btn-primary btn-sm mb-3">
                 <i data-feather="arrow-left" width="15"></i>
@@ -108,8 +130,10 @@
             <h4 style="font-weight: bold;"> 계정 만들기 </h4>
             <h6 class="mb-4">CoCo는 언제나 새 뮤지션들을 환영해요.</h6>
             <form class="needs-validation" id="register" novalidate>
-                <div class="form-group row justify-content-start">
+                <div class="form-group row justify-content-start"> 
+                    
                     <!-- <label class="form-label col-form-label col-3">사용할 계정 ID </label> -->
+                    
                     <input type="text" id="userid" class="col-6 form-control mx-3" placeholder="ID" required>
                     <button id="check_dup" class="btn btn-secondary btn-sm">중복 확인</button>
                     <div class="valid-feedback mx-3">
@@ -120,11 +144,15 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-start">
+                
                     <!-- <label class="form-label">사용할 비밀번호: </label> -->
+                   
                     <input type="password" id="usr_password" class="col-6 form-control mx-3" placeholder="비밀번호">
                 </div>
                 <div class="form-group row justify-content-start">
+                
                     <!-- <label class="form-label">비밀번호 확인: </label> -->
+                
                     <input type="password" id="usr_password_confirm" class="col-6 form-control mx-3"
                         placeholder="비밀번호 확인">
                     <div class="invalid-feedback mx-3">
@@ -132,11 +160,15 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-start">
+            
                     <!-- <label class="form-label">닉네임: </label> -->
+                    
                     <input type="text" id="nickname" class="col-6 form-control mx-3" placeholder="닉네임">
                 </div>
                 <div class="form-group row justify-content-start">
+                
                     <!-- <label class="form-label">확인용 이메일: </label> -->
+                    
                     <input type="email" id="email" class="col-6 form-control mx-3" placeholder="이메일">
                     <button id="send_veri" class="btn btn-secondary btn-sm">인증코드 전송</button>
                     <div class="valid-feedback mx-3">
@@ -147,7 +179,9 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-start">
+                
                     <!-- <label class="form-label">인증코드: </label> -->
+                    
                     <input type="text" id="verification_code" class="col-6 form-control mx-3" placeholder="인증코드">
                     <button id="confirm_veri" class="btn btn-secondary btn-sm">확인</button>
                     <div class="valid-feedback mx-3">
@@ -162,13 +196,26 @@
             </form>
         </div>
 
+        <div id="main-page" class="container-fluid">
+
+            <img class="logo my-2 mx-auto" src="icons/user_logo.png" alt="" height="180" width="180"/>
+    
+            <div id="show_id" style="margin-top: 10px; margin-bottom: 50px;">
+            <h1 class = "text-center" style="font-weight: bold; color: black;"  >Name</h1>
+            </div>
+      
+            <button type="button" id="create_room" class="btn btn-primary btn-block" style="margin: auto; width: 330px;  margin-bottom: 20px;">합주실 생성</button> 
+            <button type="button" id="join_room" class="btn btn-secondary btn-block" style="margin: auto; width: 330px;">합주실 참여</button> 
+
+        </div>
+        <!-- (정은) 로그인 후 뜨는 합주실 생성/참여 하는 메인 페이지 추가 -->
     </div>
 
     <script src="renderer.js"></script>
     <script>
         feather.replace();
         change_display_to('login-page');
-    </script>
+    </script> 
 </body>
 
 </html>

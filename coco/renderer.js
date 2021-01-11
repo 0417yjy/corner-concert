@@ -2,6 +2,8 @@ const ipcRenderer = require('electron').ipcRenderer;
 
 // check if database is ready
 ipcRenderer.send('db_connect', {});
+
+//IPC 함수 호출문
 ipcRenderer.on('callFunction', function (event, functionName, param) {
     switch (functionName) {
         case "connect":
@@ -17,6 +19,9 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
             break;
         case "register":
             check_register(param);
+            break;
+        case "login":
+            check_login(param);
             break;
     }
 })
@@ -86,7 +91,7 @@ function handleWindowControls() {
 }
 
 // --------------------------------------------- 모달 스크립트 ----------------------------------------------
-const modal_type = Object.freeze({ YESNO: 0, OK: 1 });
+const modal_type = Object.freeze({ YESNO: 0, OK: 1, TEXT_INPUT: 2 });
 function show_modal(mode, modal_header, modal_body) {
     let modal;
     
@@ -98,18 +103,25 @@ function show_modal(mode, modal_header, modal_body) {
         case modal_type.OK:
             modal = document.getElementById('ok-modal');
             break;
+        case modal_type.TEXT_INPUT:
+            modal = document.getElementById('text-input-modal');
+            break;
     }
     
     // 모달 내용 변경
     modal.querySelector('.modal-title').innerHTML = modal_header;
-    modal.querySelector('.modal-body').innerHTML = modal_body;
+    if (mode == modal_type.TEXT_INPUT) {
+        modal.querySelector('#ti_modal_input').setAttribute('placeholder', modal_body);
+    } else {
+        modal.querySelector('.modal-body').innerHTML = modal_body;
+    }
 
     // 모달 보이기
     $('#' + modal.id).modal('show');
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
-const div_ids = ['login-page', 'register-page'];
+const div_ids = ['login-page', 'register-page', 'main-page']; // (정은)main-page 추가하기
 function change_display_to(id) {
     // 모든 div 숨기기
     for (let i = 0; i < div_ids.length; i++) {
@@ -121,9 +133,67 @@ function change_display_to(id) {
 }
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
+var user_data = {
+    mode: null,
+    id: null,
+    nickname: null,
+    email: null,
+    bio: null
+}
 document.getElementById('goto_register').addEventListener("click", async (event) => {
     change_display_to('register-page');
 });
+
+document.getElementById('non_member_login').addEventListener("click", async (event) => {
+    show_modal(modal_type.TEXT_INPUT, '비회원 로그인', '사용할 닉네임');
+    document.getElementById("ti_modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#text-input-modal').modal('hide');
+        const inserted_nickname = document.getElementById('ti_modal_input').value;
+        check_login({
+            success: true,
+            mode: 2,
+            id: null,
+            nickname: inserted_nickname,
+            email: null,
+            bio: null
+        });
+    });
+});
+
+document.getElementById("login").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const id_input = document.getElementById('login_id').value;
+    const pw_input = document.getElementById('login_pw').value;
+    // 로그인 시도
+    const param = new Array(id_input, pw_input);
+    ipcRenderer.send('tryLogin', param);
+});
+
+function check_login(arg) {
+    if (arg.success) {
+        // 로그인 성공
+        user_data.mode = 1;
+        user_data.id = arg.id;
+        user_data.nickname = arg.nickname;
+        user_data.email = arg.email;
+        user_data.bio = arg.bio;
+
+        show_modal(modal_type.OK, "로그인 성공!", `
+        ID: ` + user_data.id + ` <br>
+        닉네임: ` + user_data.nickname + ` <br>
+        이메일: ` + user_data.email + ` <br>
+        상태메시지: ` + user_data.bio + ` <br>
+        `);
+
+        change_display_to('main-page'); 
+        //(정은) 성공하면 메인 페이지 띄우기.
+
+    } else {
+        // 로그인 실패
+        show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")
+    }
+}
 
 // --------------------------------------------- 회원 가입 화면 스크립트 ------------------------------------------
 var not_duplicated = false;
