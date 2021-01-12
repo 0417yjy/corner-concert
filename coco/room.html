@@ -51,9 +51,9 @@
         </div>
     </header>
     <div class="container-fluid p-0" id="main">
-        <div class="row main_area">
+        <div class="row" id="main_area">
             <div class="col-9 p-0">
-                <div class="content d-flex-column">
+                <div class="d-flex-column" id="content">
                     <nav class="navbar col-12 justify-content-between" id="room-control">
                         <div class="icon-group mx-3">
                             <span class="icon mx-2">
@@ -80,19 +80,21 @@
                             </span>
                         </div>
                     </nav>
-                    <div class="video_container col-12 container-fluid p-0"></div>
+                    <div class="col-12 container-fluid p-0" id="video_container"></div>
                 </div>
-                <div class="track d-flex-column">
-                    <div class="navbar" id="concert-control"></div>
-                    <div class="track_container d-flex-column-reverse border"></div>
+                <div class="d-flex-column" id="track">
+                    <nav class="navbar" id="concert-control">
+                    <div class="video_container col-12 container-fluid p-0"></div>
+                        </div>
+                    </nav>
+                    <div class="d-flex-column-reverse border" id="track_container"></div>
                 </div>
             </div>
-            <div class="side_bar col-3 border d-flex-column p-0">
-                <div class="participant_area border p-3" >
-
+            <div class="col-3 border d-flex-column p-0" id="side_bar">
+                <div class="border p-3" id="participant_area">
                     <div class="white_area p-3"></div>
                 </div>
-                <div class="chatting_area border p-3">
+                <div class="border p-3" id="chatting_area">
                     <div class="white_area p-3"></div>
                 </div>
             </div>

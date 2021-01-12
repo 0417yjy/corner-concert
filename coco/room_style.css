@@ -1,17 +1,17 @@
-.content{
+#content{
     height: 60%;
 }
 
-.track{
+#track{
     height : 40%
 }
 
-.video_container{
+#video_container{
     background-color: white;
     min-height: calc(100% - 40px);
 }
 
-.track_container{
+#track_container{
     display: flex;
     background-color: rgb(224, 200, 191);
     height : calc(100% - 40px);
@@ -27,20 +27,20 @@
     height : 40px;
 }
 
-.main_area{
+#main_area{
     height: 100%;
 }
 
-.side_bar{
+#side_bar{
     height: 100%;
     width : 90%;
 }
 
-.participant_area{
+#participant_area{
     height : 40%
 }
 
-.chatting_area{
+#chatting_area{
     height : 60%
 }
 
