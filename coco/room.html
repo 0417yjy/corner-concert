@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CoCo</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+    <script src="https://kit.fontawesome.com/da03029145.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="coco-style.css">
     <link rel="stylesheet" href="room_style.css">
@@ -53,7 +54,32 @@
         <div class="row main_area">
             <div class="col-9 p-0">
                 <div class="content d-flex-column">
-                    <div class="navbar col-12" id="room-control"></div>
+                    <nav class="navbar col-12 justify-content-between" id="room-control">
+                        <div class="icon-group mx-3">
+                            <span class="icon mx-2">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </span>
+                            <span class="icon mx-2">
+                                <i class="fas fa-cog"></i>
+                            </span>
+                        </div>
+                        <div class="icon-group">
+                            <span class="icon mx-2">
+                                <i class="fas fa-microphone"></i>
+                            </span>
+                            <span class="icon mx-2">
+                                <i class="fas fa-video"></i>
+                            </span>
+                        </div>
+                        <div class="icon-group">
+                            <span class="icon mx-2">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="icon mx-2" style="color: var(--primary)">
+                                <i class="fas fa-bars"></i>
+                            </span>
+                        </div>
+                    </nav>
                     <div class="video_container col-12 container-fluid p-0"></div>
                 </div>
                 <div class="track d-flex-column">
@@ -72,7 +98,6 @@
             </div>
         </div>
     </div>
-
     <script src="renderer.js"></script>
 </body>
             
