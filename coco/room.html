@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CoCo</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+    <script src="https://kit.fontawesome.com/da03029145.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="coco-style.css">
     <link rel="stylesheet" href="room_style.css">
@@ -50,42 +51,81 @@
         </div>
     </header>
     <div class="container-fluid p-0" id="main">
-        <div class="row main_area" style="height:100vh">
-            <div class="col-9">
-                <div class="content container-fluid">
-                    <div class="row">
-                        <div class="navbar col-12" id="room-control">
-                            <button class="btn-secondary">EXIT</button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
+        <div class="row" id="main_area">
+            <div class="col-9 p-0">
+                <div class="d-flex-column" id="content">
+                    <nav class="navbar col-12 justify-content-between" id="room-control">
+                        <div class="icon-group mx-3">
+                            <span class="icon mx-2">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </span>
+                            <span class="icon mx-2">
+                                <i class="fas fa-cog"></i>
+                            </span>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="video_container col-12 container-fluid p-0"></div>
-                    </div>
+                        <div class="icon-group">
+                            <span class="icon mx-2">
+                                <i class="fas fa-microphone"></i>
+                            </span>
+                            <span class="icon mx-2">
+                                <i class="fas fa-video"></i>
+                            </span>
+                        </div>
+                        <div class="icon-group">
+                            <span class="icon mx-2">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="icon mx-2" style="color: var(--primary)">
+                                <i class="fas fa-bars"></i>
+                            </span>
+                        </div>
+                    </nav>
+                    <div class="col-12 container-fluid p-0" id="video_container"></div>
                 </div>
-                <div class="navbar" id="concert-control">
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
+                <div class="d-flex-column" id="track">
+                    <nav class="navbar" id="concert-control">
+                        <div class="icon-group">
+                            <span class="icon mx-1">
+                                <i class="fas fa-play"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-pause"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-stop"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-step-backward"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-step-forward"></i>
+                            </span>
+                        </div>
+                        <div class="flex-grow-1" style="text-align: center;">
+                            <span class="icon mx-1" style="color: red;">
+                                <i class="fas fa-circle"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-download"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <!-- 메트로놈 컴포넌트 -->
+                        </div>
+                    </nav>
+                    <div class="d-flex-column-reverse border" id="track_container"></div>
                 </div>
-                <div class="track_container d-flex-column-reverse border"></div>
             </div>
-            <div class="side_bar col-3 border">
-                <div class="participant_list">
-
+            <div class="col-3 border d-flex-column p-0" id="side_bar">
+                <div class="border p-3" id="participant_area">
+                    <div class="white_area p-3"></div>
                 </div>
-                <div class="chatting_area">
-
+                <div class="border p-3" id="chatting_area">
+                    <div class="white_area p-3"></div>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="renderer.js"></script>
 </body>
             
