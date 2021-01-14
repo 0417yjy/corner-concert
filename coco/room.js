@@ -6,3 +6,13 @@ function check_num_only() {
         event.returnValue = false;
     }
 }
+
+$("#metro-volume-slider").slider({
+    value: 50,
+    slide: function (event, ui) {
+        $('#metro-volume-indicator').val(ui.value + '%');
+    }
+}).slider("pips", {
+    first: "pip",
+    last: "pip"
+})

@@ -81,3 +81,51 @@
     width: 44px;
     border-radius: 7px;
 }
+
+#metro-volume-slider {
+    display: inline-block;
+    width: 100px;
+    height: 2px;
+    border-radius: 0px;
+    background: #5c2506;
+    border: none;
+    top: 18px;
+}
+
+#metro-volume-slider .ui-slider-range {
+    background: #5c2506;
+    height: 4px;
+    top: -1px;
+    transition: all 0.2s ease-out; }
+
+.ui-slider-pips .ui-slider-line {
+    background: #5c2506;
+}
+
+#metro-volume-slider .ui-slider-pip {
+    top: 0; }
+
+#metro-volume-slider .ui-slider-pip .ui-slider-line {
+    height: 4px; }
+
+#metro-volume-slider .ui-slider-pip:nth-of-type(20n+2) .ui-slider-line {
+    top: -6px;
+    height: 17px;
+}
+
+#metro-volume-slider .ui-slider-handle {
+    top: -0.5em;
+    margin-left: -0.15em;
+    width: 0.3em;
+ }
+
+ #metro-volume-slider .ui-state-default {
+    border: none;
+    background: #96e326;
+ }
+
+ #metronome-switch-btn {
+     display: inline;
+     vertical-align: middle;
+     padding: 0 .3rem;
+ }

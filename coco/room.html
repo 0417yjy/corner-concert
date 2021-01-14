@@ -7,6 +7,14 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
     <script src="https://kit.fontawesome.com/da03029145.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- jquery 슬라이더 -->
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+    <script src="jquery-ui-slider-pips.js"></script>
+    <link rel="stylesheet" href="jquery-ui-slider-pips.css">
+
     <link rel="stylesheet" href="coco-style.css">
     <link rel="stylesheet" href="room_style.css">
 </head>
@@ -83,7 +91,7 @@
                     <div class="col-12 container-fluid p-0" id="video_container"></div>
                 </div>
                 <div class="d-flex-column" id="track">
-                    <nav class="navbar py-0" id="concert-control">
+                    <nav class="navbar py-0 pr-0" id="concert-control">
                         <div class="icon-group">
                             <span class="icon mx-1">
                                 <i class="fas fa-play"></i>
@@ -109,20 +117,31 @@
                                 <i class="fas fa-download"></i>
                             </span>
                         </div>
-                        <div>
+                        <div class="d-flex" id="metronome">
                             <!-- 메트로놈 컴포넌트 -->
-                            <span class="icon mx-1">
-                                <i style="font-size: 20pt" class="fas fa-caret-square-left"></i>
-                            </span>
-                            <input type="text" class="px-1" id="bpm-indicator" value="120" onkeypress="check_num_only();">
-                            <small style="font-weight: bold;">bpm</small>
-                            <span class="icon mx-1">
-                                <i style="font-size: 20pt" class="fas fa-caret-square-right"></i>
-                            </span>
-
-                            <select class="px-2" name="beat">
-                                <option value="beat1">beat 1</option>
-                            </select>
+                            <div id="bpm-selector" class="mx-2 py-1">
+                                <span class="icon mx-1">
+                                    <i style="font-size: 20pt" class="fas fa-caret-square-left"></i>
+                                </span>
+                                <input type="text" class="px-1" id="bpm-indicator" value="120"
+                                    onkeypress="check_num_only();">
+                                <small style="font-weight: bold;">bpm</small>
+                                <span class="icon mx-1">
+                                    <i style="font-size: 20pt" class="fas fa-caret-square-right"></i>
+                                </span>
+                            </div>
+                            <div id="beat-selector" class="mx-3">
+                                <select class="my-2" name="beat" style="vertical-align: middle;">
+                                    <option value="beat1">beat 1</option>
+                                </select>
+                            </div>
+                            <div id="volume-controller" class="mx-1">
+                                <div id="metro-volume-slider" class="mx-1"></div>
+                                <input type="text" id="metro-volume-indicator" value="50%" readonly>
+                            </div>
+                            <div id="metronome-switch" class="mx-2 py-1">
+                                <button class="btn btn-secondary my-1" id="metronome-switch-btn">off</button>
+                            </div>
                         </div>
                     </nav>
                     <div class="d-flex-column-reverse border" id="track_container"></div>
@@ -141,5 +160,5 @@
     <script src="room.js"></script>
     <script src="renderer.js"></script>
 </body>
-            
+
 </html>
