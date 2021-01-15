@@ -26,8 +26,8 @@ function createRoom() {
   roomWindow = new BrowserWindow({
     parent: mainWindow,
     show: false,
-    width: 1920,
-    height: 1080,
+    minWidth: 870,
+    minHeight: 300,
     frame: false, // 메뉴 삭제
     backgroundColor: '#FFF', // subpixel anti-aliasing enabled (https://github.com/electron/electron/issues/6344#issuecomment-420371918)
     webPreferences: {
