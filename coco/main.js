@@ -25,6 +25,7 @@ function createWindow () {
 function createRoom() {
   roomWindow = new BrowserWindow({
     parent: mainWindow,
+    show: false,
     width: 1920,
     height: 1080,
     frame: false, // 메뉴 삭제
@@ -34,6 +35,8 @@ function createRoom() {
       enableRemoteModule: true
     }
   })
+  roomWindow.maximize(); // 켤 때 최대화
+  roomWindow.show();
 
   roomWindow.loadFile('room.html');
 
