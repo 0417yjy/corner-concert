@@ -1,48 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const conn = require('./db/conn');
-const nodemailer = require('nodemailer');
-const config = require('./info');
-
-// try to connect database
-var db = require('./db/conn')();
-var connection;
-
-var transporter = nodemailer.createTransport(config.mail);
+const coco_net = require('./coco_request')();
 
 /* ---------------------------- IPC 함수 시작 --------------------------*/
-ipcMain.on('db_connect', (event, arg) => {
-  connection = db.init();
-  db.open(connection);
-});
+ipcMain.on('checkServer', (event, arg) => {
+  coco_net.check_server_on();
+})
 
 ipcMain.on('tryLogin', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
-  let sql = "CALL TRY_LOGIN(?, ?)";
-  db.execute(connection, sql, args, (err, results) => {
-    //console.log(results);
-    var user_data = {
-      success: false,
-      id: null,
-      nickname: null,
-      email: null,
-      bio: null
-    };
-
-    if (results[0][0]) {
-      // 로그인 성공
-      // user_data 새로 초기화
-      user_data.success = true;
-      user_data.id = results[0][0].login_id;
-      user_data.nickname = results[0][0].nickname;
-      user_data.email = results[0][0].email;
-      user_data.bio = results[0][0].bio;
-    }
-    else {
-      // 로그인 실패
-      console.log('Login failed');
-    }
-    win.webContents.send("callFunction", "login", user_data);
-  });
+  
+  win.webContents.send("callFunction", "login", user_data);
 });
 
 ipcMain.on('sendveri', (event, args) => {

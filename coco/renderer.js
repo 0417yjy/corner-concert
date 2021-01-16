@@ -1,7 +1,7 @@
 const ipcRenderer = require('electron').ipcRenderer;
 
-// check if database is ready
-ipcRenderer.send('db_connect', {});
+// check if server is ready
+ipcRenderer.send('checkServer', {});
 
 // IPC 함수 호출문
 ipcRenderer.on('callFunction', function (event, functionName, param) {
