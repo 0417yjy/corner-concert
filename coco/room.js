@@ -16,3 +16,11 @@ $("#metro-volume-slider").slider({
     first: "pip",
     last: "pip"
 })
+
+
+$("#side_bar_btn").off("click").on('click', function () {
+    $("#side_bar").toggle();
+    $("#room_area").toggleClass("col-9");
+    $("#room_area").toggleClass("col-12");
+});
+
