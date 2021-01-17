@@ -8,8 +8,22 @@ ipcMain.on('checkServer', (event, arg) => {
 
 ipcMain.on('tryLogin', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
+  const body = JSON.stringify(args);
+  const request = coco_net.make_http_post_request('/auth/login', body);
+  request.on('response', (response) => {
+    console.log(`STATUS: ${response.statusCode}`); 
+        console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
   
-  win.webContents.send("callFunction", "login", user_data);
+        response.on('data', (chunk) => { 
+            console.log(`BODY: ${chunk}`) 
+        }); 
+  })
+  request.on('error', (error) => {
+    console.log(`ERROR: ${JSON.stringify(error)}`) 
+  })
+  request.end();
+  console.log('Request sent');
+  // win.webContents.send("callFunction", "login", user_data);
 });
 
 ipcMain.on('sendveri', (event, args) => {

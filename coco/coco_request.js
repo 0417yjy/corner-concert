@@ -22,22 +22,29 @@ module.exports = function () {
             request.end();
         },
 
-        make_http_get_request: function (path) {
+        make_http_get_request: function (arg_path) {
             const request = net.request({
                 method: 'GET',
                 protocol: 'http:',
                 hostname: host,
-                path: path
+                port: port,
+                path: arg_path
             })
+            request.setHeader('content-type', 'application/json');
+            return request;
         },
 
-        make_http_post_request: function (path) {
+        make_http_post_request: function (arg_path, body) {
             const request = net.request({
                 method: 'POST',
                 protocol: 'http:',
                 hostname: host,
-                path: path
+                port: port,
+                path: arg_path
             })
+            request.setHeader('content-type', 'application/json'); 
+            request.write(body, 'utf-8');
+            return request;
         }
     }
 }
