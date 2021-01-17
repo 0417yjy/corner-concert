@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>CoCo</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <script src="node_modules/feather-icons/dist/feather.min.js"></script>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="coco-style.css">
 </head>
@@ -48,77 +49,145 @@
             </div>
         </div>
     </header>
-
-    <div id="main">
-        <div id="login-page">
-            <div id="img">
-                <img class="logo" src="icons/coco_circle.png" alt="" height="180" width="180"/>
-            </div>
-            <div id="login-id">
-            <br>
-
-            <h3><br>ID:
-                &nbsp;
-                    <input type="text" width=200 height=200>
-            </h3>
-            </div>
-
-            <div id="login-pw">
-            <h3><br>PW:
-                    <input type="password" pattern="*">
-            </h3>
-            </div>
-
-            <br><br>
-            <div class="buttons">
-                    <a href="" class="btn btn-secondary btn-lg">로그인</a>
-                    &nbsp; &nbsp;
-                    <a href="" class="btn btn-secondary btn-lg">회원가입</a>
-                    &nbsp; &nbsp;
-                    <a href="" class="btn btn-secondary btn-lg">비회원 로그인</a>
+    <!-- 모달 창 -->
+    <!-- 예 / 아니오 모달 -->
+    <div class="modal fade" id="yes-no-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
+                    <button type="button" class="btn btn-primary">예</button>
+                </div>
             </div>
         </div>
-        <!--
-        <div id="register">
-            <h1> 회원가입 </h1>
-            <form style="margin:20px;" action="">
-                <div class="form-group">
-                    <label class="form-label">사용할 계정 ID: </label>
-                    <input type="text" id="userid" size="40">
-                    <a href="" class="btn btn-secondary btn-sm">중복 확인</a>
+    </div>
+    <!-- 확인 모달 -->
+    <div class="modal fade" id="ok-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">사용할 비밀번호: </label>
-                    <input type="password" id="usr_password" size="40">
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">비밀번호 확인: </label>
-                    <input type="password" id="usr_password_confirm" size="40">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">닉네임: </label>
-                    <input type="text" id="nickname" size="40">
+            </div>
+        </div>
+    </div>
+    <!-- 텍스트 입력 모달 -->
+    <div class="modal fade" id="text-input-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">확인용 이메일: </label>
-                    <input type="text" id="email" size="40">
-                    <a href="" class="btn btn-secondary btn-sm">전송</a>
+                <form id="ti_modal_form">
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="ti_modal_input" placeholder="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                        <input type="submit" class="btn btn-primary" value="확인">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 화면 -->
+    <div id="main">
+        <div id="login-page" class="container-fluid">
+            <form class="form-signin" id="login">
+                <img class="logo my-2 mx-auto" src="icons/coco_circle.png" alt="" height="180" width="180" />
+                <input type="text" class="form-control my-3" placeholder="ID" id="login_id" required autofocus>
+                <input type="password" class="form-control my-3" placeholder="PW" id="login_pw" required>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 로그인 유지
+                    </label>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">인증번호: </label>
-                    <input type="text" id="verification_code" size="40">
-                    <a href="" class="btn btn-secondary btn-sm">확인</a>
+                <input type="submit" class="btn btn-primary btn-block" value="로그인">
+                <button type="button" id="goto_register" class="btn btn-primary btn-block">회원가입</button>
+                <button type="button" id="non_member_login" class="btn btn-secondary btn-block">비회원 로그인</button>
+            </form>
+        </div>
+        <div id="register-page" class="container">
+            <button id="goto_login" class="btn btn-primary btn-sm mb-3">
+                <i data-feather="arrow-left" width="15"></i>
+                로그인 화면으로
+            </button>
+            <h4 style="font-weight: bold;"> 계정 만들기 </h4>
+            <h6 class="mb-4">CoCo는 언제나 새 뮤지션들을 환영해요.</h6>
+            <form class="needs-validation" id="register" novalidate>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label col-form-label col-3">사용할 계정 ID </label> -->
+                    <input type="text" id="userid" class="col-6 form-control mx-3" placeholder="ID" required>
+                    <button id="check_dup" class="btn btn-secondary btn-sm">중복 확인</button>
+                    <div class="valid-feedback mx-3">
+                        사용 가능한 ID입니다!
+                    </div>
+                    <div id="id-dup-invalid-feedback" class="invalid-feedback mx-3">
+                        ID를 입력해 주세요.
+                    </div>
                 </div>
-                <div class="form-submit-group">
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">사용할 비밀번호: </label> -->
+                    <input type="password" id="usr_password" class="col-6 form-control mx-3" placeholder="비밀번호">
+                </div>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">비밀번호 확인: </label> -->
+                    <input type="password" id="usr_password_confirm" class="col-6 form-control mx-3"
+                        placeholder="비밀번호 확인">
+                    <div class="invalid-feedback mx-3">
+                        비밀번호가 일치하지 않습니다!
+                    </div>
+                </div>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">닉네임: </label> -->
+                    <input type="text" id="nickname" class="col-6 form-control mx-3" placeholder="닉네임">
+                </div>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">확인용 이메일: </label> -->
+                    <input type="email" id="email" class="col-6 form-control mx-3" placeholder="이메일">
+                    <button id="send_veri" class="btn btn-secondary btn-sm">인증코드 전송</button>
+                    <div class="valid-feedback mx-3">
+                        확인 코드를 이메일로 전송하였습니다.
+                    </div>
+                    <div class="invalid-feedback mx-3">
+                        이메일을 입력해주세요.
+                    </div>
+                </div>
+                <div class="form-group row justify-content-start">
+                    <!-- <label class="form-label">인증코드: </label> -->
+                    <input type="text" id="verification_code" class="col-6 form-control mx-3" placeholder="인증코드">
+                    <button id="confirm_veri" class="btn btn-secondary btn-sm">확인</button>
+                    <div class="valid-feedback mx-3">
+                        확인 코드를 이메일로 전송하였습니다.
+                    </div>
+                    <div id="id-veri-invalid-feedback" class="invalid-feedback mx-3">
+                    </div>
+                </div>
+                <div class="form-group row justify-content-end">
                     <input class="btn btn-secondary btn-sm" type="submit" value="회원가입">
                 </div>
             </form>
         </div>
-        
-        -->
+
     </div>
 
-        <script src="renderer.js"></script>
-    </body>
-    
-    </html>
+    <script src="renderer.js"></script>
+    <script>
+        feather.replace();
+        change_display_to('login-page');
+    </script>
+</body>
+
+</html>
