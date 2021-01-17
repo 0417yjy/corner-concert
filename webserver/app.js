@@ -4,11 +4,6 @@ const bodyParser = require('body-parser');
 const config = require('./info');
 const nodemailer = require('nodemailer');
 
-// try to connect database
-var db = require('./dbconn')();
-var connection = db.init();
-db.open(connection);
-
 // init nodemailer service
 var transporter = nodemailer.createTransport(config.mail);
 
