@@ -134,12 +134,12 @@ function change_display_to(id) {
 
 }
 
-//--------------------------------------------- 프로필 사진 선택 스크립트 ------------------------------------------
+//--------------------------------------------- 프로필 사진 선택 스크립트 ----------------------------------------
 
 document.getElementById("profile_img").addEventListener("click", async (event) => {
     show_modal(modal_type.TEXT_INPUT, '프로필 변경', '변경할 사진의 src');
     document.getElementById('ti_modal_input').value = null;
-    
+
     document.getElementById("ti_modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
         $('#text-input-modal').modal('hide');
@@ -210,6 +210,9 @@ function check_login(arg) {
         상태메시지: ` + user_data.bio + ` <br>
         `);
         */
+        var nkname = user_data.nickname;
+        document.getElementById("show_nickname").innerHTML = nkname;
+        
         change_display_to('main-page'); 
 
         //(정은) 성공하면 메인 페이지 띄우기.
@@ -219,6 +222,13 @@ function check_login(arg) {
         show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")
     }
 }
+//-------------------------------------------- 닉네임 변경 스크립트 ---------------------------------------------
+
+
+//1. ID를 받아온다
+//2. ID를 DB에서 찾아, 해당 닉네임을 찾는다. (함수 사용)
+//3. 닉네임을 변수에 저장한다
+//4. 닉네임변수를 document.getElementById('show_nickname').value 로 출력한다
 
 // --------------------------------------------- 회원 가입 화면 스크립트 ------------------------------------------
 var not_duplicated = false;
@@ -367,8 +377,3 @@ document.getElementById("register").addEventListener("submit", async (event) => 
         ipcRenderer.send('addNewUser', param);
     }
 });
-
-// ------------------------ 전송받은 ID에 해당하는 닉네임을 DB에서 찾기 -----------------------
-
-let sql = "SELECT nickname "
-var nk_name;
