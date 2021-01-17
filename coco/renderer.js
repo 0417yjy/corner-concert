@@ -23,6 +23,7 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
         case "login":
             check_login(param);
             break;
+
     }
 })
 
@@ -130,7 +131,27 @@ function change_display_to(id) {
 
     // 선택한 div만 표시하기
     $('#' + id).show();
+
 }
+
+//--------------------------------------------- 프로필 사진 선택 스크립트 ------------------------------------------
+
+document.getElementById("profile_img").addEventListener("click", async (event) => {
+    show_modal(modal_type.TEXT_INPUT, '프로필 변경', '변경할 사진의 src');
+    
+    document.getElementById("ti_modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#text-input-modal').modal('hide');
+        const inserted_src = document.getElementById("ti_modal_input").value;
+        var img1 = document.getElementById("profile_img");
+        img1.src = inserted_src;
+
+        $(this).dialog("close");
+        change_display_to('main-page');
+    })
+    
+});
+
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
 var user_data = {
@@ -158,6 +179,7 @@ document.getElementById('non_member_login').addEventListener("click", async (eve
             email: null,
             bio: null
         });
+        document.getElementById('ti_modal_input').value = null;
     });
 });
 
@@ -187,6 +209,7 @@ function check_login(arg) {
         `);
 
         change_display_to('main-page'); 
+
         //(정은) 성공하면 메인 페이지 띄우기.
 
     } else {
@@ -342,3 +365,8 @@ document.getElementById("register").addEventListener("submit", async (event) => 
         ipcRenderer.send('addNewUser', param);
     }
 });
+
+// ------------------------ 전송받은 ID에 해당하는 닉네임을 DB에서 찾기 -----------------------
+
+let sql = "SELECT nickname "
+var nk_name;
