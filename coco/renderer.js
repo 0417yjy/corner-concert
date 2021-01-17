@@ -1,7 +1,7 @@
 const ipcRenderer = require('electron').ipcRenderer;
 
-// check if database is ready
-ipcRenderer.send('db_connect', {});
+// check if server is ready
+ipcRenderer.send('checkServer', {});
 
 // IPC 함수 호출문
 ipcRenderer.on('callFunction', function (event, functionName, param) {
@@ -167,7 +167,11 @@ document.getElementById("login").addEventListener("submit", async (event) => {
     const id_input = document.getElementById('login_id').value;
     const pw_input = document.getElementById('login_pw').value;
     // 로그인 시도
-    const param = new Array(id_input, pw_input);
+    // const param = new Array(id_input, pw_input);
+    const param = {
+        id: id_input,
+        pw: pw_input
+    }
     ipcRenderer.send('tryLogin', param);
 });
 
