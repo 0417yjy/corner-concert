@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CoCo</title>
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+    <script src="https://kit.fontawesome.com/da03029145.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- jquery 슬라이더 -->
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+    <script src="jquery-ui-slider-pips.js"></script>
+    <link rel="stylesheet" href="jquery-ui-slider-pips.css">
+
+    <link rel="stylesheet" href="coco-style.css">
+    <link rel="stylesheet" href="room_style.css">
+</head>
+
+<body>
+    <header id="titlebar">
+        <div id="drag-region">
+            <!-- 앱 제목 -->
+            <div id="window-title">
+                <img src="icons/icon.svg" height="20">
+                <span style="margin-left: 5px;">CoCo</span>
+            </div>
+
+            <!-- 윈도우 제어 버튼 (최소화, 최대화, 창 닫기) -->
+            <div id="window-controls">
+
+                <div class="button" id="min-button">
+                    <img class="icon"
+                        srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="max-button">
+                    <img class="icon"
+                        srcset="icons/max-w-10.png 1x, icons/max-w-12.png 1.25x, icons/max-w-15.png 1.5x, icons/max-w-15.png 1.75x, icons/max-w-20.png 2x, icons/max-w-20.png 2.25x, icons/max-w-24.png 2.5x, icons/max-w-30.png 3x, icons/max-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="restore-button">
+                    <img class="icon"
+                        srcset="icons/restore-w-10.png 1x, icons/restore-w-12.png 1.25x, icons/restore-w-15.png 1.5x, icons/restore-w-15.png 1.75x, icons/restore-w-20.png 2x, icons/restore-w-20.png 2.25x, icons/restore-w-24.png 2.5x, icons/restore-w-30.png 3x, icons/restore-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+                <div class="button" id="close-button">
+                    <img class="icon"
+                        srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid p-0" id="main">
+        <div class="row" id="main_area">
+            <div class="col-9 p-0" id="room_area">
+                <div class="d-flex-column" id="content">
+                    <nav class="navbar col-12 justify-content-between" id="room-control">
+                        <div class="icon-group mx-3">
+                            <span class="icon mx-2">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </span>
+                            <span class="icon mx-2">
+                                <i class="fas fa-cog"></i>
+                            </span>
+                        </div>
+                        <div class="icon-group">
+                            <span class="icon mx-2">
+                                <i class="fas fa-microphone"></i>
+                            </span>
+                            <span class="icon mx-2">
+                                <i class="fas fa-video"></i>
+                            </span>
+                        </div>
+                        <div class="icon-group">
+                            <span class="icon mx-2">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="icon mx-2" id="side_bar_btn" style="color: var(--primary)">
+                                <i class="fas fa-bars"></i>
+                            </span>
+                        </div>
+                    </nav>
+                    <div class="col-12 container-fluid p-0" id="video_container"></div>
+                </div>
+                <div class="d-flex-column" id="track">
+                    <nav class="navbar py-0 pr-0" id="concert-control">
+                        <div class="icon-group">
+                            <span class="icon mx-1">
+                                <i class="fas fa-play"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-pause"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-stop"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-step-backward"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-step-forward"></i>
+                            </span>
+                        </div>
+                        <div class="flex-grow-1" style="text-align: center;">
+                            <span class="icon mx-1" style="color: red;">
+                                <i class="fas fa-circle"></i>
+                            </span>
+                            <span class="icon mx-1">
+                                <i class="fas fa-download"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex" id="metronome">
+                            <!-- 메트로놈 컴포넌트 -->
+                            <div id="bpm-selector" class="mx-2 py-1">
+                                <span class="icon mx-1" id="bpm-down">
+                                    <i style="font-size: 20pt" class="fas fa-caret-square-left"></i>
+                                </span>
+                                <input type="text" class="px-1" id="bpm-indicator" value="120"
+                                    onkeypress="check_num_only();">
+                                <small style="font-weight: bold;">bpm</small>
+                                <span class="icon mx-1" id="bpm-up">
+                                    <i style="font-size: 20pt" class="fas fa-caret-square-right"></i>
+                                </span>
+                            </div>
+                            <div id="beat-selector" class="mx-3">
+                                <select class="my-2" name="beat" style="vertical-align: middle;">
+                                    <option value="beat1">beat 1</option>
+                                </select>
+                            </div>
+                            <div id="volume-controller" class="mx-1">
+                                <div id="metro-volume-slider" class="mx-1"></div>
+                                <input type="text" id="metro-volume-indicator" value="50%" readonly>
+                            </div>
+                            <div id="metronome-switch" class="mx-2 py-1">
+                                <button class="btn btn-secondary my-1" id="metronome-switch-btn">off</button>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="d-flex-column-reverse border" id="track_container">
+                        <div class="track_row justify-content-center" id="add_track_btn_row">
+                            <button class="btn btn-primary m-1 py-0 px-1" style="font-weight: bolder;">+ add track</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 border d-flex-column p-0" id="side_bar">
+                <div class="border p-3" id="participant_area">
+                    <div class="white_area p-3"></div>
+                </div>
+                <div class="border p-3" id="chatting_area">
+                    <div class="white_area p-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="windowcontrol.js"></script>
+    <script src="room.js"></script>
+</body>
+
+</html>

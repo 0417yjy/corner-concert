@@ -1,0 +1,142 @@
+@font-face {
+    font-family: Digital-7;
+    src: url(fonts/digital-7.ttf);
+}
+
+#content {
+    height: 60%;
+}
+
+#track {
+    height: 40%
+}
+
+#video_container {
+    background-color: white;
+    min-height: calc(100% - 40px);
+}
+
+#track_container {
+    display: flex;
+    background-color: rgb(224, 200, 191);
+    height: calc(100% - 40px);
+}
+
+.navbar#room-control {
+    background-color: rgb(224, 200, 191);
+    height: 40px;
+}
+
+.navbar#concert-control {
+    background-color: rgb(192, 168, 159);
+    height: 40px;
+}
+
+#main_area {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#side_bar {
+    height: 100%;
+    width: 90%;
+}
+
+#participant_area {
+    height: 40%
+}
+
+#chatting_area {
+    height: 60%
+}
+
+.white_area {
+    background-color: white;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.icon {
+    /* font-size: 20px; */
+    color: #4c3322;
+}
+
+.icon :hover {
+    filter: brightness(30%);
+}
+
+.icon :active {
+    filter: brightness(55%);
+}
+
+#bpm-indicator {
+    font-family: Digital-7;
+    font-size: 24pt;
+    height: 24pt;
+    width: 44px;
+    border-radius: 7px;
+}
+
+#metro-volume-indicator {
+    text-align: center;
+    width: 44px;
+    border-radius: 7px;
+}
+
+#metro-volume-slider {
+    display: inline-block;
+    width: 100px;
+    height: 2px;
+    border-radius: 0px;
+    background: #5c2506;
+    border: none;
+    top: 18px;
+}
+
+#metro-volume-slider .ui-slider-range {
+    background: #5c2506;
+    height: 4px;
+    top: -1px;
+    transition: all 0.2s ease-out; }
+
+.ui-slider-pips .ui-slider-line {
+    background: #5c2506;
+}
+
+#metro-volume-slider .ui-slider-pip {
+    top: 0; }
+
+#metro-volume-slider .ui-slider-pip .ui-slider-line {
+    height: 4px; }
+
+#metro-volume-slider .ui-slider-pip:nth-of-type(20n+2) .ui-slider-line {
+    top: -6px;
+    height: 17px;
+}
+
+#metro-volume-slider .ui-slider-handle {
+    top: -0.5em;
+    margin-left: -0.15em;
+    width: 0.3em;
+ }
+
+ #metro-volume-slider .ui-state-default {
+    border: none;
+    background: #96e326;
+ }
+
+ #metronome-switch-btn {
+     display: inline;
+     vertical-align: middle;
+     padding: 0 .3rem;
+ }
+
+ .track_row {
+     width: 100%;
+     height: 32px;
+ }
+
+ #add_track_btn_row {
+     text-align: center;
+ }

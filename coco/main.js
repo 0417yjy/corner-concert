@@ -144,6 +144,7 @@ ipcMain.on('addNewUser', (event, args) => {
 /* ---------------------------- IPC 함수 끝 ---------------------------*/
 
 let mainWindow;
+let roomWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -164,7 +165,32 @@ function createWindow() {
   });
 }
 
+function createRoom() {
+  roomWindow = new BrowserWindow({
+    parent: mainWindow,
+    show: false,
+    minWidth: 900,
+    minHeight: 300,
+    frame: false, // 메뉴 삭제
+    backgroundColor: '#FFF', // subpixel anti-aliasing enabled (https://github.com/electron/electron/issues/6344#issuecomment-420371918)
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+    }
+  })
+  roomWindow.maximize(); // 켤 때 최대화
+  roomWindow.show();
+  
+  roomWindow.loadFile('room.html');
+
+  roomWindow.on('closed', () => {
+    roomWindow = null;
+  });
+}
+
+
 app.whenReady().then(createWindow)
+// app.whenReady().then(createRoom)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
