@@ -190,7 +190,7 @@ function createRoom() {
 
 
 app.whenReady().then(createWindow)
-app.whenReady().then(createRoom)
+// app.whenReady().then(createRoom)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
