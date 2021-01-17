@@ -17,10 +17,20 @@ $("#metro-volume-slider").slider({
     last: "pip"
 })
 
-
+//사이드바 숨김버튼
 $("#side_bar_btn").off("click").on('click', function () {
     $("#side_bar").toggle();
     $("#room_area").toggleClass("col-9");
     $("#room_area").toggleClass("col-12");
 });
 
+//bpm 조절버튼
+$("#bpm-down").off('click').on('click',function(){
+    let bpm_value=$("#bpm-indicator").val();
+    $("#bpm-indicator").val(Number(bpm_value)-1);
+});
+
+$("#bpm-up").off().on('click', function () {
+    let bpm_value = $("#bpm-indicator").val();
+    $("#bpm-indicator").val(Number(bpm_value)+1);
+});
