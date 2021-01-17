@@ -1,5 +1,20 @@
+/*
+ * File: netutils.js
+ * Project: corner-concert
+ * File Created: Sunday, 17th January 2021 1:57:47 am
+ * Author: Jongyeon Yoon (0417yjy@naver.com)
+ * Desc: HTTP 요청 생성, 문자 암호화 등 서버와 의사소통할 때 유용한 기능들을 제공하는 함수들
+ * -----
+ * Last Modified: Monday, 18th January 2021 3:34:20 am
+ * Modified By: Jongyeon Yoon (0417yjy@naver.com>)
+ * -----
+ * Copyright 2021 Jongyeon Yoon
+ */
+
+
 const { net } = require('electron');
 const config = require('./webinfo');
+const crypto = require('crypto');
 
 // web server variables
 const host = config.testsvr.host; // for debug use only
@@ -45,6 +60,10 @@ module.exports = function () {
             request.setHeader('content-type', 'application/json'); 
             request.write(body, 'utf-8');
             return request;
+        },
+
+        hash: function (str) {
+            return crypto.createHash('sha512').update(str).digest('base64');
         }
     }
 }
