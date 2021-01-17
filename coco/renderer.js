@@ -138,10 +138,12 @@ function change_display_to(id) {
 
 document.getElementById("profile_img").addEventListener("click", async (event) => {
     show_modal(modal_type.TEXT_INPUT, '프로필 변경', '변경할 사진의 src');
+    document.getElementById('ti_modal_input').value = null;
     
     document.getElementById("ti_modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
         $('#text-input-modal').modal('hide');
+
         const inserted_src = document.getElementById("ti_modal_input").value;
         var img1 = document.getElementById("profile_img");
         img1.src = inserted_src;
@@ -179,7 +181,6 @@ document.getElementById('non_member_login').addEventListener("click", async (eve
             email: null,
             bio: null
         });
-        document.getElementById('ti_modal_input').value = null;
     });
 });
 
@@ -201,13 +202,14 @@ function check_login(arg) {
         user_data.email = arg.email;
         user_data.bio = arg.bio;
 
+        /*
         show_modal(modal_type.OK, "로그인 성공!", `
         ID: ` + user_data.id + ` <br>
         닉네임: ` + user_data.nickname + ` <br>
         이메일: ` + user_data.email + ` <br>
         상태메시지: ` + user_data.bio + ` <br>
         `);
-
+        */
         change_display_to('main-page'); 
 
         //(정은) 성공하면 메인 페이지 띄우기.
