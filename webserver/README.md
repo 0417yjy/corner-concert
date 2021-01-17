@@ -1,4 +1,6 @@
 # Node.js 기반 웹 서버
+## HTTP 상태 코드
+[위키](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)
 
 ## 서버 측 명령어
 * 도커 이미지 생성
