@@ -75,10 +75,10 @@ router.post('/register/confirmveri/', function (req, res, next) {
     let sql = "SELECT GET_VERIFICATION_CODE(?) as code";
     db.execute(sql, args[0], (err, results) => {
         // console.log(results);
+        let body = {
+            success: false
+        };
         if (results) {
-            let body = {
-                success: false
-            };
             if (args[1] == results[0].code) {
                 // 코드가 일치하는 경우
                 body.success = true;
@@ -96,5 +96,23 @@ router.post('/register/confirmveri/', function (req, res, next) {
         }
     });
 });
+
+router.get('/register/checkdup/:loginid', function (req, res, next) {
+    const args = req.params.loginid;
+    let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
+    db.execute(sql, args, (err, results) => {
+        let body = {
+            success: false
+        };
+        if (results[0].res == 1) {
+            // 중복되는 경우
+            res.send(body);
+        } else {
+            // 중복되는 것이 없는 경우
+            body.success = true;
+            res.send(body);
+        }
+    });
+})
 
 module.exports = router;
