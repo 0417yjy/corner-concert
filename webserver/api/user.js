@@ -3,25 +3,24 @@ var router = express.Router();
 const config = require('../info');
 const nodemailer = require('nodemailer');
 var db = require('../dbconn')();
-
 // init nodemailer service
 var transporter = nodemailer.createTransport(config.mail);
 
-router.get('/:userid', function (req, res, next) {
-
-});
-
 router.post('/register', function (req, res, next) {
-
+    const args = new Array(req.body.nickname, req.body.id, req.body.email, req.body.pw)
 
     let sql = "INSERT INTO user(nickname, login_id, email, bio, pw) VALUES (?, ?, ?, NULL, SHA2(?, 256))";
     db.execute(sql, args, (err, results) => {
+        let body = {
+            success: false
+        }
         if (err) {
             console.log("[ERROR] Register failed during executing sql state: " + results);
-            win.webContents.send("callFunction", "register", false);
+            res.send(body);
         } else {
             // console.log(results);
-            win.webContents.send("callFunction", "register", true);
+            body.success = true;
+            res.send(body);
         }
     });
 });
