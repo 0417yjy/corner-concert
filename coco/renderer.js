@@ -1,7 +1,7 @@
 const ipcRenderer = require('electron').ipcRenderer;
 
-// check if database is ready
-ipcRenderer.send('db_connect', {});
+// check if server is ready
+ipcRenderer.send('checkServer', {});
 
 // IPC 함수 호출문
 ipcRenderer.on('callFunction', function (event, functionName, param) {
@@ -111,7 +111,11 @@ document.getElementById("login").addEventListener("submit", async (event) => {
     const id_input = document.getElementById('login_id').value;
     const pw_input = document.getElementById('login_pw').value;
     // 로그인 시도
-    const param = new Array(id_input, pw_input);
+    // const param = new Array(id_input, pw_input);
+    const param = {
+        id: id_input,
+        pw: pw_input
+    }
     ipcRenderer.send('tryLogin', param);
 });
 
@@ -248,9 +252,13 @@ document.getElementById("confirm_veri").addEventListener("click", async (event) 
     event.preventDefault();
     const email = document.getElementById("email").value;
     const code = document.getElementById("verification_code").value;
+    const param = {
+        email: email,
+        code: code
+    }
 
     if (code) {
-        ipcRenderer.send('confirmveri', [email, code]);
+        ipcRenderer.send('confirmveri', param);
     } else {
         // alert("인증코드를 입력해주세요.");
         set_valid(valid_mode.INVALID, 'verification_code', 'confirm_veri', '확인', 'id-veri-invalid-feedback', '인증코드를 입력해주세요.');
@@ -279,7 +287,12 @@ document.getElementById("register").addEventListener("submit", async (event) => 
         const nickname = document.getElementById("nickname").value;
         const email = document.getElementById("email").value;
 
-        let param = new Array(nickname, id, email, pw);
+        let param = {
+            id: id,
+            nickname: nickname,
+            email: email,
+            pw: pw
+        }
         ipcRenderer.send('addNewUser', param);
     }
 });

@@ -1,5 +1,6 @@
 # npm modules
 coco/node_modules/*
+webserver/node_modules/*
 
 # exclude bootstrap css
 !coco/node_modules/bootstrap/
@@ -12,3 +13,4 @@ coco/node_modules/bootstrap/dist/css/*
 
 # info contents
 info.js
+webinfo.js
