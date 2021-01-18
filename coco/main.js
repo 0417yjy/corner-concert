@@ -27,48 +27,20 @@ ipcMain.on('tryLogin', (event, args) => {
 });
 
 ipcMain.on('sendveri', (event, args) => {
-  // console.log(arg);
+  const body = JSON.stringify({ email: args });
 
-  // 코드 생성
-  let sql = "CALL MAKE_VERIFICATION_CODE(?)";
-  db.execute(connection, sql, args, (err, results) => {
-    // console.log(results);
-  });
-
-  // 코드 이메일로 전송
-  sql = "SELECT GET_VERIFICATION_CODE(?) as code";
-  db.execute(connection, sql, args, (err, results) => {
-    // console.log(results);
-    if (results) {
-      transporter.sendMail({
-        from: "'CoCo Team' <coco-dev@naver.com>",
-        to: args,
-        subject: '[CoCo] 인증번호 입력',
-        html: `
-          <h3>CoCo에 오신 걸 환영합니다.</h3>
-          <p>
-            다음 인증코드를 해당 란에 입력하십시오: <br><br>
-
-            ` + results[0].code + ` <br><br>
-
-            '확인' 버튼을 눌러 인증을 완료 후 '회원가입' 버튼을 누르면 정상적으로 계정이 생성됩니다. <br><br>
-
-            CoCo 팀 드림
-          </p>
-        `,
-      }, function (err, info) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Message sent to: %s', info.messageId);
-        }
-      });
-    }
-    else {
-      // results가 없는 경우
-      console.log('No results');
-    }
-  });
+  const request = coco_net.make_http_put_request('/user/register/sendveri', body);
+  request.on('response', (response) => {
+    console.log(`STATUS: ${response.statusCode}`); 
+        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+        response.on('data', (chunk) => { 
+          console.log(`BODY: ${chunk}`);
+        }); 
+  })
+  request.on('error', (error) => {
+    console.log(`ERROR: ${JSON.stringify(error)}`) 
+  })
+  request.end();
 })
 
 ipcMain.on('confirmveri', (event, args) => {
