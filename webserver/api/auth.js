@@ -1,9 +1,6 @@
 const express  = require('express');
 const router = express.Router();
-
 var db = require('../dbconn')();
-var connection = db.init();
-db.open(connection);
 
 router.get('/', (req, res) => {
     console.log('Got request');
@@ -12,10 +9,10 @@ router.get('/', (req, res) => {
 
 router.post('/login', (req, res) => {
     const args = new Array(req.body.id, req.body.pw);
-    console.log(args);
+    // console.log(args);
     
     let sql = "CALL TRY_LOGIN(?, ?)";
-    db.execute(connection, sql, args, (err, results) => {
+    db.execute(sql, args, (err, results) => {
         //console.log(results);
         var user_data = {
             success: false,

@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express()
 const bodyParser = require('body-parser');
-const config = require('./info');
-const nodemailer = require('nodemailer');
+var db = require('./dbconn')();
 
-// init nodemailer service
-var transporter = nodemailer.createTransport(config.mail);
+// init db connection
+db.init();
+db.open();
 
 // Other settings
 app.use(bodyParser.json());
