@@ -28,7 +28,6 @@ ipcMain.on('tryLogin', (event, args) => {
 
 ipcMain.on('sendveri', (event, args) => {
   const body = JSON.stringify({ email: args });
-
   const request = coco_net.make_http_put_request('/user/register/sendveri', body);
   request.on('response', (response) => {
     console.log(`STATUS: ${response.statusCode}`); 
@@ -45,25 +44,27 @@ ipcMain.on('sendveri', (event, args) => {
 
 ipcMain.on('confirmveri', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
-  let sql = "SELECT GET_VERIFICATION_CODE(?) as code";
-  db.execute(connection, sql, args[0], (err, results) => {
-    // console.log(results);
-    if (results) {
-      if (args[1] == results[0].code) {
-        // 코드가 일치하는 경우
-        win.webContents.send("callFunction", "checkVerified", true);
-      } else {
-        // 코드가 불일치하는 경우
-        console.log('Not same');
-        win.webContents.send("callFunction", "checkVerified", false);
-      }
-    }
-    else {
-      // results가 없는 경우
-      console.log('No results');
-      win.webContents.send("callFunction", "checkVerified", false);
-    }
-  });
+
+  const body = JSON.stringify(args);
+  const request = coco_net.make_http_post_request('/user/register/confirmveri/', body);
+  request.on('response', (response) => {
+    console.log(`STATUS: ${response.statusCode}`); 
+        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+        response.on('data', (chunk) => { 
+          // console.log(`BODY: ${chunk}`);
+          let obj = JSON.parse(chunk);
+          if (obj.success) {
+            win.webContents.send("callFunction", "checkVerified", true);
+          } else {
+            win.webContents.send("callFunction", "checkVerified", false);
+          }
+        }); 
+  })
+  request.on('error', (error) => {
+    // console.log(`ERROR: ${JSON.stringify(error)}`)
+    win.webContents.send("callFunction", "checkVerified", false);
+  })
+  request.end();
 })
 
 ipcMain.on('checkdup', (event, args) => {

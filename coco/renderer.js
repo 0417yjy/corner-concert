@@ -308,9 +308,13 @@ document.getElementById("confirm_veri").addEventListener("click", async (event) 
     event.preventDefault();
     const email = document.getElementById("email").value;
     const code = document.getElementById("verification_code").value;
+    const param = {
+        email: email,
+        code: code
+    }
 
     if (code) {
-        ipcRenderer.send('confirmveri', [email, code]);
+        ipcRenderer.send('confirmveri', param);
     } else {
         // alert("인증코드를 입력해주세요.");
         set_valid(valid_mode.INVALID, 'verification_code', 'confirm_veri', '확인', 'id-veri-invalid-feedback', '인증코드를 입력해주세요.');
