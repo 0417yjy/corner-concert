@@ -13,11 +13,11 @@ ipcMain.on('tryLogin', (event, args) => {
   const body = JSON.stringify(args);
   const request = coco_net.make_http_post_request('/auth/login', body);
   request.on('response', (response) => {
-    console.log(`STATUS: ${response.statusCode}`); 
+    // console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           // console.log(`BODY: ${chunk}`);
-          win.webContents.send("callFunction", "login", chunk);
+          win.webContents.send("callFunction", "login", JSON.parse(chunk));
         }); 
   })
   request.on('error', (error) => {
@@ -30,7 +30,7 @@ ipcMain.on('sendveri', (event, args) => {
   const body = JSON.stringify({ email: args });
   const request = coco_net.make_http_put_request('/user/register/sendveri', body);
   request.on('response', (response) => {
-    console.log(`STATUS: ${response.statusCode}`); 
+    //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           console.log(`BODY: ${chunk}`);
@@ -48,16 +48,12 @@ ipcMain.on('confirmveri', (event, args) => {
   const body = JSON.stringify(args);
   const request = coco_net.make_http_post_request('/user/register/confirmveri/', body);
   request.on('response', (response) => {
-    console.log(`STATUS: ${response.statusCode}`); 
+    //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           // console.log(`BODY: ${chunk}`);
           let obj = JSON.parse(chunk);
-          if (obj.success) {
-            win.webContents.send("callFunction", "checkVerified", true);
-          } else {
-            win.webContents.send("callFunction", "checkVerified", false);
-          }
+          win.webContents.send("callFunction", "checkVerified", obj.success);
         }); 
   })
   request.on('error', (error) => {
@@ -69,31 +65,44 @@ ipcMain.on('confirmveri', (event, args) => {
 
 ipcMain.on('checkdup', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
-  let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
-  db.execute(connection, sql, args, (err, results) => {
-    if (results[0].res == 1) {
-      // 중복되는 경우
-      win.webContents.send("callFunction", "checkDuplicate", false);
-    } else {
-      // 중복되는 것이 없는 경우
-      win.webContents.send("callFunction", "checkDuplicate", true);
-    }
-  });
+  const request = coco_net.make_http_get_request('/user/register/checkdup/' + args);
+  request.on('response', (response) => {
+    //console.log(`STATUS: ${response.statusCode}`); 
+        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+        response.on('data', (chunk) => { 
+          // console.log(`BODY: ${chunk}`);
+          let obj = JSON.parse(chunk);
+          win.webContents.send("callFunction", "checkDuplicate", obj.success);
+        }); 
+  })
+  request.on('error', (error) => {
+    // console.log(`ERROR: ${JSON.stringify(error)}`)
+    win.webContents.send("callFunction", "checkDuplicate", false);
+  })
+  request.end();
 });
 
 ipcMain.on('addNewUser', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
   // console.log('Add new user: ' + args);
-  let sql = "INSERT INTO user(nickname, login_id, email, bio, pw) VALUES (?, ?, ?, NULL, SHA2(?, 256))";
-  db.execute(connection, sql, args, (err, results) => {
-    if (err) {
-      console.log("[ERROR] Register failed during executing sql state: " + results);
-      win.webContents.send("callFunction", "register", false);
-    } else {
-      // console.log(results);
-      win.webContents.send("callFunction", "register", true);
-    }
-  });
+
+  args.pw = coco_net.hash(args.pw); // client-side encryption
+  const body = JSON.stringify(args);
+  const request = coco_net.make_http_post_request('/user/register', body);
+  request.on('response', (response) => {
+    //console.log(`STATUS: ${response.statusCode}`); 
+        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+        response.on('data', (chunk) => { 
+          // console.log(`BODY: ${chunk}`);
+          let obj = JSON.parse(chunk);
+          win.webContents.send("callFunction", "register", obj.success);
+        }); 
+  })
+  request.on('error', (error) => {
+    // console.log(`ERROR: ${JSON.stringify(error)}`)
+    win.webContents.send("callFunction", "register", false);
+  })
+  request.end();
 });
 /* ---------------------------- IPC 함수 끝 ---------------------------*/
 

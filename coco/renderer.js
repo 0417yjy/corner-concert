@@ -343,7 +343,12 @@ document.getElementById("register").addEventListener("submit", async (event) => 
         const nickname = document.getElementById("nickname").value;
         const email = document.getElementById("email").value;
 
-        let param = new Array(nickname, id, email, pw);
+        let param = {
+            id: id,
+            nickname: nickname,
+            email: email,
+            pw: pw
+        }
         ipcRenderer.send('addNewUser', param);
     }
 });
