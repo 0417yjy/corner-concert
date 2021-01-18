@@ -57,17 +57,44 @@ router.put('/register/sendveri', function (req, res, next) {
         `,
             }, function (err, info) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                 } else {
-                    console.log('Message sent to: %s', info.messageId);
+                    // console.log('Message sent to: %s', info.messageId);
                 }
             });
         }
         else {
             // results가 없는 경우
-            console.log('No results');
+            // console.log('No results');
         }
     });
-})
+});
+
+router.post('/register/confirmveri/', function (req, res, next) {
+    const args = new Array(req.body.email, req.body.code);
+    let sql = "SELECT GET_VERIFICATION_CODE(?) as code";
+    db.execute(sql, args[0], (err, results) => {
+        // console.log(results);
+        if (results) {
+            let body = {
+                success: false
+            };
+            if (args[1] == results[0].code) {
+                // 코드가 일치하는 경우
+                body.success = true;
+                res.send(body);
+            } else {
+                // 코드가 불일치하는 경우
+                // console.log('Not same');
+                res.send(body);
+            }
+        }
+        else {
+            // results가 없는 경우
+            // console.log('No results');
+            res.send(body);
+        }
+    });
+});
 
 module.exports = router;
