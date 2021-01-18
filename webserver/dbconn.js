@@ -1,13 +1,15 @@
 const mysql = require('mysql');
 const config = require('./info');
 
+var conn;
+
 module.exports = function () {
     return {
         init: function () {
-            return mysql.createConnection(config.db)
+            conn = mysql.createConnection(config.db);
         },
 
-        open: function (conn) {
+        open: function () {
             conn.connect(function (err, callback) {
                 if (err) {
                     console.log("[ERROR] Cannot connect to MySQL!: " + err);
@@ -17,14 +19,14 @@ module.exports = function () {
             })
         },
 
-        close: function (conn) {
+        close: function () {
             conn.end(function (err) {
                 if (err) conn.destroy();
                 console.log("[SUCCESS] Disconnected to MySQL.");
             })
         },
 
-        execute: function (conn, sql, args, callback) {
+        execute: function (sql, args, callback) {
             return conn.query(sql, args, (error, results, fields) => {
                 if (error) {
                     callback(true, error)
