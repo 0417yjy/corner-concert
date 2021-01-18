@@ -62,6 +62,19 @@ module.exports = function () {
             return request;
         },
 
+        make_http_put_request: function (arg_path, body) {
+            const request = net.request({
+                method: 'PUT',
+                protocol: 'http:',
+                hostname: host,
+                port: port,
+                path: arg_path
+            })
+            request.setHeader('content-type', 'application/json'); 
+            request.write(body, 'utf-8');
+            return request;
+        },
+
         hash: function (str) {
             return crypto.createHash('sha512').update(str).digest('base64');
         }
