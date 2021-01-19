@@ -83,16 +83,16 @@
             </div>
         </div>
     </div>
-    <!-- 텍스트 입력 모달 -->
-    <div class="modal fade" id="text-input-modal" tabindex="-1">
+    <!-- 폼 모달 -->
+    <div class="modal fade" id="form-modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal title</h5>
                 </div>
-                <form id="ti_modal_form">
+                <form id="modal_form">
                     <div class="modal-body">
-                        <input type="text" class="form-control" id="ti_modal_input" placeholder="">
+                        <!-- <input type="text" class="form-control" id="ti_modal_input" placeholder=""> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
@@ -128,7 +128,6 @@
             <h6 class="mb-4">CoCo는 언제나 새 뮤지션들을 환영해요.</h6>
             <form class="needs-validation" id="register" novalidate>
                 <div class="form-group row justify-content-start">
-                    <!-- <label class="form-label col-form-label col-3">사용할 계정 ID </label> -->
                     <input type="text" id="userid" class="col-6 form-control mx-3" placeholder="ID" required>
                     <button id="check_dup" class="btn btn-secondary btn-sm">중복 확인</button>
                     <div class="valid-feedback mx-3">
@@ -139,11 +138,9 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-start">
-                    <!-- <label class="form-label">사용할 비밀번호: </label> -->
                     <input type="password" id="usr_password" class="col-6 form-control mx-3" placeholder="비밀번호">
                 </div>
                 <div class="form-group row justify-content-start">
-                    <!-- <label class="form-label">비밀번호 확인: </label> -->
                     <input type="password" id="usr_password_confirm" class="col-6 form-control mx-3"
                         placeholder="비밀번호 확인">
                     <div class="invalid-feedback mx-3">
@@ -151,11 +148,9 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-start">
-                    <!-- <label class="form-label">닉네임: </label> -->
                     <input type="text" id="nickname" class="col-6 form-control mx-3" placeholder="닉네임">
                 </div>
                 <div class="form-group row justify-content-start">
-                    <!-- <label class="form-label">확인용 이메일: </label> -->
                     <input type="email" id="email" class="col-6 form-control mx-3" placeholder="이메일">
                     <button id="send_veri" class="btn btn-secondary btn-sm">인증코드 전송</button>
                     <div class="valid-feedback mx-3">
@@ -166,7 +161,6 @@
                     </div>
                 </div>
                 <div class="form-group row justify-content-start">
-                    <!-- <label class="form-label">인증코드: </label> -->
                     <input type="text" id="verification_code" class="col-6 form-control mx-3" placeholder="인증코드">
                     <button id="confirm_veri" class="btn btn-secondary btn-sm">확인</button>
                     <div class="valid-feedback mx-3">
