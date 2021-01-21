@@ -170,6 +170,6 @@ p {
     overflow-y: auto;
 }
 
-#login-page, #register-page {
+#login-page, #register-page, #main-page {
     display: none;
 }
