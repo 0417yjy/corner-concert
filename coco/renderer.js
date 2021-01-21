@@ -72,7 +72,7 @@ function show_modal(mode, modal_header, modal_body) {
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
-const div_ids = ['login-page', 'register-page'];
+const div_ids = ['login-page', 'register-page', 'main-page'];
 function change_display_to(id) {
     // 모든 div 숨기기
     for (let i = 0; i < div_ids.length; i++) {
@@ -146,6 +146,10 @@ function check_login(arg) {
         이메일: ` + user_data.email + ` <br>
         상태메시지: ` + user_data.bio + ` <br>
         `);
+
+        var nkname = user_data.nickname;
+        document.getElementById("show_nickname").innerHTML = nkname;
+        change_display_to('main-page');
     } else {
         // 로그인 실패
         show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")
