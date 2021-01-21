@@ -36,7 +36,7 @@ function check_dbconnect(param) {
 }
 
 // --------------------------------------------- 모달 스크립트 ----------------------------------------------
-const modal_type = Object.freeze({ YESNO: 0, OK: 1, TEXT_INPUT: 2 });
+const modal_type = Object.freeze({ YESNO: 0, OK: 1, FORM: 2 });
 function show_modal(mode, modal_header, modal_body) {
     let modal;
 
@@ -48,15 +48,21 @@ function show_modal(mode, modal_header, modal_body) {
         case modal_type.OK:
             modal = document.getElementById('ok-modal');
             break;
-        case modal_type.TEXT_INPUT:
-            modal = document.getElementById('text-input-modal');
+        case modal_type.FORM:
+            modal = document.getElementById('form-modal');
             break;
     }
 
     // 모달 내용 변경
     modal.querySelector('.modal-title').innerHTML = modal_header;
-    if (mode == modal_type.TEXT_INPUT) {
-        modal.querySelector('#ti_modal_input').setAttribute('placeholder', modal_body);
+    if (mode == modal_type.FORM) {
+        // modal.querySelector('#ti_modal_input').setAttribute('placeholder', modal_body);
+        if (modal_body.html) {
+            // contents에서 직접 html을 명시한 경우
+            modal.querySelector('.modal-body').innerHTML = modal_body.contents;
+        } else {
+            // contents에서 form input 객체들의 리스트를 넘겨준 경우 (미구현)
+        }
     } else {
         modal.querySelector('.modal-body').innerHTML = modal_body;
     }
@@ -90,11 +96,17 @@ document.getElementById('goto_register').addEventListener("click", async (event)
 });
 
 document.getElementById('non_member_login').addEventListener("click", async (event) => {
-    show_modal(modal_type.TEXT_INPUT, '비회원 로그인', '사용할 닉네임');
-    document.getElementById("ti_modal_form").addEventListener("submit", async (event) => {
+    const modal_body = {
+        html: true,
+        contents: `
+        <input type="text" class="form-control" id="nonmember_nickname" placeholder="">
+        `
+    }
+    show_modal(modal_type.FORM, '비회원 로그인', modal_body);
+    document.getElementById("modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
-        $('#text-input-modal').modal('hide');
-        const inserted_nickname = document.getElementById('ti_modal_input').value;
+        $('#form-modal').modal('hide');
+        const inserted_nickname = document.getElementById('nonmember_nickname').value;
         check_login({
             success: true,
             mode: 2,
