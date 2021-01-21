@@ -105,7 +105,7 @@ document.getElementById('non_member_login').addEventListener("click", async (eve
     show_modal(modal_type.FORM, '비회원 로그인', modal_body);
     document.getElementById("modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
-        $('#text-input-modal').modal('hide');
+        $('#form-modal').modal('hide');
         const inserted_nickname = document.getElementById('nonmember_nickname').value;
         check_login({
             success: true,
