@@ -140,13 +140,15 @@ function check_login(arg) {
         user_data.email = arg.email;
         user_data.bio = arg.bio;
 
+        /*
         show_modal(modal_type.OK, "로그인 성공!", `
         ID: ` + user_data.id + ` <br>
         닉네임: ` + user_data.nickname + ` <br>
         이메일: ` + user_data.email + ` <br>
         상태메시지: ` + user_data.bio + ` <br>
         `);
-
+        */
+       
         var nkname = user_data.nickname;
         document.getElementById("show_nickname").innerHTML = nkname;
         change_display_to('main-page');
