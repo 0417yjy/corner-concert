@@ -148,6 +148,7 @@ function check_login(arg) {
         user_data.email = arg.user_data.email;
         user_data.bio = arg.user_data.bio;
 
+        /*
         show_modal(modal_type.OK, "로그인 성공!", `
         토큰: ` + token + ` <br>
         ID: ` + user_data.id + ` <br>
@@ -155,7 +156,8 @@ function check_login(arg) {
         이메일: ` + user_data.email + ` <br>
         상태메시지: ` + user_data.bio + ` <br>
         `);
-
+        */
+       
         var nkname = user_data.nickname;
         document.getElementById("show_nickname").innerHTML = nkname;
         change_display_to('main-page');
