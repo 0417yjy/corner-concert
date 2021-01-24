@@ -24,6 +24,9 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
         case "login":
             check_login(param);
             break;
+        default:
+            console.log(functionName + 'is not implemented!');
+            break;
     }
 })
 
@@ -84,13 +87,15 @@ function change_display_to(id) {
 }
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
-var user_data = {
-    mode: null, // 회원은 1, 비회원은 2
-    id: null,
-    nickname: null,
-    email: null,
-    bio: null
-}
+// var user_data = {
+//     mode: null, // 회원은 1, 비회원은 2
+//     id: null,
+//     nickname: null,
+//     email: null,
+//     bio: null
+// }
+var token = "";
+
 document.getElementById('goto_register').addEventListener("click", async (event) => {
     change_display_to('register-page');
 });
@@ -132,20 +137,19 @@ document.getElementById("login").addEventListener("submit", async (event) => {
 });
 
 function check_login(arg) {
+    // console.log(arg);
+    console.log(arg.message);
+
     if (arg.success) {
         // 로그인 성공
-        user_data.mode = 1;
-        user_data.id = arg.id;
-        user_data.nickname = arg.nickname;
-        user_data.email = arg.email;
-        user_data.bio = arg.bio;
+        token = arg.token;
 
-        show_modal(modal_type.OK, "로그인 성공!", `
-        ID: ` + user_data.id + ` <br>
-        닉네임: ` + user_data.nickname + ` <br>
-        이메일: ` + user_data.email + ` <br>
-        상태메시지: ` + user_data.bio + ` <br>
-        `);
+        // show_modal(modal_type.OK, "로그인 성공!", `
+        // ID: ` + user_data.id + ` <br>
+        // 닉네임: ` + user_data.nickname + ` <br>
+        // 이메일: ` + user_data.email + ` <br>
+        // 상태메시지: ` + user_data.bio + ` <br>
+        // `);
     } else {
         // 로그인 실패
         show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")

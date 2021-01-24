@@ -13,16 +13,44 @@ ipcMain.on('tryLogin', (event, args) => {
   const body = JSON.stringify(args);
   const request = coco_net.make_http_post_request('/auth/login', body);
   request.on('response', (response) => {
-    // console.log(`STATUS: ${response.statusCode}`); 
-        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
-        response.on('data', (chunk) => { 
-          // console.log(`BODY: ${chunk}`);
-          win.webContents.send("callFunction", "login", JSON.parse(chunk));
-        }); 
-  })
+    // console.log(`STATUS: ${response.statusCode}`);
+    // console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
+    // response.on('data', (chunk) => {
+    //   console.log(`BODY: ${chunk}`);
+    //   win.webContents.send("callFunction", "login", JSON.parse(chunk));
+    // });
+    switch (response.statusCode) {
+      case 200:
+        // 로그인 성공
+        response.on('data', (chunk) => {
+          chunk = JSON.parse(chunk);
+          chunk.success = true;
+          win.webContents.send("callFunction", "login", chunk);
+        });
+        break;
+      case 403:
+        // 로그인 실패
+        response.on('data', (chunk) => {
+          chunk = JSON.parse(chunk);
+          chunk.success = false;
+          win.webContents.send("callFunction", "login", chunk);
+        });
+        break;
+      default:
+        // 서버 오류
+        response.on('data', (chunk) => {
+          chunk = JSON.parse(chunk);
+          chunk.success = false;
+          win.webContents.send("callFunction", "login", chunk);
+        });
+        break;
+    }
+  });
+
   request.on('error', (error) => {
-    console.log(`ERROR: ${JSON.stringify(error)}`) 
-  })
+    console.log(`ERROR: ${JSON.stringify(error)}`)
+  });
+
   request.end();
 });
 
