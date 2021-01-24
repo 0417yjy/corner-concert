@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 var db = require('./dbconn')();
+require('dotenv').config(); 
 
 // init db connection
 db.init();
