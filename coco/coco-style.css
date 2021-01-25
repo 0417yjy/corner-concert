@@ -180,6 +180,6 @@ p {
     position:fixed;
     left:0px;
     top:0px;
-    background:rgba(255, 255, 255, 0.479);
+    background: #bdee8f;
     z-index:1000; 
 }
