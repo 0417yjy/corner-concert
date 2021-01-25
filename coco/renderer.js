@@ -342,8 +342,8 @@ document.getElementById('create_room').addEventListener("click", async (event) =
         </p>
 
         <p> 권한 부여 &nbsp; &nbsp; &nbsp;
-        <label><input type="checkbox" value="entire"> 전체</label>
-        <label><input type="checkbox" value="record"> 녹음</label>
+        <!-- <label><input type="checkbox" value="entire"> 전체</label>
+        <label><input type="checkbox" value="record"> 녹음</label> -->
         </p>
         `
     }
@@ -373,3 +373,10 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
     });
 });
 
+// --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
+$(function () {
+    $('#btn-upload').click(function (e) {
+        e.preventDefault();
+        $('#file').click();
+    });
+});
