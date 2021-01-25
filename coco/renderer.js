@@ -149,6 +149,7 @@ function check_login(arg) {
         user_data.bio = arg.user_data.bio;
 
         show_modal(modal_type.OK, "로그인 성공!", `
+        토큰: ` + token + ` <br>
         ID: ` + user_data.id + ` <br>
         닉네임: ` + user_data.nickname + ` <br>
         이메일: ` + user_data.email + ` <br>
