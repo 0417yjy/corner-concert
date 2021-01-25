@@ -177,11 +177,10 @@
         <div id="main-page" class="container-fluid">
 
             <form class="form-main" id="main-profile">
-                <button type="button" class="btn btnEvent" style="display: block; margin: auto;">
-                <img class="logo my-2 mx-auto" src="icons/user_logo.png" alt="" height="180" width="180"/>
-                </button>
-            <div class = "nickname" id="show_id" style="margin-top: 10px; margin-bottom: 50px;">
-            <h1 id = "show_nickname" class = "text-center" style="font-weight: bold; color: black;">
+            <img class="logo my-2 mx-auto" src="icons/user_logo.png" alt="" height="180" width="180" style="margin: auto; "/>
+
+            <div class = "nickname" id="show_id" style="text-align: center; margin-top: 30px; margin-bottom: 50px;">
+            <h1 id="show_nickname" >
                 Name
             </h1>
             </div>
@@ -189,11 +188,11 @@
             <button type="button" id="create_room" class="btn btn-primary btn-block" style="margin: auto; width: 330px;  margin-bottom: 20px;">합주실 생성</button> 
             <button type="button" id="join_room" class="btn btn-secondary btn-block" style="margin: auto; width: 330px;">합주실 참여</button> 
 
-            <button id="goto_login" class="btn btn-primary btn-sm mb-3" style="margin-top: 65px; float:right;">
-                <i width="20"></i>
-                <!-- <i data-feather="arrow-left" width="15"></i> -->
+            <button id="goto_login" class="btn btn-primary btn-sm mb-3" style="margin-top: 40px; float:right;">
+                <i data-feather="log-out" width="15"></i>
                 로그아웃
             </button>
+            </form>
         </div>
         <!-- (정은) 로그인 후 뜨는 합주실 생성/참여 하는 메인 페이지 추가 -->
 

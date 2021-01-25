@@ -95,6 +95,7 @@ document.getElementById('goto_register').addEventListener("click", async (event)
     change_display_to('register-page');
 });
 
+
 document.getElementById('non_member_login').addEventListener("click", async (event) => {
     const modal_body = {
         html: true,
@@ -314,3 +315,52 @@ document.getElementById("register").addEventListener("submit", async (event) => 
         ipcRenderer.send('addNewUser', param);
     }
 });
+
+// ---------------------------------------- 메인 화면 버튼 클릭 스크립트 --------------------------------------
+document.getElementById('create_room').addEventListener("click", async (event) => {
+    const modal_body = {
+        html: true,
+        contents: `
+        <p> 최대 인원 수 &nbsp;
+        <select id="people">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        </p>
+
+        <p> 권한 부여 &nbsp; &nbsp; &nbsp;
+        <label><input type="checkbox" value="entire"> 전체</label>
+        <label><input type="checkbox" value="record"> 녹음</label>
+        </p>
+        `
+    }
+
+    show_modal(modal_type.FORM, '합주실', modal_body);
+    document.getElementById("modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#form-modal').modal('hide');
+
+    })
+})
+
+document.getElementById('join_room').addEventListener("click", async (event) => {
+    const modal_body = {
+        html: true,
+        contents: `
+        <input type="text" class="form-control my-3" id="room_num">
+        `
+    }
+    show_modal(modal_type.FORM, '합주실 검색', modal_body);
+    document.getElementById("modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#form-modal').modal('hide');
+        //$('#room_num').get(0).focus();
+
+        const inserted_nickname = document.getElementById('room_num').value;
+    });
+});
+
