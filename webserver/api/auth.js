@@ -40,6 +40,7 @@ router.post('/login', (req, res) => {
 
             res.status(200).json({
                 message: 'A token has been granted.',
+                user_data,
                 token
             });
         }
