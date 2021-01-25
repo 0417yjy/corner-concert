@@ -17,10 +17,10 @@ const config = require('./webinfo');
 const crypto = require('crypto');
 
 // web server variables
-//const host = config.testsvr.host; // for debug use only
-//const port = config.testsvr.port;
-const host = config.stablesvr.host;
-const port = config.stablesvr.port;
+const host = config.testsvr.host; // for debug use only
+const port = config.testsvr.port;
+// const host = config.stablesvr.host;
+// const port = config.stablesvr.port;
 const ROOT_URL = 'http://' + host + ':' + port + '/';
 
 module.exports = function () {

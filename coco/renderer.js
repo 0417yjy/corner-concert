@@ -87,13 +87,13 @@ function change_display_to(id) {
 }
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
-// var user_data = {
-//     mode: null, // 회원은 1, 비회원은 2
-//     id: null,
-//     nickname: null,
-//     email: null,
-//     bio: null
-// }
+var user_data = {
+    mode: null, // 회원은 1, 비회원은 2
+    id: null,
+    nickname: null,
+    email: null,
+    bio: null
+}
 var token = "";
 
 document.getElementById('goto_register').addEventListener("click", async (event) => {
@@ -143,13 +143,17 @@ function check_login(arg) {
     if (arg.success) {
         // 로그인 성공
         token = arg.token;
+        user_data.id = arg.user_data.id;
+        user_data.nickname = arg.user_data.nickname;
+        user_data.email = arg.user_data.email;
+        user_data.bio = arg.user_data.bio;
 
-        // show_modal(modal_type.OK, "로그인 성공!", `
-        // ID: ` + user_data.id + ` <br>
-        // 닉네임: ` + user_data.nickname + ` <br>
-        // 이메일: ` + user_data.email + ` <br>
-        // 상태메시지: ` + user_data.bio + ` <br>
-        // `);
+        show_modal(modal_type.OK, "로그인 성공!", `
+        ID: ` + user_data.id + ` <br>
+        닉네임: ` + user_data.nickname + ` <br>
+        이메일: ` + user_data.email + ` <br>
+        상태메시지: ` + user_data.bio + ` <br>
+        `);
     } else {
         // 로그인 실패
         show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")
