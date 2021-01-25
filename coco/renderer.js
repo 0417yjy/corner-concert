@@ -24,6 +24,9 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
         case "login":
             check_login(param);
             break;
+        default:
+            console.log(functionName + 'is not implemented!');
+            break;
     }
 })
 
@@ -91,6 +94,8 @@ var user_data = {
     email: null,
     bio: null
 }
+var token = "";
+
 document.getElementById('goto_register').addEventListener("click", async (event) => {
     change_display_to('register-page');
 });
@@ -132,15 +137,19 @@ document.getElementById("login").addEventListener("submit", async (event) => {
 });
 
 function check_login(arg) {
+    // console.log(arg);
+    console.log(arg.message);
+
     if (arg.success) {
         // 로그인 성공
-        user_data.mode = 1;
-        user_data.id = arg.id;
-        user_data.nickname = arg.nickname;
-        user_data.email = arg.email;
-        user_data.bio = arg.bio;
+        token = arg.token;
+        user_data.id = arg.user_data.id;
+        user_data.nickname = arg.user_data.nickname;
+        user_data.email = arg.user_data.email;
+        user_data.bio = arg.user_data.bio;
 
         show_modal(modal_type.OK, "로그인 성공!", `
+        토큰: ` + token + ` <br>
         ID: ` + user_data.id + ` <br>
         닉네임: ` + user_data.nickname + ` <br>
         이메일: ` + user_data.email + ` <br>

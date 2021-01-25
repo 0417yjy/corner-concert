@@ -1,6 +1,8 @@
 const express  = require('express');
 const router = express.Router();
 var db = require('../dbconn')();
+const jwt = require('jsonwebtoken');
+const util = require('../util');
 
 router.get('/', (req, res) => {
     console.log('Got request');
@@ -14,31 +16,41 @@ router.post('/login', (req, res) => {
     let sql = "CALL TRY_LOGIN(?, ?)";
     db.execute(sql, args, (err, results) => {
         //console.log(results);
-        var user_data = {
-            success: false,
-            id: null,
-            nickname: null,
-            email: null,
-            bio: null
-        };
+        
         if (err) {
             // 로그인 실패
             console.log('Login failed');
+            res.status(403).json({
+                message: 'Login failed.',
+            });
         }
         else if (results[0][0]) {
             // 로그인 성공
-            // user_data 새로 초기화
-            user_data.success = true;
-            user_data.id = results[0][0].login_id;
-            user_data.nickname = results[0][0].nickname;
-            user_data.email = results[0][0].email;
-            user_data.bio = results[0][0].bio;
+            const user_data = {
+                id: results[0][0].login_id,
+                nickname: results[0][0].nickname,
+                email: results[0][0].email,
+                bio: results[0][0].bio
+            };
+
+            // token 발급
+            const token = jwt.sign(user_data, process.env.JWT_SECRET, {
+                expiresIn: '7d'
+            });
+
+            res.status(200).json({
+                message: 'A token has been granted.',
+                user_data,
+                token
+            });
         }
         else {
             // 로그인 실패
             console.log('Login failed');
+            res.status(403).json({
+                message: 'Login failed.',
+            });
         }
-        res.json(user_data);
     });
 });
 
