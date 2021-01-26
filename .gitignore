@@ -11,6 +11,7 @@ coco/node_modules/bootstrap/dist/*
 coco/node_modules/bootstrap/dist/css/*
 !coco/node_modules/bootstrap/dist/css/bootstrap.min.css
 
-# info contents
+# secret contents
 info.js
 webinfo.js
+.env

@@ -11,8 +11,8 @@
 
 * 도커 컨테이너 실행
     ```
-    $ docker run -p [외부포트]:[내부포트] [이름]
-    $ docker run -p 5000:3000 -d coco-nodejs-webserver-docker
+    $ docker run --restart="always" -p [외부포트]:[내부포트] [이름]
+    $ docker run --restart="always" -p 5000:3000 -d coco-nodejs-webserver-docker
     ```
 
 ## 클라이언트 측 명령어

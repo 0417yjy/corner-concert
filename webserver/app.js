@@ -1,7 +1,8 @@
 const express = require('express');
-const app = express()
+const app = express();
 const bodyParser = require('body-parser');
 var db = require('./dbconn')();
+require('dotenv').config(); 
 
 // init db connection
 db.init();
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(function (req, res, next) { // 1
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'content-type');
+  res.header('Access-Control-Allow-Headers', 'content-type, x-access-token');
   next();
 });
 
