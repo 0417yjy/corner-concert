@@ -54,3 +54,6 @@ function handleWindowControls() {
     }
 }
 
+$(window).on('load', function(){
+    $(".loading").remove();
+});
