@@ -174,12 +174,3 @@ p {
     display: none;
 }
 
-.loading{
-    width:100%;
-    height:100%;
-    position:fixed;
-    left:0px;
-    top:0px;
-    background: #bdee8f;
-    z-index:1000; 
-}
