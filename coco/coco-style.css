@@ -163,6 +163,17 @@ p {
     display: none;
 }
 
+#show_nickname {
+    font-weight: bold;
+    color: black;
+    margin-top: 20px;
+}
+
+#people #authority {
+    border: 1px solid #4C3322;
+    border-radius: 5px;
+}
+
 #main {
     height: calc(100% - 32px);
     margin-top: 32px;
@@ -170,7 +181,7 @@ p {
     overflow-y: auto;
 }
 
-#login-page, #register-page {
+#login-page, #register-page, #main-page {
     display: none;
 }
 
