@@ -22,3 +22,9 @@
     curl 124.111.89.191:55000/status # 도커 컨테이너 포트 (상용화)
     ```
     *Server is on*
+* DB 상태 체크
+    ```
+    curl 124.111.89.191:53000/status/db # 개발중 테스트 포트
+    curl 124.111.89.191:55000/status/db # 도커 컨테이너 포트 (상용화)
+    ```
+    *[SUCCESS] DB is ready!*
