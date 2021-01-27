@@ -6,11 +6,26 @@
     <title>CoCo</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <script src="node_modules/feather-icons/dist/feather.min.js"></script>
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="coco-style.css">
+    <link rel="stylesheet" href="loading.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <div class="loading">
+        <div id="loading_title">Let COrner COncert!</div>
+        <div class="loadingio-spinner-bars-hru83o1t0hh"><div class="ldio-4yjzgiisfk9">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div></div>
+    </div>
     <header id="titlebar">
         <div id="drag-region">
             <!-- 앱 제목 -->
@@ -174,6 +189,29 @@
                 </div>
             </form>
         </div>
+        <div id="main-page" class="container-fluid">
+
+            <form class="form-main" id="main-profile">
+                <input type="file" class="form-control-file" id="file" style="display: none;" onchange="loadFile(event)">
+                <img class="logo my-2 mx-auto" id="btn-upload" src="icons/user_logo.png" alt="" height="180" width="180" style="margin: auto; cursor: pointer;"/>
+
+
+                <div class ="nickname" id="show_id" style="text-align: center; margin-top: 25px; margin-bottom: 45px;">
+                <h1 id="show_nickname" >
+                    Name
+                </h1>
+                </div>
+      
+                <button type="button" id="create_room" class="btn btn-primary btn-block" style="margin: auto; width: 330px;  margin-bottom: 25px;">합주실 생성</button> 
+                <button type="button" id="join_room" class="btn btn-secondary btn-block" style="margin: auto; width: 330px;">합주실 참여</button> 
+
+                <button id="goto_login" class="btn btn-primary btn-sm mb-3" style="margin-top: 65px; float:right;">
+                    <i data-feather="log-out" width="15"></i>
+                    로그아웃
+                </button>
+            </form>
+        </div>
+        <!-- (정은) 로그인 후 뜨는 합주실 생성/참여 하는 메인 페이지 추가 -->
 
     </div>
     <script src="windowcontrol.js"></script>

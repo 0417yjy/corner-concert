@@ -75,7 +75,7 @@ function show_modal(mode, modal_header, modal_body) {
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
-const div_ids = ['login-page', 'register-page'];
+const div_ids = ['login-page', 'register-page', 'main-page'];
 function change_display_to(id) {
     // 모든 div 숨기기
     for (let i = 0; i < div_ids.length; i++) {
@@ -99,6 +99,7 @@ var token = "";
 document.getElementById('goto_register').addEventListener("click", async (event) => {
     change_display_to('register-page');
 });
+
 
 document.getElementById('non_member_login').addEventListener("click", async (event) => {
     const modal_body = {
@@ -148,6 +149,7 @@ function check_login(arg) {
         user_data.email = arg.user_data.email;
         user_data.bio = arg.user_data.bio;
 
+        /*
         show_modal(modal_type.OK, "로그인 성공!", `
         토큰: ` + token + ` <br>
         ID: ` + user_data.id + ` <br>
@@ -155,6 +157,11 @@ function check_login(arg) {
         이메일: ` + user_data.email + ` <br>
         상태메시지: ` + user_data.bio + ` <br>
         `);
+        */
+       
+        var nkname = user_data.nickname;
+        document.getElementById("show_nickname").innerHTML = nkname;
+        change_display_to('main-page');
     } else {
         // 로그인 실패
         show_modal(modal_type.OK, "로그인 실패", "로그인에 실패하였습니다. 아이디와 비밀번호를 다시 확인해 주세요.")
@@ -316,4 +323,60 @@ document.getElementById("register").addEventListener("submit", async (event) => 
         }
         ipcRenderer.send('addNewUser', param);
     }
+});
+
+// ---------------------------------------- 메인 화면 버튼 클릭 스크립트 --------------------------------------
+document.getElementById('create_room').addEventListener("click", async (event) => {
+    const modal_body = {
+        html: true,
+        contents: `
+        <p> 최대 인원 수 &nbsp;
+        <select id="people">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        </p>
+
+        <p> 권한 부여 &nbsp; &nbsp; &nbsp;
+        <!-- <label><input type="checkbox" value="entire"> 전체</label>
+        <label><input type="checkbox" value="record"> 녹음</label> -->
+        </p>
+        `
+    }
+
+    show_modal(modal_type.FORM, '합주실', modal_body);
+    document.getElementById("modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#form-modal').modal('hide');
+
+    })
+})
+
+document.getElementById('join_room').addEventListener("click", async (event) => {
+    const modal_body = {
+        html: true,
+        contents: `
+        <input type="text" class="form-control my-3" id="room_num">
+        `
+    }
+    show_modal(modal_type.FORM, '합주실 검색', modal_body);
+    document.getElementById("modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        $('#form-modal').modal('hide');
+        //$('#room_num').get(0).focus();
+
+        const inserted_nickname = document.getElementById('room_num').value;
+    });
+});
+
+// --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
+$(function () {
+    $('#btn-upload').click(function (e) {
+        e.preventDefault();
+        $('#file').click();
+    });
 });
