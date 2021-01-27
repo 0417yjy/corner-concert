@@ -20,6 +20,7 @@ app.use(function (req, res, next) { // 1
 
 // 서버 체크용 URI
 app.get('/status', (req, res) => res.send('Server is on'));
+app.get('/status/db', (req, res) => res.send(db.is_open()));
 // 라우트 설정
 app.use('/user', require('./api/user'));
 app.use('/auth', require('./api/auth'));
