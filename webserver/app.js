@@ -6,7 +6,6 @@ require('dotenv').config();
 
 // init db connection
 db.init();
-db.open();
 
 // Other settings
 app.use(bodyParser.json());
@@ -20,7 +19,19 @@ app.use(function (req, res, next) { // 1
 
 // 서버 체크용 URI
 app.get('/status', (req, res) => res.send('Server is on'));
-app.get('/status/db', (req, res) => res.send(db.is_open()));
+app.get('/status/db', (req, res) => {
+  const success_msg = "[SUCCESS] DB is ready!";
+  const fail_msg = "[ERROR] Disconnected to DB!";
+
+  db.execute('SELECT 1', null, (err, results) => {
+    if (err) {
+      res.send(fail_msg);
+    } else {
+      res.send(success_msg);
+    }
+  });
+});
+
 // 라우트 설정
 app.use('/user', require('./api/user'));
 app.use('/auth', require('./api/auth'));
