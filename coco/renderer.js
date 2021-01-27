@@ -115,11 +115,12 @@ document.getElementById('non_member_login').addEventListener("click", async (eve
         const inserted_nickname = document.getElementById('nonmember_nickname').value;
         check_login({
             success: true,
-            mode: 2,
-            id: null,
-            nickname: inserted_nickname,
-            email: null,
-            bio: null
+            user_data: {
+                id: null,
+                nickname: inserted_nickname,
+                email: null,
+                bio: null
+            }
         });
     });
 });
