@@ -1,8 +1,6 @@
 const mysql = require('mysql');
 const config = require('./info');
 
-var conn;
-
 module.exports = function () {
     return {
         init: function () {
@@ -35,6 +33,13 @@ module.exports = function () {
                     callback(false, results)
                 }
             });
+        },
+
+        is_open: function () {
+            conn.ping((err) => {
+                return "[ERROR] Disconnected to DB!";
+            })
+            return "[SUCCESS] DB is ready!";
         }
     }
 }
