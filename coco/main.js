@@ -33,6 +33,7 @@ ipcMain.on('tryLogin', (event, args) => {
         response.on('data', (chunk) => {
           chunk = JSON.parse(chunk);
           chunk.success = false;
+          console.log('403: ' + chunk.message);
           win.webContents.send("callFunction", "login", chunk);
         });
         break;
@@ -41,6 +42,7 @@ ipcMain.on('tryLogin', (event, args) => {
         response.on('data', (chunk) => {
           chunk = JSON.parse(chunk);
           chunk.success = false;
+          console.log(response.statusCode + ': ' + chunk.message);
           win.webContents.send("callFunction", "login", chunk);
         });
         break;

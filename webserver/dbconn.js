@@ -4,42 +4,41 @@ const config = require('./info');
 module.exports = function () {
     return {
         init: function () {
-            conn = mysql.createConnection(config.db);
+            // conn = mysql.createConnection(config.db);
+            pool = mysql.createPool(config.db);
         },
 
-        open: function () {
-            conn.connect(function (err, callback) {
-                if (err) {
-                    console.log("[ERROR] Cannot connect to MySQL!: " + err);
-                } else {
-                    console.log("[SUCCESS] Connected to MySQL!");
-                }
-            })
-        },
+        // open: function () {
+        //     conn.connect(function (err, callback) {
+        //         if (err) {
+        //             console.log("[ERROR] Cannot connect to MySQL!: " + err);
+        //         } else {
+        //             console.log("[SUCCESS] Connected to MySQL!");
+        //         }
+        //     })
+        // },
 
-        close: function () {
-            conn.end(function (err) {
-                if (err) conn.destroy();
-                console.log("[SUCCESS] Disconnected to MySQL.");
-            })
-        },
+        // close: function () {
+        //     conn.end(function (err) {
+        //         if (err) conn.destroy();
+        //         console.log("[SUCCESS] Disconnected to MySQL.");
+        //     })
+        // },
 
         execute: function (sql, args, callback) {
-            return conn.query(sql, args, (error, results, fields) => {
-                if (error) {
-                    callback(true, error)
+            pool.getConnection(function (err, conn) {
+                if (!err) {
+                    conn.query(sql, args, (error, results, fields) => {
+                        if (error) {
+                            callback(true, error)
+                        }
+                        else {
+                            callback(false, results)
+                        }
+                    });
                 }
-                else {
-                    callback(false, results)
-                }
+                conn.release();
             });
-        },
-
-        is_open: function () {
-            conn.ping((err) => {
-                return "[ERROR] Disconnected to DB!";
-            })
-            return "[SUCCESS] DB is ready!";
         }
     }
 }

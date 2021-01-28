@@ -19,9 +19,8 @@ router.post('/login', (req, res) => {
         
         if (err) {
             // 로그인 실패
-            console.log('Login failed');
             res.status(403).json({
-                message: 'Login failed.',
+                message: '[ERROR] ' + results.message,
             });
         }
         else if (results[0][0]) {
@@ -46,9 +45,8 @@ router.post('/login', (req, res) => {
         }
         else {
             // 로그인 실패
-            console.log('Login failed');
             res.status(403).json({
-                message: 'Login failed.',
+                message: '[ERROR] No results',
             });
         }
     });
