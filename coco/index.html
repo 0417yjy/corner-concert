@@ -196,10 +196,10 @@
                 <img class="logo my-2 mx-auto" id="btn-upload" src="icons/user_logo.png" alt="" height="180" width="180" style="margin: auto; cursor: pointer;"/>
 
 
-                <div class ="nickname" id="show_id" style="text-align: center; margin-top: 25px; margin-bottom: 45px;">
-                <h1 id="show_nickname" >
-                    Name
-                </h1>
+                <div class ="nickname" id="show_id">
+                    <h1 id="show_nickname" style="display: inline">
+                        Name
+                    </h1>
                 </div>
       
                 <button type="button" id="create_room" class="btn btn-primary btn-block" style="margin: auto; width: 330px;  margin-bottom: 25px;">합주실 생성</button> 
@@ -212,6 +212,29 @@
             </form>
         </div>
         <!-- (정은) 로그인 후 뜨는 합주실 생성/참여 하는 메인 페이지 추가 -->
+        <div id="profile" class="container">
+            <div class="row my-3">
+                <div class="col-5">
+                    <img id="profile-img" src="icons/user_logo.png" height="300" width="300" style="margin: auto; cursor: pointer;"/>
+                </div>
+                <div class="col">
+                    <h1 id="profile-nickname">닉네임</h1>
+                    <h2 id="profile-id">아이디</h2>
+                    <div id="profile-message">
+                        상태 메시지
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary profile-btn">프로필 수정</button>
+            </div>
+            <div>
+                <button class="btn btn-primary profile-btn">프로필 공개범위 설정</button>
+            </div>
+            <div>
+                <button class="btn btn-primary profile-btn">프로필 회원 탈퇴</button>
+            </div>
+        </div>
 
     </div>
     <script src="windowcontrol.js"></script>

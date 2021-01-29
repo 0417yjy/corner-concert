@@ -185,3 +185,16 @@ p {
     display: none;
 }
 
+#show_id {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 45px;
+}
+
+#show_nickname {
+    cursor: pointer;
+}
+
+#show_nickname:hover {
+    color: rgb(0, 51, 0);
+}

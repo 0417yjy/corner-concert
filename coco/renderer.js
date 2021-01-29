@@ -75,7 +75,7 @@ function show_modal(mode, modal_header, modal_body) {
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
-const div_ids = ['login-page', 'register-page', 'main-page'];
+const div_ids = ['login-page', 'register-page', 'main-page', 'profile'];
 function change_display_to(id) {
     // 모든 div 숨기기
     for (let i = 0; i < div_ids.length; i++) {
@@ -373,6 +373,10 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
         const inserted_nickname = document.getElementById('room_num').value;
     });
 });
+
+document.getElementById('show_nickname').addEventListener('click', async (event) => {
+    change_display_to('profile');
+})
 
 // --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
 $(function () {
