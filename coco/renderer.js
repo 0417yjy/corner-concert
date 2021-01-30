@@ -370,7 +370,7 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
         $('#form-modal').modal('hide');
         //$('#room_num').get(0).focus();
 
-        const inserted_nickname = document.getElementById('room_num').value;
+        const inserted_roomnumber = document.getElementById('room_num').value;
     });
 });
 
@@ -380,4 +380,15 @@ $(function () {
         e.preventDefault();
         $('#file').click();
     });
+
 });
+
+document.getElementById("file").addEventListener("change", function(event) {
+    var origin_img = document.getElementById("file").value.split('\\');
+    var filename = origin_img[origin_img.length - 1];
+
+    var change_img = 'icons\\' + filename;
+    //alert(change_img);
+    document.getElementById("btn-upload").src = change_img;
+  });
+
