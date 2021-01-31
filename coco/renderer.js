@@ -401,6 +401,25 @@ document.getElementById('update-profile').addEventListener('click', async (event
 
         <label for="bio_update" class="col-form-label">소개글</label>
         <textarea id="bio_update" class="form-control" placeholder="내용을 입력해주세요" maxlength="120" style="resize:none"></textarea>
+
+        <label for="session_update" class="col-form-label">세션</label>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: block; text-align: center;">
+            <label class="btn btn-danger">
+                <input type="checkbox"> Guitar
+            </label>
+            <label class="btn btn-success">
+                <input type="checkbox"> Blue
+            </label>
+            <label class="btn btn-warning">
+                <input type="checkbox"> Vocal
+            </label>
+            <label class="btn btn-light">
+                <input type="checkbox"> Keyboard
+            </label>
+            <label class="btn btn-info">
+                <input type="checkbox"> Drum
+            </label>
+        </div>
         `
     }
 
