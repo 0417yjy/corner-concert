@@ -391,10 +391,66 @@ document.getElementById('update-profile').addEventListener('click', async (event
     modal_body = {
         html: true,
         contents: `
-        
+        <div class="row">
+            <input type="file" id="profile-img_update_upload" style="display: none; onchange="loadfile(event)">
+            <img class="mx-auto" id="profile-img_update" style="cursor: pointer;" width="100" height="100" src="icons/user_logo.png"/>
+        </div>
+
+        <label for="nickname_update" class="col-form-label">닉네임</label>
+        <input type="text" class="form-control" id="nickname_update" placeholder="닉네임">
+
+        <label for="bio_update" class="col-form-label">소개글</label>
+        <textarea id="bio_update" class="form-control" placeholder="내용을 입력해주세요" maxlength="120" style="resize:none"></textarea>
         `
     }
-    show_modal(modal_type.FORM, '프로필 공개범위 설정', )
+
+    show_modal(modal_type.FORM, '프로필 수정', modal_body);
+
+    $('#profile-img_update').on('click', (function (e) {
+        e.preventDefault();
+        $('#profile-img_update_upload').trigger('click');
+    }));
+})
+
+document.getElementById('publicity-profile').addEventListener('click', async (event) => {
+    modal_body = {
+        html: true,
+        contents: `
+        <div class="form-group row">
+            <label for="profile-image-publicity" class="col-6 col-form-label">프로필 사진</label>
+            <div class="col-6">
+                <select name="profile-image-publicity" class="custom-select">
+                    <option value="all">전체 공개</option>
+                    <option value="friend">친구 공개</option>
+                    <option value="not">공개안함</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id-publicity" class="col-6 col-form-label">아이디</label>
+            <div class="col-6">
+                <select name="id-publicity" class="custom-select">
+                    <option value="all">전체 공개</option>
+                    <option value="friend">친구 공개</option>
+                    <option value="not">공개안함</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="bio-publicity" class="col-6 col-form-label">상태 메시지</label>
+            <div class="col-6">
+                <select name="profile-image-publicity" class="custom-select">
+                    <option value="all">전체 공개</option>
+                    <option value="friend">친구 공개</option>
+                    <option value="not">공개안함</option>
+                </select>
+            </div>
+        </div>
+        `
+    }
+    show_modal(modal_type.FORM, '프로필 공개범위 설정', modal_body);
 })
 
 document.getElementById('delete-account').addEventListener('click', async (event) => {
