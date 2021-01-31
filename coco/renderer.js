@@ -385,3 +385,22 @@ $(function () {
         $('#file').click();
     });
 });
+
+// ---------------------------------------- 프로필 화면 스크립트 --------------------------------------
+document.getElementById('update-profile').addEventListener('click', async (event) => {
+    modal_body = {
+        html: true,
+        contents: `
+        
+        `
+    }
+    show_modal(modal_type.FORM, '프로필 공개범위 설정', )
+})
+
+document.getElementById('delete-account').addEventListener('click', async (event) => {
+    const body = `
+    당신의 계정은 영구히 삭제되며, 친구들의 목록에서도 당신이 사라집니다 :(\n
+    계속하시겠어요?
+    `
+    show_modal(modal_type.YESNO, '회원 탈퇴', body);
+})
