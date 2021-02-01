@@ -86,6 +86,14 @@ function change_display_to(id) {
     $('#' + id).show();
 }
 
+function goto_profile() {
+    $('#profile-nickname').html(user_data.nickname);
+    $('#profile-id').html(user_data.id);
+    $('#profile-bio').html(user_data.bio);
+
+    change_display_to('profile');
+}
+
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
 var user_data = {
     mode: null, // 회원은 1, 비회원은 2
@@ -375,7 +383,7 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
 });
 
 document.getElementById('show_nickname').addEventListener('click', async (event) => {
-    change_display_to('profile');
+    goto_profile();
 })
 
 // --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
@@ -404,26 +412,28 @@ document.getElementById('update-profile').addEventListener('click', async (event
 
         <label for="session_update" class="col-form-label">세션</label>
         <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: block; text-align: center;">
-            <label class="btn btn-danger">
+            <label class="shadow btn btn-danger">
                 <input type="checkbox"> Guitar
             </label>
-            <label class="btn btn-success">
-                <input type="checkbox"> Blue
+            <label class="shadow btn btn-success">
+                <input type="checkbox"> Bass
             </label>
-            <label class="btn btn-warning">
+            <label class="shadow btn btn-warning">
                 <input type="checkbox"> Vocal
             </label>
-            <label class="btn btn-light">
+            <label class="shadow btn btn-light">
                 <input type="checkbox"> Keyboard
             </label>
-            <label class="btn btn-info">
+            <label class="shadow btn btn-info">
                 <input type="checkbox"> Drum
             </label>
         </div>
         `
     }
-
     show_modal(modal_type.FORM, '프로필 수정', modal_body);
+
+    $('#nickname_update').val(user_data.nickname);
+    $('#bio_update').val(user_data.bio);
 
     $('#profile-img_update').on('click', (function (e) {
         e.preventDefault();
