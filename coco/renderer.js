@@ -23,7 +23,7 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
             break;
         case "login":
             check_login(param);
-            break;
+            break; 
         default:
             console.log(functionName + 'is not implemented!');
             break;
@@ -341,21 +341,23 @@ document.getElementById('create_room').addEventListener("click", async (event) =
             <option value="6">6</option>
         </select>
         </p>
-
+  
         <p> 권한 부여 &nbsp; &nbsp; &nbsp;
         <!-- <label><input type="checkbox" value="entire"> 전체</label>
         <label><input type="checkbox" value="record"> 녹음</label> -->
         </p>
         `
     }
-
+  
     show_modal(modal_type.FORM, '합주실', modal_body);
     document.getElementById("modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
         $('#form-modal').modal('hide');
+  
+       // window.open("room.html", "",'fullscreen=yes', "");
+    });
+  });
 
-    })
-})
 
 document.getElementById('join_room').addEventListener("click", async (event) => {
     const modal_body = {
