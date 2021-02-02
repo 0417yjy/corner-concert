@@ -3,40 +3,22 @@ const ipcRenderer = require('electron').ipcRenderer;
 // check if server is ready
 ipcRenderer.send('checkServer', {});
 
-// IPC 함수 호출문
-ipcRenderer.on('callFunction', function (event, functionName, param) {
-    // main 프로세스에서 send('callFunction', functionName, param); 함수를 호출하면 이곳에서 메시지를 받아서 처리
-    switch (functionName) {
-        case "connect":
-            check_dbconnect(param);
-            break;
-        case "disconnect":
-            break;
-        case "checkVerified":
-            check_verified(param);
-            break;
-        case "checkDuplicate":
-            check_duplicated(param);
-            break;
-        case "register":
-            check_register(param);
-            break;
-        case "login":
-            check_login(param);
-            break;
-        default:
-            console.log(functionName + 'is not implemented!');
-            break;
-    }
-})
+// --------------------------------------------- IPC 함수 호출문 ---------------------------------------------
+ipcRenderer.on('checkVerified', (event, param) => {
+    check_verified(param);
+});
 
-function check_dbconnect(param) {
-    if (param) {
-        console.log("mysql 성공");
-    } else {
-        console.log("mysql 실패");
-    }
-}
+ipcRenderer.on('checkDuplicate', (event, param) => {
+    check_duplicated(param);
+});
+
+ipcRenderer.on('checkDuplicate', (event, param) => {
+    check_register(param);
+});
+
+ipcRenderer.on('login', (event, param) => {
+    check_login(param);
+});
 
 // --------------------------------------------- 모달 스크립트 ----------------------------------------------
 const modal_type = Object.freeze({ YESNO: 0, OK: 1, FORM: 2 });
@@ -488,4 +470,12 @@ document.getElementById('delete-account').addEventListener('click', async (event
     계속하시겠어요?
     `
     show_modal(modal_type.YESNO, '회원 탈퇴', body);
+
+    $('#yes-no-modal-yesbtn').on('click', async () => {
+        const sending_param = {
+            token: token,
+            id: user_data.id
+        }
+        ipcRenderer.send('deleteUser', sending_param);
+    });
 })
