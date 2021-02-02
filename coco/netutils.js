@@ -25,6 +25,13 @@ const ROOT_URL = 'http://' + host + ':' + port + '/';
 
 module.exports = function () {
     return {
+        method: {
+            GET: 'GET',
+            POST: 'POST',
+            PUT: 'PUT',
+            DELETE: 'DELETE'
+        },
+
         check_server_on: function () {
             // check server is on
             let request = net.request(ROOT_URL + 'status');
@@ -37,41 +44,18 @@ module.exports = function () {
             request.end();
         },
 
-        make_http_get_request: function (arg_path) {
+        make_http_request: function (method_selected, arg_path, body) {
             const request = net.request({
-                method: 'GET',
-                protocol: 'http:',
-                hostname: host,
-                port: port,
-                path: arg_path
-            })
-            request.setHeader('content-type', 'application/json');
-            return request;
-        },
-
-        make_http_post_request: function (arg_path, body) {
-            const request = net.request({
-                method: 'POST',
+                method: method_selected,
                 protocol: 'http:',
                 hostname: host,
                 port: port,
                 path: arg_path
             })
             request.setHeader('content-type', 'application/json'); 
-            request.write(body, 'utf-8');
-            return request;
-        },
-
-        make_http_put_request: function (arg_path, body) {
-            const request = net.request({
-                method: 'PUT',
-                protocol: 'http:',
-                hostname: host,
-                port: port,
-                path: arg_path
-            })
-            request.setHeader('content-type', 'application/json'); 
-            request.write(body, 'utf-8');
+            if (body !== undefined) {
+                request.write(body, 'utf-8');
+            }
             return request;
         },
 

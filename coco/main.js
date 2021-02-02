@@ -11,7 +11,7 @@ ipcMain.on('tryLogin', (event, args) => {
 
   args.pw = coco_net.hash(args.pw); // client-side encryption
   const body = JSON.stringify(args);
-  const request = coco_net.make_http_post_request('/auth/login', body);
+  const request = coco_net.make_http_request(coco_net.method.POST, '/auth/login', body);
   request.on('response', (response) => {
     // console.log(`STATUS: ${response.statusCode}`);
     // console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
@@ -58,7 +58,7 @@ ipcMain.on('tryLogin', (event, args) => {
 
 ipcMain.on('sendveri', (event, args) => {
   const body = JSON.stringify({ email: args });
-  const request = coco_net.make_http_put_request('/user/register/sendveri', body);
+  const request = coco_net.make_http_request(coco_net.method.PUT, '/user/register/sendveri', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
@@ -76,7 +76,7 @@ ipcMain.on('confirmveri', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
 
   const body = JSON.stringify(args);
-  const request = coco_net.make_http_post_request('/user/register/confirmveri/', body);
+  const request = coco_net.make_http_request(coco_net.method.POST, '/user/register/confirmveri/', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
@@ -95,7 +95,7 @@ ipcMain.on('confirmveri', (event, args) => {
 
 ipcMain.on('checkdup', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
-  const request = coco_net.make_http_get_request('/user/register/checkdup/' + args);
+  const request = coco_net.make_http_request(coco_net.method.GET, '/user/register/checkdup/' + args);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
@@ -118,7 +118,7 @@ ipcMain.on('addNewUser', (event, args) => {
 
   args.pw = coco_net.hash(args.pw); // client-side encryption
   const body = JSON.stringify(args);
-  const request = coco_net.make_http_post_request('/user/register', body);
+  const request = coco_net.make_http_request(coco_net.method.POST, '/user/register', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
