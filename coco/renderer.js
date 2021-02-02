@@ -5,19 +5,49 @@ ipcRenderer.send('checkServer', {});
 
 // --------------------------------------------- IPC 함수 호출문 ---------------------------------------------
 ipcRenderer.on('checkVerified', (event, param) => {
-    check_verified(param);
+    // 이메일 코드 인증 함수
+    is_verified = param;
+    //console.log(is_verified);
+    if (param) {
+        // alert("인증되었습니다.");
+        set_valid(valid_mode.VALID, 'verification_code', 'confirm_veri', '확인', null, null);
+    } else {
+        // alert("잘못된 인증번호입니다.");
+        set_valid(valid_mode.INVALID, 'verification_code', 'confirm_veri', '확인', 'id-veri-invalid-feedback', '잘못된 인증코드입니다.');
+    }
 });
 
 ipcRenderer.on('checkDuplicate', (event, param) => {
-    check_duplicated(param);
+    // id 중복 확인 함수
+    not_duplicated = param;
+    //console.log(not_duplicated);
+    if (param) {
+        // 사용 가능한 id
+        set_valid(valid_mode.VALID, 'userid', 'check_dup', '사용 가능', null, null);
+    } else {
+        // 사용 불가능한 id
+        set_valid(valid_mode.INVALID, 'userid', 'check_dup', '중복 확인', 'id-dup-invalid-feedback', "이미 존재하는 ID입니다. 다른 ID로 시도하세요.");
+    }
 });
 
-ipcRenderer.on('checkDuplicate', (event, param) => {
-    check_register(param);
+ipcRenderer.on('register', (event, param) => {
+    if (param) {
+        // 회원가입 성공
+        // alert("회원가입에 성공하였습니다.");
+        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 성공하였습니다.");
+    } else {
+        // alert("회원가입에 실패하였습니다.");
+        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 실패하였습니다. 다시 시도하시거나, 문제가 반복되는 경우 관리자에게 문의하십시오.");
+    }
+    change_display_to('login-page')
 });
 
 ipcRenderer.on('login', (event, param) => {
     check_login(param);
+});
+
+ipcRenderer.on('delete_user', (event, param) => {
+    
 });
 
 // --------------------------------------------- 모달 스크립트 ----------------------------------------------
@@ -192,19 +222,6 @@ function set_valid(mode, input_id, btn_id, btn_label, feedback_id, feedback_text
     }
 }
 
-function check_verified(bool) {
-    // 이메일 코드 인증 함수
-    is_verified = bool;
-    //console.log(is_verified);
-    if (bool) {
-        // alert("인증되었습니다.");
-        set_valid(valid_mode.VALID, 'verification_code', 'confirm_veri', '확인', null, null);
-    } else {
-        // alert("잘못된 인증번호입니다.");
-        set_valid(valid_mode.INVALID, 'verification_code', 'confirm_veri', '확인', 'id-veri-invalid-feedback', '잘못된 인증코드입니다.');
-    }
-}
-
 function check_duplicated(bool) {
     // id 중복 확인 함수
     not_duplicated = bool;
@@ -217,19 +234,6 @@ function check_duplicated(bool) {
         // 사용 불가능한 id
         set_valid(valid_mode.INVALID, 'userid', 'check_dup', '중복 확인', 'id-dup-invalid-feedback', "이미 존재하는 ID입니다. 다른 ID로 시도하세요.");
     }
-}
-
-function check_register(bool) {
-    //console.log(bool);
-    if (bool) {
-        // 회원가입 성공
-        // alert("회원가입에 성공하였습니다.");
-        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 성공하였습니다.");
-    } else {
-        // alert("회원가입에 실패하였습니다.");
-        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 실패하였습니다. 다시 시도하시거나, 문제가 반복되는 경우 관리자에게 문의하십시오.");
-    }
-    change_display_to('login-page')
 }
 
 $('#userid').on("propertychange change keyup paste input", async (event) => {
@@ -376,7 +380,7 @@ $(function () {
     });
 });
 
-// ---------------------------------------- 프로필 화면 스크립트 --------------------------------------
+// --------------------------------------------- 프로필 화면 스크립트 ---------------------------------------------
 document.getElementById('update-profile').addEventListener('click', async (event) => {
     modal_body = {
         html: true,
