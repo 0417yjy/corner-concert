@@ -11,13 +11,13 @@ ipcMain.on('tryLogin', (event, args) => {
 
   args.pw = coco_net.hash(args.pw); // client-side encryption
   const body = JSON.stringify(args);
-  const request = coco_net.make_http_post_request('/auth/login', body);
+  const request = coco_net.make_http_request(coco_net.method.POST, '/auth/login', body);
   request.on('response', (response) => {
     // console.log(`STATUS: ${response.statusCode}`);
     // console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
     // response.on('data', (chunk) => {
     //   console.log(`BODY: ${chunk}`);
-    //   win.webContents.send("callFunction", "login", JSON.parse(chunk));
+    //   win.webContents.send("login", JSON.parse(chunk));
     // });
     switch (response.statusCode) {
       case 200:
@@ -25,7 +25,7 @@ ipcMain.on('tryLogin', (event, args) => {
         response.on('data', (chunk) => {
           chunk = JSON.parse(chunk);
           chunk.success = true;
-          win.webContents.send("callFunction", "login", chunk);
+          win.webContents.send("login", chunk);
         });
         break;
       case 403:
@@ -34,7 +34,7 @@ ipcMain.on('tryLogin', (event, args) => {
           chunk = JSON.parse(chunk);
           chunk.success = false;
           console.log('403: ' + chunk.message);
-          win.webContents.send("callFunction", "login", chunk);
+          win.webContents.send("login", chunk);
         });
         break;
       default:
@@ -43,7 +43,7 @@ ipcMain.on('tryLogin', (event, args) => {
           chunk = JSON.parse(chunk);
           chunk.success = false;
           console.log(response.statusCode + ': ' + chunk.message);
-          win.webContents.send("callFunction", "login", chunk);
+          win.webContents.send("login", chunk);
         });
         break;
     }
@@ -58,7 +58,7 @@ ipcMain.on('tryLogin', (event, args) => {
 
 ipcMain.on('sendveri', (event, args) => {
   const body = JSON.stringify({ email: args });
-  const request = coco_net.make_http_put_request('/user/register/sendveri', body);
+  const request = coco_net.make_http_request(coco_net.method.PUT, '/user/register/sendveri', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
@@ -76,38 +76,38 @@ ipcMain.on('confirmveri', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
 
   const body = JSON.stringify(args);
-  const request = coco_net.make_http_post_request('/user/register/confirmveri/', body);
+  const request = coco_net.make_http_request(coco_net.method.POST, '/user/register/confirmveri/', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           // console.log(`BODY: ${chunk}`);
           let obj = JSON.parse(chunk);
-          win.webContents.send("callFunction", "checkVerified", obj.success);
+          win.webContents.send("checkVerified", obj.success);
         }); 
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
-    win.webContents.send("callFunction", "checkVerified", false);
+    win.webContents.send("checkVerified", false);
   })
   request.end();
 })
 
 ipcMain.on('checkdup', (event, args) => {
   let win = BrowserWindow.getFocusedWindow();
-  const request = coco_net.make_http_get_request('/user/register/checkdup/' + args);
+  const request = coco_net.make_http_request(coco_net.method.GET, '/user/register/checkdup/' + args);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           // console.log(`BODY: ${chunk}`);
           let obj = JSON.parse(chunk);
-          win.webContents.send("callFunction", "checkDuplicate", obj.success);
+          win.webContents.send("checkDuplicate", obj.success);
         }); 
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
-    win.webContents.send("callFunction", "checkDuplicate", false);
+    win.webContents.send("checkDuplicate", false);
   })
   request.end();
 });
@@ -118,19 +118,40 @@ ipcMain.on('addNewUser', (event, args) => {
 
   args.pw = coco_net.hash(args.pw); // client-side encryption
   const body = JSON.stringify(args);
-  const request = coco_net.make_http_post_request('/user/register', body);
+  const request = coco_net.make_http_request(coco_net.method.POST, '/user/register', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           // console.log(`BODY: ${chunk}`);
           let obj = JSON.parse(chunk);
-          win.webContents.send("callFunction", "register", obj.success);
+          win.webContents.send("register", obj.success);
         }); 
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
-    win.webContents.send("callFunction", "register", false);
+    win.webContents.send("register", false);
+  })
+  request.end();
+});
+
+ipcMain.on('deleteUser', (event, args) => {
+  let win = BrowserWindow.getFocusedWindow();
+  // console.log('Add new user: ' + args);
+
+  const request = coco_net.make_http_request(coco_net.method.DELETE, '/user/' + args.id, body);
+  request.on('response', (response) => {
+    //console.log(`STATUS: ${response.statusCode}`); 
+        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+        response.on('data', (chunk) => { 
+          // console.log(`BODY: ${chunk}`);
+          let obj = JSON.parse(chunk);
+          win.webContents.send("delete_user", obj.success);
+        }); 
+  })
+  request.on('error', (error) => {
+    // console.log(`ERROR: ${JSON.stringify(error)}`)
+    win.webContents.send("delete_user", false);
   })
   request.end();
 });

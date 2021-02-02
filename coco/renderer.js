@@ -3,40 +3,52 @@ const ipcRenderer = require('electron').ipcRenderer;
 // check if server is ready
 ipcRenderer.send('checkServer', {});
 
-// IPC 함수 호출문
-ipcRenderer.on('callFunction', function (event, functionName, param) {
-    // main 프로세스에서 send('callFunction', functionName, param); 함수를 호출하면 이곳에서 메시지를 받아서 처리
-    switch (functionName) {
-        case "connect":
-            check_dbconnect(param);
-            break;
-        case "disconnect":
-            break;
-        case "checkVerified":
-            check_verified(param);
-            break;
-        case "checkDuplicate":
-            check_duplicated(param);
-            break;
-        case "register":
-            check_register(param);
-            break;
-        case "login":
-            check_login(param);
-            break;
-        default:
-            console.log(functionName + 'is not implemented!');
-            break;
-    }
-})
-
-function check_dbconnect(param) {
+// --------------------------------------------- IPC 함수 호출문 ---------------------------------------------
+ipcRenderer.on('checkVerified', (event, param) => {
+    // 이메일 코드 인증 함수
+    is_verified = param;
+    //console.log(is_verified);
     if (param) {
-        console.log("mysql 성공");
+        // alert("인증되었습니다.");
+        set_valid(valid_mode.VALID, 'verification_code', 'confirm_veri', '확인', null, null);
     } else {
-        console.log("mysql 실패");
+        // alert("잘못된 인증번호입니다.");
+        set_valid(valid_mode.INVALID, 'verification_code', 'confirm_veri', '확인', 'id-veri-invalid-feedback', '잘못된 인증코드입니다.');
     }
-}
+});
+
+ipcRenderer.on('checkDuplicate', (event, param) => {
+    // id 중복 확인 함수
+    not_duplicated = param;
+    //console.log(not_duplicated);
+    if (param) {
+        // 사용 가능한 id
+        set_valid(valid_mode.VALID, 'userid', 'check_dup', '사용 가능', null, null);
+    } else {
+        // 사용 불가능한 id
+        set_valid(valid_mode.INVALID, 'userid', 'check_dup', '중복 확인', 'id-dup-invalid-feedback', "이미 존재하는 ID입니다. 다른 ID로 시도하세요.");
+    }
+});
+
+ipcRenderer.on('register', (event, param) => {
+    if (param) {
+        // 회원가입 성공
+        // alert("회원가입에 성공하였습니다.");
+        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 성공하였습니다.");
+    } else {
+        // alert("회원가입에 실패하였습니다.");
+        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 실패하였습니다. 다시 시도하시거나, 문제가 반복되는 경우 관리자에게 문의하십시오.");
+    }
+    change_display_to('login-page')
+});
+
+ipcRenderer.on('login', (event, param) => {
+    check_login(param);
+});
+
+ipcRenderer.on('delete_user', (event, param) => {
+    
+});
 
 // --------------------------------------------- 모달 스크립트 ----------------------------------------------
 const modal_type = Object.freeze({ YESNO: 0, OK: 1, FORM: 2 });
@@ -75,7 +87,7 @@ function show_modal(mode, modal_header, modal_body) {
 }
 
 // --------------------------------------------- 화면 전환 스크립트 ----------------------------------------------
-const div_ids = ['login-page', 'register-page', 'main-page'];
+const div_ids = ['login-page', 'register-page', 'main-page', 'profile'];
 function change_display_to(id) {
     // 모든 div 숨기기
     for (let i = 0; i < div_ids.length; i++) {
@@ -84,6 +96,14 @@ function change_display_to(id) {
 
     // 선택한 div만 표시하기
     $('#' + id).show();
+}
+
+function goto_profile() {
+    $('#profile-nickname').html(user_data.nickname);
+    $('#profile-id').html(user_data.id);
+    $('#profile-bio').html(user_data.bio);
+
+    change_display_to('profile');
 }
 
 // --------------------------------------------- 로그인 화면 스크립트 --------------------------------------------
@@ -202,19 +222,6 @@ function set_valid(mode, input_id, btn_id, btn_label, feedback_id, feedback_text
     }
 }
 
-function check_verified(bool) {
-    // 이메일 코드 인증 함수
-    is_verified = bool;
-    //console.log(is_verified);
-    if (bool) {
-        // alert("인증되었습니다.");
-        set_valid(valid_mode.VALID, 'verification_code', 'confirm_veri', '확인', null, null);
-    } else {
-        // alert("잘못된 인증번호입니다.");
-        set_valid(valid_mode.INVALID, 'verification_code', 'confirm_veri', '확인', 'id-veri-invalid-feedback', '잘못된 인증코드입니다.');
-    }
-}
-
 function check_duplicated(bool) {
     // id 중복 확인 함수
     not_duplicated = bool;
@@ -227,19 +234,6 @@ function check_duplicated(bool) {
         // 사용 불가능한 id
         set_valid(valid_mode.INVALID, 'userid', 'check_dup', '중복 확인', 'id-dup-invalid-feedback', "이미 존재하는 ID입니다. 다른 ID로 시도하세요.");
     }
-}
-
-function check_register(bool) {
-    //console.log(bool);
-    if (bool) {
-        // 회원가입 성공
-        // alert("회원가입에 성공하였습니다.");
-        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 성공하였습니다.");
-    } else {
-        // alert("회원가입에 실패하였습니다.");
-        show_modal(modal_type.OK, "계정 생성하기", "회원가입에 실패하였습니다. 다시 시도하시거나, 문제가 반복되는 경우 관리자에게 문의하십시오.");
-    }
-    change_display_to('login-page')
 }
 
 $('#userid').on("propertychange change keyup paste input", async (event) => {
@@ -374,6 +368,10 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
     });
 });
 
+document.getElementById('show_nickname').addEventListener('click', async (event) => {
+    goto_profile();
+})
+
 // --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
 $(function () {
     $('#btn-upload').click(function (e) {
@@ -381,3 +379,107 @@ $(function () {
         $('#file').click();
     });
 });
+
+// --------------------------------------------- 프로필 화면 스크립트 ---------------------------------------------
+document.getElementById('update-profile').addEventListener('click', async (event) => {
+    modal_body = {
+        html: true,
+        contents: `
+        <div class="row">
+            <input type="file" id="profile-img_update_upload" style="display: none; onchange="loadfile(event)">
+            <img class="mx-auto" id="profile-img_update" style="cursor: pointer;" width="100" height="100" src="icons/user_logo.png"/>
+        </div>
+
+        <label for="nickname_update" class="col-form-label">닉네임</label>
+        <input type="text" class="form-control" id="nickname_update" placeholder="닉네임">
+
+        <label for="bio_update" class="col-form-label">소개글</label>
+        <textarea id="bio_update" class="form-control" placeholder="내용을 입력해주세요" maxlength="120" style="resize:none"></textarea>
+
+        <label for="session_update" class="col-form-label">세션</label>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: block; text-align: center;">
+            <label class="shadow btn btn-danger">
+                <input type="checkbox"> Guitar
+            </label>
+            <label class="shadow btn btn-success">
+                <input type="checkbox"> Bass
+            </label>
+            <label class="shadow btn btn-warning">
+                <input type="checkbox"> Vocal
+            </label>
+            <label class="shadow btn btn-light">
+                <input type="checkbox"> Keyboard
+            </label>
+            <label class="shadow btn btn-info">
+                <input type="checkbox"> Drum
+            </label>
+        </div>
+        `
+    }
+    show_modal(modal_type.FORM, '프로필 수정', modal_body);
+
+    $('#nickname_update').val(user_data.nickname);
+    $('#bio_update').val(user_data.bio);
+
+    $('#profile-img_update').on('click', (function (e) {
+        e.preventDefault();
+        $('#profile-img_update_upload').trigger('click');
+    }));
+})
+
+document.getElementById('publicity-profile').addEventListener('click', async (event) => {
+    modal_body = {
+        html: true,
+        contents: `
+        <div class="form-group row">
+            <label for="profile-image-publicity" class="col-6 col-form-label">프로필 사진</label>
+            <div class="col-6">
+                <select name="profile-image-publicity" class="custom-select">
+                    <option value="all">전체 공개</option>
+                    <option value="friend">친구 공개</option>
+                    <option value="not">공개안함</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id-publicity" class="col-6 col-form-label">아이디</label>
+            <div class="col-6">
+                <select name="id-publicity" class="custom-select">
+                    <option value="all">전체 공개</option>
+                    <option value="friend">친구 공개</option>
+                    <option value="not">공개안함</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="bio-publicity" class="col-6 col-form-label">상태 메시지</label>
+            <div class="col-6">
+                <select name="profile-image-publicity" class="custom-select">
+                    <option value="all">전체 공개</option>
+                    <option value="friend">친구 공개</option>
+                    <option value="not">공개안함</option>
+                </select>
+            </div>
+        </div>
+        `
+    }
+    show_modal(modal_type.FORM, '프로필 공개범위 설정', modal_body);
+})
+
+document.getElementById('delete-account').addEventListener('click', async (event) => {
+    const body = `
+    당신의 계정은 영구히 삭제되며, 친구들의 목록에서도 당신이 사라집니다 :(\n
+    계속하시겠어요?
+    `
+    show_modal(modal_type.YESNO, '회원 탈퇴', body);
+
+    $('#yes-no-modal-yesbtn').on('click', async () => {
+        const sending_param = {
+            token: token,
+            id: user_data.id
+        }
+        ipcRenderer.send('deleteUser', sending_param);
+    });
+})
