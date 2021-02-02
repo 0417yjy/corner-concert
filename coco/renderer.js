@@ -4,7 +4,7 @@ const ipcRenderer = require('electron').ipcRenderer;
 ipcRenderer.send('checkServer', {});
 
 // IPC 함수 호출문
-ipcRenderer.on('callFunction', function (event, functionName, param) {
+ipcRenderer.on('callFunction', function (event, functionName, param, type) {
     // main 프로세스에서 send('callFunction', functionName, param); 함수를 호출하면 이곳에서 메시지를 받아서 처리
     switch (functionName) {
         case "connect":
@@ -16,7 +16,7 @@ ipcRenderer.on('callFunction', function (event, functionName, param) {
             check_verified(param);
             break;
         case "checkDuplicate":
-            check_duplicated(param);
+            check_duplicated(param, type);
             break;
         case "register":
             check_register(param);
@@ -215,17 +215,22 @@ function check_verified(bool) {
     }
 }
 
-function check_duplicated(bool) {
+function check_duplicated(bool, type) {
     // id 중복 확인 함수
     not_duplicated = bool;
     //console.log(not_duplicated);
-    let btn_check_dup = document.getElementById("check_dup");
-    if (bool) {
-        // 사용 가능한 id
-        set_valid(valid_mode.VALID, 'userid', 'check_dup', '사용 가능', null, null);
-    } else {
-        // 사용 불가능한 id
-        set_valid(valid_mode.INVALID, 'userid', 'check_dup', '중복 확인', 'id-dup-invalid-feedback', "이미 존재하는 ID입니다. 다른 ID로 시도하세요.");
+    if(type==id){
+        let btn_check_dup = document.getElementById("check_dup");
+        if (bool) {
+            // 사용 가능한 id
+            set_valid(valid_mode.VALID, 'userid', 'check_dup', '사용 가능', null, null);
+        } else {
+            // 사용 불가능한 id
+            set_valid(valid_mode.INVALID, 'userid', 'check_dup', '중복 확인', 'id-dup-invalid-feedback', "이미 존재하는 ID입니다. 다른 ID로 시도하세요.");
+        }
+    }
+    else if(type==email){
+
     }
 }
 
@@ -256,7 +261,7 @@ document.getElementById("check_dup").addEventListener("click", async (event) => 
     const id = document.getElementById("userid").value;
 
     if (id) {
-        ipcRenderer.send('checkdup', id);
+        ipcRenderer.send('checkdup', id, 'id');
     } else {
         document.getElementById('id-dup-invalid-feedback').innerHTML = "ID를 입력해 주세요.";
         $('#userid').removeClass('is-valid').addClass('is-invalid'); // invalid 설정
@@ -268,6 +273,7 @@ document.getElementById("send_veri").addEventListener("click", async (event) => 
     const email = document.getElementById("email").value;
 
     if (email) {
+        ipcRenderer.send('checkdup', email, 'email')
         ipcRenderer.send('sendveri', email);
         // alert("확인 코드를 이메일로 전송하였습니다.");
         set_valid(valid_mode.VALID, 'email', 'send_veri', '인증코드 전송', null, null);

@@ -96,7 +96,25 @@ router.post('/register/confirmveri/', function (req, res, next) {
     });
 });
 
-router.get('/register/checkdup/:loginid', function (req, res, next) {
+router.get('/register/checkdup/id/:loginid', function (req, res, next) {
+    const args = req.params.loginid;
+    let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
+    db.execute(sql, args, (err, results) => {
+        let body = {
+            success: false
+        };
+        if (results[0].res == 1) {
+            // 중복되는 경우
+            res.send(body);
+        } else {
+            // 중복되는 것이 없는 경우
+            body.success = true;
+            res.send(body);
+        }
+    });
+})
+
+router.get('/register/checkdup/email/:loginid', function (req, res, next) {
     const args = req.params.loginid;
     let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
     db.execute(sql, args, (err, results) => {

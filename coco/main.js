@@ -93,21 +93,21 @@ ipcMain.on('confirmveri', (event, args) => {
   request.end();
 })
 
-ipcMain.on('checkdup', (event, args) => {
+ipcMain.on('checkdup', (event, args, type) => {
   let win = BrowserWindow.getFocusedWindow();
-  const request = coco_net.make_http_get_request('/user/register/checkdup/' + args);
+  const request = coco_net.make_http_get_request('/user/register/checkdup/'+ type + '/' + args);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
         // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
         response.on('data', (chunk) => { 
           // console.log(`BODY: ${chunk}`);
           let obj = JSON.parse(chunk);
-          win.webContents.send("callFunction", "checkDuplicate", obj.success);
+          win.webContents.send("callFunction", "checkDuplicate", obj.success, type);
         }); 
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
-    win.webContents.send("callFunction", "checkDuplicate", false);
+    win.webContents.send("callFunction", "checkDuplicate", false, type);
   })
   request.end();
 });
