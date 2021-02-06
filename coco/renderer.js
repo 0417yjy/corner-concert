@@ -376,14 +376,67 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
     });
 });
 
+document.getElementById('show_nickname').addEventListener('click', async (event) => {
+    goto_profile();
+})
+
+/*
 // --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
 $(function () {
     $('#btn-upload').click(function (e) {
         e.preventDefault();
         $('#file').click();
     });
-
 });
+*/
+// --------------------------------------------- 프로필 화면 스크립트 ---------------------------------------------
+document.getElementById('update-profile').addEventListener('click', async (event) => {
+    modal_body = {
+        html: true,
+        contents: `
+        <div class="row">
+            <input type="file" id="profile-img_update_upload" style="display: none; onchange="loadfile(event)">
+            <img class="mx-auto" id="profile-img_update" style="cursor: pointer;" width="100" height="100" src="icons/user_logo.png"/>
+        </div>
+
+        <label for="nickname_update" class="col-form-label">닉네임</label>
+        <input type="text" class="form-control" id="nickname_update" placeholder="닉네임">
+
+        <label for="bio_update" class="col-form-label">소개글</label>
+        <textarea id="bio_update" class="form-control" placeholder="내용을 입력해주세요" maxlength="120" style="resize:none"></textarea>
+
+        <label for="session_update" class="col-form-label">세션</label>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="display: block; text-align: center;">
+            <label class="shadow btn btn-danger">
+                <input type="checkbox"> Guitar
+            </label>
+            <label class="shadow btn btn-success">
+                <input type="checkbox"> Bass
+            </label>
+            <label class="shadow btn btn-warning">
+                <input type="checkbox"> Vocal
+            </label>
+            <label class="shadow btn btn-light">
+                <input type="checkbox"> Keyboard
+            </label>
+            <label class="shadow btn btn-info">
+                <input type="checkbox"> Drum
+            </label>
+        </div>
+        `
+    }
+    show_modal(modal_type.FORM, '프로필 수정', modal_body);
+
+    document.getElementById("modal_form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        change_profile();
+        $("#profile-img_update").attr("src", change_img);
+        $('#form-modal').modal('hide');
+    });
+
+    $('#nickname_update').val(user_data.nickname);
+    $('#bio_update').val(user_data.bio);
 
 document.getElementById("file").addEventListener("change", function(event) {
     var origin_img = document.getElementById("file").value.split('\\');
@@ -394,3 +447,35 @@ document.getElementById("file").addEventListener("change", function(event) {
     document.getElementById("btn-upload").src = change_img;
   });
 
+document.getElementById('delete-account').addEventListener('click', async (event) => {
+    const body = `
+    당신의 계정은 영구히 삭제되며, 친구들의 목록에서도 당신이 사라집니다 :(\n
+    계속하시겠어요?
+    `
+    show_modal(modal_type.YESNO, '회원 탈퇴', body);
+
+    $('#yes-no-modal-yesbtn').on('click', async () => {
+        const sending_param = {
+            token: token,
+            id: user_data.id
+        }
+        ipcRenderer.send('deleteUser', sending_param);
+    });
+})
+
+// --------------------------------------------- 프로필 사진 변경 스크립트 ------------------------------------------
+var change_img;
+function change_profile(){
+        
+        var origin_img = document.getElementById("profile-img_update_upload").value.split('\\');
+        var filename = origin_img[origin_img.length - 1];
+    
+        change_img = 'icons\\' + filename;
+        //alert(change_img);
+
+        $("#profile-img_update").attr("src", change_img);
+
+        //document.getElementById("profile-img_update").src = change_img;
+        document.getElementById("profile-img").src = change_img;
+        document.getElementById("btn-upload").src = change_img;
+}
