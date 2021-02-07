@@ -155,6 +155,10 @@ ipcMain.on('deleteUser', (event, args) => {
   })
   request.end();
 });
+
+ipcMain.on('createConcertWindow', (event, args) => {
+  createRoom();
+})
 /* ---------------------------- IPC 함수 끝 ---------------------------*/
 
 let mainWindow;
