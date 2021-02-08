@@ -216,11 +216,11 @@ function check_verified(bool) {
 }
 
 function check_duplicated(bool, type) {
-    // id 중복 확인 함수
+    // 중복 확인 함수
     not_duplicated = bool;
     //console.log(not_duplicated);
     if(type==id){
-        let btn_check_dup = document.getElementById("check_dup");
+        //let btn_check_dup = document.getElementById("check_dup");
         if (bool) {
             // 사용 가능한 id
             set_valid(valid_mode.VALID, 'userid', 'check_dup', '사용 가능', null, null);
@@ -230,7 +230,14 @@ function check_duplicated(bool, type) {
         }
     }
     else if(type==email){
-
+        //let btn_check_dup = document.getElementById("check_dup");
+        if (bool) {
+            // 중복 x email
+            set_valid(valid_mode.VALID, 'email', 'send_veri', '사용 가능', null, null);
+        } else {
+            // 중복 email
+            set_valid(valid_mode.INVALID, 'email', 'send_veri', '중복 확인', 'email-dup-invalid-feedback', "이미 등록된 이메일입니다");
+        }
     }
 }
 
