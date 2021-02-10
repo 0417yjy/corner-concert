@@ -114,8 +114,8 @@ router.get('/register/checkdup/id/:loginid', function (req, res, next) {
     });
 })
 
-router.get('/register/checkdup/email/:loginid', function (req, res, next) {
-    const args = req.params.loginid;
+router.get('/register/checkdup/email/:email', function (req, res, next) {
+    const args = req.params.email;
     let sql = "SELECT CHECK_DUPLICATE_ID(?) as res";
     db.execute(sql, args, (err, results) => {
         let body = {

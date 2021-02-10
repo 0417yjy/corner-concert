@@ -17,8 +17,8 @@ const config = require('./webinfo');
 const crypto = require('crypto');
 
 // web server variables
-// const host = config.testsvr.host; // for developing use only
-// const port = config.testsvr.port;
+//const host = config.testsvr.host; // for developing use only
+//const port = config.testsvr.port;
 const host = config.stablesvr.host;
 const port = config.stablesvr.port;
 const ROOT_URL = 'http://' + host + ':' + port + '/';
