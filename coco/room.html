@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" href="coco-style.css">
     <link rel="stylesheet" href="room_style.css">
+
+    <!-- <script lang="text/javascript" src="node_modules/socket.io/client-dist/socket.io.js"></script> -->
 </head>
 
 <body>
@@ -88,7 +90,9 @@
                             </span>
                         </div>
                     </nav>
-                    <div class="col-12 container-fluid p-0" id="video_container"></div>
+                    <div class="col-12 container-fluid p-0" id="video_container">
+                        <video id="localVideo" class="vid" autoplay muted></video>
+                    </div>
                 </div>
                 <div class="d-flex-column" id="track">
                     <nav class="navbar py-0 pr-0" id="concert-control">
@@ -163,6 +167,7 @@
     </div>
     <script src="windowcontrol.js"></script>
     <script src="room.js"></script>
+    <script src="webrtc/client.js"></script>
 </body>
 
 </html>
