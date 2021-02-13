@@ -1,5 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const coco_net = require('./netutils')();
+const cmd = require('node-cmd');
+const { spawn } = require('child_process');
+
+var child_server = null;
+var server_port = 3001;
+var hosted = false;
 
 /* ---------------------------- IPC 함수 시작 --------------------------*/
 ipcMain.on('checkServer', (event, arg) => {
@@ -157,7 +163,28 @@ ipcMain.on('deleteUser', (event, args) => {
 });
 
 ipcMain.on('createConcertWindow', (event, args) => {
+  cmd.run('node webrtc/server.js');
   createRoom();
+})
+
+ipcMain.on('hostServer', (event, args) => {
+  console.log('hosting express server..');
+  const server_process = spawn('cmd', ['node', 'webrtc\\server.js']);
+
+  server_process.on('error', (error) => {
+    console.log(error);
+  })
+
+  server_process.stdout.on('data', (data) => {
+    console.log(data);
+  });
+
+  server_process.stderr.on('data', (data) => {
+    console.log(data);
+  });
+
+  child_server = server_process;
+  hosted = true;
 })
 /* ---------------------------- IPC 함수 끝 ---------------------------*/
 
@@ -178,7 +205,8 @@ function createWindow() {
 
   mainWindow.loadFile('index.html');
 
-  mainWindow.on('closed', () => {
+  mainWindow.on('close', () => {
+    console.log('main is closed');
     mainWindow = null;
   });
 }
@@ -201,16 +229,27 @@ function createRoom() {
   
   roomWindow.loadFile('room.html');
 
-  roomWindow.on('closed', () => {
+  roomWindow.on('close', () => {
     roomWindow = null;
+    console.log('concertorom closed');
+    if (hosted) {
+      console.log('killing server process...');
+      // console.log(child_server);
+      child_server.kill();
+
+      hosted = false;
+      child_server = null;
+    }
   });
 }
 
 
 app.whenReady().then(createWindow)
-// app.whenReady().then(createRoom)
 
 app.on('window-all-closed', () => {
+  if (hosted) {
+    child_server.kill();
+  }
   if (process.platform !== 'darwin') {
     app.quit()
   }
