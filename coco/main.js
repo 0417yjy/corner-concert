@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const coco_net = require('./netutils')();
 const cmd = require('node-cmd');
 const { spawn } = require('child_process');
+const kill = require('tree-kill')
 
 var child_server = null;
 var server_port = 3001;
@@ -169,18 +170,18 @@ ipcMain.on('createConcertWindow', (event, args) => {
 
 ipcMain.on('hostServer', (event, args) => {
   console.log('hosting express server..');
-  const server_process = spawn('cmd', ['node', 'webrtc\\server.js']);
+  const server_process = spawn('node', ['webrtc\\server.js'], {shell: true});
 
   server_process.on('error', (error) => {
     console.log(error);
   })
 
   server_process.stdout.on('data', (data) => {
-    console.log(data);
+    console.log(`${data}`);
   });
 
   server_process.stderr.on('data', (data) => {
-    console.log(data);
+    console.log(`${data}`);
   });
 
   child_server = server_process;
@@ -234,8 +235,10 @@ function createRoom() {
     console.log('concertorom closed');
     if (hosted) {
       console.log('killing server process...');
-      // console.log(child_server);
-      child_server.kill();
+      console.log(child_server.pid);
+      kill(child_server.pid, (error) => {
+        console.log(error);
+      });
 
       hosted = false;
       child_server = null;
