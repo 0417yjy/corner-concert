@@ -344,10 +344,7 @@ document.getElementById('create_room').addEventListener("click", async (event) =
         $('#form-modal').modal('hide');
 
         // 서버 생성
-        ipcRenderer.send('hostServer');
-
-        // 합주실 윈도우 생성
-        ipcRenderer.send('createConcertWindow');
+        ipcRenderer.send('hostServer', true);
     })
 })
 

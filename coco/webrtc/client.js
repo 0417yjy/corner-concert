@@ -1,4 +1,4 @@
-var io = require('socket.io');
+var io = require('socket.io-client');
 /**
  * Socket.io socket
  */
@@ -11,10 +11,7 @@ let localStream = null;
  * All peer connections
  */
 let peers = {}
-
-// redirect if not https
-// if(location.href.substr(0,5) !== 'https') 
-//     location.href = 'https' + location.href.substr(4, location.href.length - 4)
+let port = 3001;
 
 //////////// CONFIGURATION //////////////////
 
@@ -69,13 +66,16 @@ navigator.mediaDevices.getUserMedia(constraints).then(stream => {
 
     console.log(location.href);
     
-}).catch(e => alert(`getusermedia error ${e.name}`))
+})//.catch(e => alert(`getusermedia error: ${e}`))
 
 /**
  * initialize the socket connections
  */
 function init() {
-    socket = io()
+    console.log(`http://localhost:${port}`);
+    
+    socket = io(`http://localhost:${port}`, { path: '/socketio' });
+    console.log(socket);
 
     socket.on('initReceive', socket_id => {
         console.log('INIT RECEIVE ' + socket_id)
