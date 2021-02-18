@@ -1,5 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const coco_net = require('./netutils')();
+const cmd = require('node-cmd');
+const { spawn } = require('child_process');
+const kill = require('tree-kill');
+const { METHODS } = require('http');
+
+var child_server = null;
+var server_port = 3001;
+var hosted = false;
 
 /* ---------------------------- IPC 함수 시작 --------------------------*/
 ipcMain.on('checkServer', (event, arg) => {
@@ -61,13 +69,13 @@ ipcMain.on('sendveri', (event, args) => {
   const request = coco_net.make_http_request(coco_net.method.PUT, '/user/register/sendveri', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
-        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
-        response.on('data', (chunk) => { 
-          console.log(`BODY: ${chunk}`);
-        }); 
+    // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+    response.on('data', (chunk) => {
+      console.log(`BODY: ${chunk}`);
+    });
   })
   request.on('error', (error) => {
-    console.log(`ERROR: ${JSON.stringify(error)}`) 
+    console.log(`ERROR: ${JSON.stringify(error)}`)
   })
   request.end();
 })
@@ -79,12 +87,12 @@ ipcMain.on('confirmveri', (event, args) => {
   const request = coco_net.make_http_request(coco_net.method.POST, '/user/register/confirmveri/', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
-        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
-        response.on('data', (chunk) => { 
-          // console.log(`BODY: ${chunk}`);
-          let obj = JSON.parse(chunk);
-          win.webContents.send("checkVerified", obj.success);
-        }); 
+    // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+    response.on('data', (chunk) => {
+      // console.log(`BODY: ${chunk}`);
+      let obj = JSON.parse(chunk);
+      win.webContents.send("checkVerified", obj.success);
+    });
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
@@ -98,12 +106,12 @@ ipcMain.on('checkdup', (event, args) => {
   const request = coco_net.make_http_request(coco_net.method.GET, '/user/register/checkdup/' + args);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
-        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
-        response.on('data', (chunk) => { 
-          // console.log(`BODY: ${chunk}`);
-          let obj = JSON.parse(chunk);
-          win.webContents.send("checkDuplicate", obj.success);
-        }); 
+    // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+    response.on('data', (chunk) => {
+      // console.log(`BODY: ${chunk}`);
+      let obj = JSON.parse(chunk);
+      win.webContents.send("checkDuplicate", obj.success);
+    });
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
@@ -121,12 +129,12 @@ ipcMain.on('addNewUser', (event, args) => {
   const request = coco_net.make_http_request(coco_net.method.POST, '/user/register', body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
-        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
-        response.on('data', (chunk) => { 
-          // console.log(`BODY: ${chunk}`);
-          let obj = JSON.parse(chunk);
-          win.webContents.send("register", obj.success);
-        }); 
+    // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+    response.on('data', (chunk) => {
+      // console.log(`BODY: ${chunk}`);
+      let obj = JSON.parse(chunk);
+      win.webContents.send("register", obj.success);
+    });
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
@@ -142,12 +150,12 @@ ipcMain.on('deleteUser', (event, args) => {
   const request = coco_net.make_http_request(coco_net.method.DELETE, '/user/' + args.id, body);
   request.on('response', (response) => {
     //console.log(`STATUS: ${response.statusCode}`); 
-        // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
-        response.on('data', (chunk) => { 
-          // console.log(`BODY: ${chunk}`);
-          let obj = JSON.parse(chunk);
-          win.webContents.send("delete_user", obj.success);
-        }); 
+    // console.log(`HEADERS: ${JSON.stringify(response.headers)}`); 
+    response.on('data', (chunk) => {
+      // console.log(`BODY: ${chunk}`);
+      let obj = JSON.parse(chunk);
+      win.webContents.send("delete_user", obj.success);
+    });
   })
   request.on('error', (error) => {
     // console.log(`ERROR: ${JSON.stringify(error)}`)
@@ -155,6 +163,48 @@ ipcMain.on('deleteUser', (event, args) => {
   })
   request.end();
 });
+
+ipcMain.on('createConcertWindow', (event, args) => {
+  cmd.run('node webrtc/server.js');
+  createRoom();
+})
+
+ipcMain.on('hostServer', (event, args) => {
+  console.log('hosting express server..');
+  const server_process = spawn('node', ['webrtc\\server.js'], { shell: true });
+
+  server_process.on('error', (error) => {
+    console.log(error);
+  })
+
+  server_process.stdout.on('data', (data) => {
+    console.log(`${data}`);
+  });
+
+  server_process.stderr.on('data', (data) => {
+    console.log(`${data}`);
+  });
+
+  child_server = server_process;
+  hosted = true;
+
+  if (args === true) {
+    const request = coco_net.make_http_request(coco_net.method.GET, 'status', undefined, { host: 'localhost', port: 3001 });
+    request.on('response', (response) => {
+      console.log(`STATUS: ${response.statusCode}`);
+      console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
+      response.on('data', (chunk) => {
+        createRoom();
+      });
+    });
+    request.on('error', (error) => {
+      console.log(error);
+    })
+    request.end();
+
+
+  }
+})
 /* ---------------------------- IPC 함수 끝 ---------------------------*/
 
 let mainWindow;
@@ -174,7 +224,8 @@ function createWindow() {
 
   mainWindow.loadFile('index.html');
 
-  mainWindow.on('closed', () => {
+  mainWindow.on('close', () => {
+    console.log('main is closed');
     mainWindow = null;
   });
 }
@@ -194,19 +245,32 @@ function createRoom() {
   })
   roomWindow.maximize(); // 켤 때 최대화
   roomWindow.show();
-  
+
   roomWindow.loadFile('room.html');
 
-  roomWindow.on('closed', () => {
+  roomWindow.on('close', () => {
     roomWindow = null;
+    console.log('concertorom closed');
+    if (hosted) {
+      console.log('killing server process...');
+      console.log(child_server.pid);
+      kill(child_server.pid, (error) => {
+        console.log(error);
+      });
+
+      hosted = false;
+      child_server = null;
+    }
   });
 }
 
 
 app.whenReady().then(createWindow)
-// app.whenReady().then(createRoom)
 
 app.on('window-all-closed', () => {
+  if (hosted) {
+    child_server.kill();
+  }
   if (process.platform !== 'darwin') {
     app.quit()
   }

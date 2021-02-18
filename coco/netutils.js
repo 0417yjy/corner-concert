@@ -44,12 +44,12 @@ module.exports = function () {
             request.end();
         },
 
-        make_http_request: function (method_selected, arg_path, body) {
+        make_http_request: function (method_selected, arg_path, body, option = {host: host, port: port}) {
             const request = net.request({
                 method: method_selected,
                 protocol: 'http:',
-                hostname: host,
-                port: port,
+                hostname: option.host,
+                port: option.port,
                 path: arg_path
             })
             request.setHeader('content-type', 'application/json'); 

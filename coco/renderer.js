@@ -326,28 +326,25 @@ document.getElementById('create_room').addEventListener("click", async (event) =
         html: true,
         contents: `
         <p> 최대 인원 수 &nbsp;
-        <select id="people">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4" selected>4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-        </select>
+        <input type="number" id="create_room_max_sessions" min="1" max="10" value="1">
         </p>
 
+        <!--
         <p> 권한 부여 &nbsp; &nbsp; &nbsp;
-        <!-- <label><input type="checkbox" value="entire"> 전체</label>
-        <label><input type="checkbox" value="record"> 녹음</label> -->
+        <label><input type="checkbox" value="entire"> 전체</label>
+        <label><input type="checkbox" value="record"> 녹음</label>
         </p>
+        -->
         `
     }
 
-    show_modal(modal_type.FORM, '합주실', modal_body);
+    show_modal(modal_type.FORM, '합주실 생성', modal_body);
     document.getElementById("modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
         $('#form-modal').modal('hide');
 
+        // 서버 생성
+        ipcRenderer.send('hostServer', true);
     })
 })
 
@@ -358,7 +355,7 @@ document.getElementById('join_room').addEventListener("click", async (event) => 
         <input type="text" class="form-control my-3" id="room_num">
         `
     }
-    show_modal(modal_type.FORM, '합주실 검색', modal_body);
+    show_modal(modal_type.FORM, '합주실 참여', modal_body);
     document.getElementById("modal_form").addEventListener("submit", async (event) => {
         event.preventDefault();
         $('#form-modal').modal('hide');

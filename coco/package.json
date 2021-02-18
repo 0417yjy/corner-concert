@@ -24,9 +24,15 @@
   "dependencies": {
     "bootstrap": "^4.5.3",
     "crypto": "^1.0.1",
+    "express": "^4.17.1",
     "feather-icons": "^4.28.0",
+    "http": "0.0.1-security",
     "jquery": "^3.5.1",
     "jquery-ui-dist": "^1.12.1",
-    "popper.js": "^1.16.1"
+    "node-cmd": "^4.0.0",
+    "popper.js": "^1.16.1",
+    "socket.io": "^3.1.1",
+    "socket.io-client": "^3.1.1",
+    "tree-kill": "^1.2.2"
   }
 }
