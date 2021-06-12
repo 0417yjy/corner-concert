@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
 const coco_net = require('./netutils')();
 const cmd = require('node-cmd');
 const { spawn } = require('child_process');
@@ -216,6 +217,7 @@ function createWindow() {
     height: 600,
     frame: false, // 메뉴 삭제
     backgroundColor: '#FFF', // subpixel anti-aliasing enabled (https://github.com/electron/electron/issues/6344#issuecomment-420371918)
+    icon: path.join(__dirname, "icons", "circle_icon.png"),
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true
